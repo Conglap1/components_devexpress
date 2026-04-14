@@ -1,0 +1,90 @@
+.hq-segmented-control {
+    display: inline-flex;
+    gap: var(--spacing-1x);
+    width: fit-content;
+}
+
+.hq-segmented-control__item {
+    align-items: center;
+    appearance: none;
+    background: var(--color-white-90);
+    border: 1px solid var(--color-white-80);
+    border-radius: var(--radius-2x);
+    color: var(--color-black-100);
+    cursor: pointer;
+    display: inline-flex;
+    font-family: var(--font-family-base);
+    font-weight: 400;
+    justify-content: center;
+    letter-spacing: var(--font-letter-spacing);
+    margin: 0;
+    padding: 0 var(--spacing-5x);
+    white-space: nowrap;
+}
+
+.hq-segmented-control__text {
+    line-height: 1;
+}
+
+.hq-segmented-control__icon {
+    height: 1rem;
+    width: 1rem;
+}
+
+.hq-segmented-control__item.is-selected {
+    background: var(--color-navy-60);
+    border-color: var(--color-navy-60);
+    color: var(--color-white-100);
+    font-weight: 500;
+}
+
+.hq-segmented-control__item:hover:not(:disabled):not(.is-selected) {
+    background: var(--color-white-80);
+    border-color: var(--color-white-80);
+}
+
+.hq-segmented-control__item:active:not(:disabled):not(.is-selected) {
+    background: var(--color-white-70);
+    border-color: var(--color-white-70);
+}
+
+.hq-segmented-control__item:focus-visible {
+    outline: 2px solid color-mix(in srgb, var(--color-navy-60) 25%, transparent);
+    outline-offset: 2px;
+}
+
+.hq-segmented-control__item:disabled {
+    background: var(--color-white-80);
+    border-color: var(--color-white-80);
+    color: var(--color-black-20);
+    cursor: not-allowed;
+}
+
+.hq-segmented-control--md .hq-segmented-control__item {
+    font-size: var(--text-label-md-size);
+    height: var(--button-height-sm);
+    line-height: var(--text-label-md-lh);
+    padding: 0 var(--spacing-6x);
+}
+
+.hq-segmented-control--sm .hq-segmented-control__item {
+    font-size: var(--text-label-sm-size);
+    height: var(--button-height-xs);
+    line-height: var(--text-label-sm-lh);
+    padding: 0 var(--spacing-4x);
+}
+
+.hq-segmented-control--xs .hq-segmented-control__item {
+    font-size: var(--text-label-sm-size);
+    height: 20px;
+    line-height: var(--text-label-sm-lh);
+    padding: 0 var(--spacing-3x);
+}
+
+.hq-segmented-control__item .hq-segmented-control__icon--leading {
+    margin-right: var(--spacing-1x);
+}
+
+.hq-segmented-control__item .hq-segmented-control__icon--trailing {
+    margin-left: var(--spacing-1x);
+}

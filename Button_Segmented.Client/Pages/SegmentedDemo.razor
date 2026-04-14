@@ -1,0 +1,61 @@
+@page "/segmented-demo"
+
+<PageTitle>Segmented Demo</PageTitle>
+
+<div class="segmented-page">
+    <h1>Segmented component</h1>
+    <p class="segmented-subtitle">
+        Thường sử dụng trong trường hợp thay đổi chế độ xem của các dữ liệu liên quan. Ví dụ như xem dữ liệu theo ngày, tháng hoặc kiểu hiển thị.
+    </p>
+
+    <section class="segmented-section">
+        <h2>Sizes</h2>
+        <div class="segmented-stack">
+            <HqSegmentedButtonGroup Items="@TwoItems" @bind-SelectedIndex="@SelectedMd" Size="HqButtonSize.Md" />
+            <HqSegmentedButtonGroup Items="@TwoItems" @bind-SelectedIndex="@SelectedSm" Size="HqButtonSize.Sm" />
+        </div>
+    </section>
+
+    <section class="segmented-section">
+        <h2>2 / 4 / 8 options</h2>
+        <div class="segmented-stack">
+            <HqSegmentedButtonGroup Items="@TwoItems" @bind-SelectedIndex="@Selected2" Size="HqButtonSize.Md" />
+            <HqSegmentedButtonGroup Items="@FourItems" @bind-SelectedIndex="@Selected4" Size="HqButtonSize.Md" />
+            <HqSegmentedButtonGroup Items="@EightItems" @bind-SelectedIndex="@Selected8" Size="HqButtonSize.Md" />
+        </div>
+    </section>
+</div>
+
+@code {
+    private int SelectedMd = 0;
+    private int SelectedSm = 0;
+    private int Selected2 = 0;
+    private int Selected4 = 0;
+    private int Selected8 = 0;
+
+    private List<HqSegmentedItem> TwoItems =>
+    [
+        new() { Text = "Text" },
+        new() { Text = "Text" }
+    ];
+
+    private List<HqSegmentedItem> FourItems =>
+    [
+        new() { Text = "Text" },
+        new() { Text = "Text" },
+        new() { Text = "Text" },
+        new() { Text = "Text" }
+    ];
+
+    private List<HqSegmentedItem> EightItems =>
+    [
+        new() { Text = "Text" },
+        new() { Text = "Text" },
+        new() { Text = "Text" },
+        new() { Text = "Text" },
+        new() { Text = "Text" },
+        new() { Text = "Text" },
+        new() { Text = "Text" },
+        new() { Text = "Text" }
+    ];
+}

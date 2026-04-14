@@ -1,0 +1,97 @@
+@namespace Button_Segmented.Client.Components.Buttons
+
+<span class="hq-btn-host">
+    <DxButton CssClass="@CssClass"
+              style="@Style"
+              Enabled="@IsEnabled"
+              Click="@HandleClick">
+        @if (!string.IsNullOrWhiteSpace(EffectiveLeadingIconCssClass))
+        {
+            <span class="@($"icon {EffectiveLeadingIconCssClass}")" aria-hidden="true"></span>
+        }
+
+        @if (!IconOnly && !string.IsNullOrWhiteSpace(Text))
+        {
+            <span>@Text</span>
+        }
+
+        @if (!string.IsNullOrWhiteSpace(TrailingIconCssClass) && !IconOnly)
+        {
+            <span class="@($"icon {TrailingIconCssClass}")" aria-hidden="true"></span>
+        }
+    </DxButton>
+</span>
+
+@code {
+    [Parameter] public string? Text { get; set; }
+    [Parameter] public string? IconCssClass { get; set; } = "icon-menu";
+    [Parameter] public string? LeadingIconCssClass { get; set; }
+    [Parameter] public string? TrailingIconCssClass { get; set; }
+    [Parameter] public bool IconOnly { get; set; }
+    [Parameter] public bool FullWidth { get; set; }
+    [Parameter] public HqButtonVariant Variant { get; set; } = HqButtonVariant.Primary;
+    [Parameter] public HqButtonSize Size { get; set; } = HqButtonSize.Md;
+    [Parameter] public HqButtonShape Shape { get; set; } = HqButtonShape.RoundedMedium;
+    [Parameter] public HqButtonVisualState State { get; set; } = HqButtonVisualState.Enabled;
+    [Parameter] public string? BackgroundColor { get; set; }
+    [Parameter] public string? BackgroundColorHover { get; set; }
+    [Parameter] public string? BackgroundColorPressed { get; set; }
+    [Parameter] public string? BorderColor { get; set; }
+    [Parameter] public string? TextColor { get; set; }
+    [Parameter] public string? Class { get; set; }
+    [Parameter] public EventCallback Click { get; set; }
+
+    private bool IsEnabled => State != HqButtonVisualState.Disabled;
+
+    private string EffectiveLeadingIconCssClass => string.IsNullOrWhiteSpace(LeadingIconCssClass)
+        ? IconCssClass ?? string.Empty
+        : LeadingIconCssClass;
+
+    private HqButtonShape EffectiveShape => Variant switch
+    {
+        HqButtonVariant.Ghost => HqButtonShape.None,
+        _ when Shape == HqButtonShape.RoundedFull && !IconOnly => HqButtonShape.RoundedMedium,
+        _ => Shape
+    };
+
+    private string CssClass => string.Join(
+        " ",
+        "hq-btn",
+        $"hq-btn--{Variant.ToString().ToLowerInvariant()}",
+        $"hq-btn--{Size.ToString().ToLowerInvariant()}",
+        $"hq-btn--{ShapeToClassName(EffectiveShape)}",
+        IconOnly ? "hq-btn--icon-only" : "hq-btn--text-icon",
+        FullWidth ? "hq-btn--full-width" : null,
+        $"is-{State.ToString().ToLowerInvariant()}",
+        Class);
+
+    private string? Style
+    {
+        get
+        {
+            var styles = new List<string>();
+            if (!string.IsNullOrWhiteSpace(BackgroundColor)) styles.Add($"--hq-bg: {BackgroundColor}");
+            if (!string.IsNullOrWhiteSpace(BackgroundColorHover)) styles.Add($"--hq-bg-hover: {BackgroundColorHover}");
+            if (!string.IsNullOrWhiteSpace(BackgroundColorPressed)) styles.Add($"--hq-bg-pressed: {BackgroundColorPressed}");
+            if (!string.IsNullOrWhiteSpace(BorderColor)) styles.Add($"--hq-border: {BorderColor}");
+            if (!string.IsNullOrWhiteSpace(TextColor)) styles.Add($"--hq-fg: {TextColor}");
+            return styles.Count == 0 ? null : string.Join("; ", styles);
+        }
+    }
+
+    private static string ShapeToClassName(HqButtonShape shape) => shape switch {
+        HqButtonShape.RoundedMedium => "rounded-medium",
+        HqButtonShape.RoundedFull => "rounded-full",
+        _ => "none"
+    };
+
+    private async Task HandleClick()
+    {
+        if (!IsEnabled)
+        {
+            return;
+        }
+
+        await Click.InvokeAsync();
+    }
+}

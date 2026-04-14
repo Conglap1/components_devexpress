@@ -1,0 +1,42 @@
+.segmented-page {
+    color: var(--color-on-background);
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-8x);
+    padding: var(--spacing-12x);
+}
+
+.segmented-page h1 {
+    font-size: var(--text-heading-lg-size);
+    line-height: var(--text-heading-lg-lh);
+    margin: 0;
+}
+
+.segmented-subtitle {
+    color: var(--color-on-surface-1);
+    font-size: var(--text-body-md-size);
+    line-height: var(--text-body-md-lh);
+    margin: 0;
+}
+
+.segmented-section {
+    background: var(--color-surface);
+    border: 1px solid var(--color-outline-1);
+    border-radius: var(--radius-6x);
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-6x);
+    padding: var(--spacing-8x);
+}
+
+.segmented-section h2 {
+    font-size: var(--text-title-md-size);
+    line-height: var(--text-title-md-lh);
+    margin: 0;
+}
+
+.segmented-stack {
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-6x);
+}

@@ -1,0 +1,101 @@
+.buttons-demo {
+    color: var(--color-on-background);
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-12x);
+    padding: var(--spacing-12x);
+}
+
+.demo-section {
+    background: var(--color-surface);
+    border: 1px solid var(--color-outline-1);
+    border-radius: var(--radius-6x);
+    box-shadow: var(--elevation-bottom-1);
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-5x);
+    padding: var(--spacing-8x);
+}
+
+.demo-section h2 {
+    font-size: var(--text-title-md-size);
+    line-height: var(--text-title-md-lh);
+    margin: 0;
+}
+
+.demo-row {
+    align-items: center;
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--spacing-4x);
+}
+
+.demo-label {
+    color: var(--color-on-surface-1);
+    min-width: 88px;
+}
+
+.demo-group {
+    align-items: flex-start;
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-6x);
+}
+
+.matrix-header,
+.matrix-row {
+    align-items: center;
+    column-gap: var(--spacing-6x);
+    display: grid;
+    grid-template-columns: 110px minmax(260px, 1fr) minmax(220px, 1fr) minmax(220px, 1fr);
+}
+
+.matrix-header {
+    color: var(--color-on-surface-1);
+    font-size: var(--text-body-sm-size);
+}
+
+.variant-block {
+    border-top: 1px solid var(--color-outline-1);
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-4x);
+    padding-top: var(--spacing-6x);
+}
+
+.variant-block h3 {
+    font-size: var(--text-title-sm-size);
+    line-height: var(--text-title-sm-lh);
+    margin: 0;
+    text-transform: capitalize;
+}
+
+.state-label {
+    color: var(--color-on-surface-1);
+    font-size: var(--text-body-sm-size);
+}
+
+.matrix-cell {
+    align-items: flex-start;
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-3x);
+    min-height: 44px;
+}
+
+.matrix-size-line {
+    align-items: flex-start;
+    display: inline-flex;
+    gap: var(--spacing-2x);
+}
+
+.matrix-size-line .hq-btn {
+    margin-right: 0;
+}
+
+.size-tag {
+    color: var(--color-on-surface-1);
+    font-size: var(--text-label-sm-size);
+    line-height: var(--text-label-sm-lh);
+    text-transform: uppercase;
+}

@@ -1,0 +1,8 @@
+<Solution>
+  <Folder Name="/Solution Items/">
+    <File Path="../../../Desktop/Button-final.md" />
+    <File Path="HQSOFT-Design-System-Guidelines-FINAL 1.md" />
+  </Folder>
+  <Project Path="Button_Segmented.Client/Button_Segmented.Client.csproj" />
+  <Project Path="Button_Segmented/Button_Segmented.csproj" />
+</Solution>

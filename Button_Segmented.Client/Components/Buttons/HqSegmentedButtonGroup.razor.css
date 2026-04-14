@@ -1,0 +1,35 @@
+::deep .hq-segmented {
+    display: inline-flex;
+    gap: 0;
+    width: fit-content;
+}
+
+::deep .hq-segmented .hq-btn.dxbl-btn {
+    min-width: 0;
+    width: fit-content;
+    margin-inline-start: 0;
+}
+
+::deep .hq-segmented .hq-segmented__button.dxbl-btn {
+    border-radius: var(--radius-4x);
+    position: relative;
+}
+
+::deep .hq-segmented--md .hq-segmented__button.dxbl-btn {
+    font-size: var(--text-title-md-size);
+    line-height: var(--text-title-md-lh);
+}
+
+::deep .hq-segmented--sm .hq-segmented__button.dxbl-btn,
+::deep .hq-segmented--xs .hq-segmented__button.dxbl-btn {
+    font-size: var(--text-title-sm-size);
+    line-height: var(--text-title-sm-lh);
+}
+
+::deep .hq-segmented .hq-segmented__button.dxbl-btn.is-enabled {
+    z-index: 0;
+}
+
+::deep .hq-segmented .hq-segmented__button.dxbl-btn.hq-btn--primary {
+    z-index: 1;
+}

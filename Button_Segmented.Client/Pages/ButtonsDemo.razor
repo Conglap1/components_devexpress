@@ -1,0 +1,137 @@
+@page "/buttons-demo"
+
+<PageTitle>Buttons Demo</PageTitle>
+
+<div class="buttons-demo">
+    <section class="demo-section">
+        <h2>Button matrix from Figma</h2>
+        <div class="matrix-header">
+            <span>State</span>
+            <span>Text + icon (md/sm/xs)</span>
+            <span>Icon-only rounded-medium (md/sm/xs)</span>
+            <span>Icon-only rounded-full (md/sm/xs)</span>
+        </div>
+
+        @foreach (var variant in Variants)
+        {
+            <div class="variant-block">
+                <h3>@variant</h3>
+                <div class="matrix-row">
+                    <div class="state-label">Interactive</div>
+                    <div class="matrix-cell">
+                        @foreach (var size in Sizes)
+                        {
+                            <div class="matrix-size-line">
+                                <div class="size-tag">@size</div>
+                                <HqButton Variant="@variant"
+                                          Size="@size"
+                                          Shape="@GetBaseShape(variant)"
+                                          Text="Text"
+                                          IconCssClass="icon-menu" />
+                            </div>
+                        }
+                    </div>
+                    <div class="matrix-cell">
+                        @foreach (var size in Sizes)
+                        {
+                            <div class="matrix-size-line">
+                                <div class="size-tag">@size</div>
+                                <HqButton Variant="@variant"
+                                          Size="@size"
+                                          Shape="@GetBaseShape(variant)"
+                                          IconOnly="true"
+                                          IconCssClass="icon-menu" />
+                            </div>
+                        }
+                    </div>
+                    <div class="matrix-cell">
+                        @if (SupportsRoundedFull(variant))
+                        {
+                            @foreach (var size in Sizes)
+                            {
+                                <div class="matrix-size-line">
+                                    <div class="size-tag">@size</div>
+                                    <HqButton Variant="@variant"
+                                              Size="@size"
+                                              Shape="HqButtonShape.RoundedFull"
+                                              IconOnly="true"
+                                              IconCssClass="icon-menu" />
+                                </div>
+                            }
+                        }
+                    </div>
+                </div>
+
+                <div class="matrix-row">
+                    <div class="state-label">Disabled</div>
+                    <div class="matrix-cell">
+                        @foreach (var size in Sizes)
+                        {
+                            <div class="matrix-size-line">
+                                <div class="size-tag">@size</div>
+                                <HqButton Variant="@variant"
+                                          Size="@size"
+                                          State="HqButtonVisualState.Disabled"
+                                          Shape="@GetBaseShape(variant)"
+                                          Text="Text"
+                                          IconCssClass="icon-menu" />
+                            </div>
+                        }
+                    </div>
+                    <div class="matrix-cell">
+                        @foreach (var size in Sizes)
+                        {
+                            <div class="matrix-size-line">
+                                <div class="size-tag">@size</div>
+                                <HqButton Variant="@variant"
+                                          Size="@size"
+                                          State="HqButtonVisualState.Disabled"
+                                          Shape="@GetBaseShape(variant)"
+                                          IconOnly="true"
+                                          IconCssClass="icon-menu" />
+                            </div>
+                        }
+                    </div>
+                    <div class="matrix-cell">
+                        @if (SupportsRoundedFull(variant))
+                        {
+                            @foreach (var size in Sizes)
+                            {
+                                <div class="matrix-size-line">
+                                    <div class="size-tag">@size</div>
+                                    <HqButton Variant="@variant"
+                                              Size="@size"
+                                              State="HqButtonVisualState.Disabled"
+                                              Shape="HqButtonShape.RoundedFull"
+                                              IconOnly="true"
+                                              IconCssClass="icon-menu" />
+                                </div>
+                            }
+                        }
+                    </div>
+                </div>
+            </div>
+        }
+    </section>
+</div>
+
+@code {
+    private readonly HqButtonVariant[] Variants = [
+        HqButtonVariant.Primary,
+        HqButtonVariant.Secondary,
+        HqButtonVariant.Outline,
+        HqButtonVariant.Ghost
+    ];
+
+    private readonly HqButtonSize[] Sizes = [
+        HqButtonSize.Md,
+        HqButtonSize.Sm,
+        HqButtonSize.Xs
+    ];
+
+    private static HqButtonShape GetBaseShape(HqButtonVariant variant) =>
+        variant == HqButtonVariant.Ghost ? HqButtonShape.None : HqButtonShape.RoundedMedium;
+
+    private static bool SupportsRoundedFull(HqButtonVariant variant) =>
+        variant is HqButtonVariant.Primary or HqButtonVariant.Secondary or HqButtonVariant.Outline;
+}
