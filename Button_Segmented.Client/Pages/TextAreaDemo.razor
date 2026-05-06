@@ -1,0 +1,11 @@
+@page "/text-area-demo"
+@inject NavigationManager NavigationManager
+
+<PageTitle>Text Area Demo</PageTitle>
+
+@code {
+    protected override void OnInitialized()
+    {
+        NavigationManager.NavigateTo("/text-field-demo", replace: true);
+    }
+}

@@ -1,0 +1,76 @@
+/* ===== HqProgressKpi ===== */
+
+/* ── Status color overrides: applied to .hq-progress-circle-host (the outer span) ── */
+/* These rules are already in HqProgressCircle.razor.css — no duplication needed here */
+
+/* ── Circle type layout ── */
+.hq-progress-kpi--circle {
+    align-items: center;
+    display: inline-flex;
+    gap: var(--progress-kpi-gap);
+}
+
+/* ── Line type layout ── */
+.hq-progress-kpi--line {
+    display: flex;
+    flex-direction: column;
+    gap: var(--progress-kpi-info-gap);
+    width: 100%;
+}
+
+/* ── Info panels ── */
+.hq-progress-kpi__info--horizontal {
+    align-items: center;
+    display: flex;
+    gap: var(--spacing-3x);
+    justify-content: space-between;
+    width: 100%;
+}
+
+.hq-progress-kpi__info--vertical {
+    display: flex;
+    flex-direction: column;
+    gap: var(--progress-kpi-info-gap);
+}
+
+/* ── Typography ── */
+.hq-progress-kpi__desc {
+    color: var(--progress-kpi-desc-color);
+    font-family: var(--font-family-base);
+    font-size: var(--text-label-lg-size);
+    font-weight: 400;
+    letter-spacing: var(--font-letter-spacing);
+    line-height: var(--text-label-lg-lh);
+}
+
+.hq-progress-kpi__value {
+    align-items: center;
+    display: flex;
+    font-family: var(--font-family-base);
+    font-size: var(--text-body-lg-size);
+    font-weight: 700;
+    gap: var(--spacing-2x);
+    letter-spacing: var(--font-letter-spacing);
+    line-height: var(--text-body-lg-lh);
+}
+
+.hq-progress-kpi__pct {
+    color: var(--color-on-surface);
+    font-family: var(--font-family-base);
+    font-size: var(--text-label-lg-size);
+    font-weight: 400;
+    letter-spacing: var(--font-letter-spacing);
+    line-height: var(--text-label-lg-lh);
+}
+
+/* Status: only current value in circle KPI is status-colored */
+.hq-progress-kpi--default .hq-progress-kpi__current    { color: var(--progress-kpi-value-color-default); }
+.hq-progress-kpi--stressful .hq-progress-kpi__current  { color: var(--progress-kpi-value-color-stressful); }
+.hq-progress-kpi--careful .hq-progress-kpi__current    { color: var(--progress-kpi-value-color-careful); }
+.hq-progress-kpi--positive .hq-progress-kpi__current   { color: var(--progress-kpi-value-color-positive); }
+
+/* sep + max are always secondary text */
+.hq-progress-kpi__sep,
+.hq-progress-kpi__max {
+    color: var(--color-on-surface);
+}

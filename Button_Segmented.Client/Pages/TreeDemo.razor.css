@@ -1,0 +1,46 @@
+/* ===== Tree Demo page layout ===== */
+.demo-title {
+    font-family: var(--font-family-base);
+    font-size: 28px;
+    font-weight: 600;
+    letter-spacing: var(--font-letter-spacing);
+    color: var(--color-on-surface);
+    margin: 0 0 4px;
+}
+
+.demo-subtitle {
+    font-family: var(--font-family-base);
+    font-size: 14px;
+    color: var(--color-on-surface-1);
+    letter-spacing: var(--font-letter-spacing);
+    margin: 0 0 32px;
+}
+
+.demo-section {
+    margin-bottom: 40px;
+}
+
+.demo-section-title {
+    font-family: var(--font-family-base);
+    font-size: 18px;
+    font-weight: 600;
+    letter-spacing: var(--font-letter-spacing);
+    color: var(--color-on-surface);
+    margin: 0 0 4px;
+}
+
+.demo-section-desc {
+    font-family: var(--font-family-base);
+    font-size: 14px;
+    color: var(--color-on-surface-1);
+    letter-spacing: var(--font-letter-spacing);
+    margin: 0 0 16px;
+}
+
+.demo-card {
+    background: var(--color-surface);
+    border: 1px solid var(--color-outline-1);
+    border-radius: var(--radius-6x);
+    padding: 16px;
+    max-width: 400px;
+}

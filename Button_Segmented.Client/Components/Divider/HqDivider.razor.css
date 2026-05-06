@@ -1,0 +1,50 @@
+.hq-divider-host {
+    display: flex;
+    flex-shrink: 0;
+}
+
+.hq-divider-host--horizontal {
+    width: 100%;
+}
+
+.hq-divider-host--vertical {
+    align-self: stretch;
+    height: 100%;
+}
+
+::deep .hq-divider.mud-divider {
+    --hq-divider-color: var(--divider-color);
+    border-color: var(--hq-divider-color);
+    margin: 0;
+    opacity: 1;
+}
+
+::deep .hq-divider.mud-divider:not(.mud-divider-vertical) {
+    border-top-width: var(--divider-weight);
+    width: 100%;
+}
+
+::deep .hq-divider.mud-divider.mud-divider-vertical {
+    align-self: stretch;
+    border-left-width: var(--divider-weight);
+    height: 100%;
+}
+
+/* Dashed: exact Figma pattern 4px dash + 4px gap */
+::deep .hq-divider--dashed.mud-divider:not(.mud-divider-vertical) {
+    border-top-style: dashed;
+    border-image: repeating-linear-gradient(
+        90deg,
+        var(--hq-divider-color) 0 4px,
+        transparent 4px 8px
+    ) 1;
+}
+
+::deep .hq-divider--dashed.mud-divider.mud-divider-vertical {
+    border-left-style: dashed;
+    border-image: repeating-linear-gradient(
+        180deg,
+        var(--hq-divider-color) 0 4px,
+        transparent 4px 8px
+    ) 1;
+}

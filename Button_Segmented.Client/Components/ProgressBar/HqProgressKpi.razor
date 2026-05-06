@@ -1,0 +1,67 @@
+@namespace Button_Segmented.Client.Components.ProgressBar
+
+@* KPI widget — type=circle: [circle] [vertical info] | type=line: [info] [line bar] *@
+
+<div class="@RootClass" style="@Style">
+    @if (Type == HqProgressKpiType.Circle)
+    {
+        @* Circle: progress circle on the left, vertical info on the right *@
+        <HqProgressCircle Size="HqProgressCircleSize.Md"
+                          Progress="@PercentInt"
+                          Class="@CircleStatusClass" />
+
+        <div class="hq-progress-kpi__info hq-progress-kpi__info--vertical">
+            @if (!string.IsNullOrWhiteSpace(Description))
+            {
+                <span class="hq-progress-kpi__desc">@Description</span>
+            }
+            <span class="hq-progress-kpi__value">
+                <span class="hq-progress-kpi__current">@Value</span>
+                <span class="hq-progress-kpi__sep">/</span>
+                <span class="hq-progress-kpi__max">@Max</span>
+            </span>
+        </div>
+    }
+    else
+    {
+        @* Line: Progress line component with built-in info row *@
+        <HqProgressLine Value="@Value"
+                        Max="@Max"
+                        Status="@Status"
+                        Size="HqProgressLineSize.Md"
+                        ShowInfo="true"
+                        Description="@Description"
+                        Label="@($"{PercentInt}%")" />
+    }
+</div>
+
+@code {
+    [Parameter] public HqProgressKpiType Type { get; set; } = HqProgressKpiType.Circle;
+    [Parameter] public HqProgressStatus Status { get; set; } = HqProgressStatus.Default;
+    [Parameter] public int Value { get; set; }
+    [Parameter] public int Max { get; set; } = 100;
+    [Parameter] public string? Description { get; set; }
+    [Parameter] public string? Class { get; set; }
+    [Parameter] public string? Style { get; set; }
+
+    private int ClampedValue => Math.Clamp(Value, 0, Math.Max(Max, 1));
+    private int PercentInt => Max <= 0 ? 0 : (int)Math.Round(ClampedValue * 100.0 / Max);
+
+    private string RootClass => string.Join(" ",
+        new[]
+        {
+            "hq-progress-kpi",
+            $"hq-progress-kpi--{Type.ToString().ToLowerInvariant()}",
+            $"hq-progress-kpi--{Status.ToString().ToLowerInvariant()}",
+            Class
+        }.Where(c => !string.IsNullOrWhiteSpace(c)));
+
+    /// <summary>Override the circle's color via the --hq-progress-circle-color CSS variable.</summary>
+    private string CircleStatusClass => Status switch
+    {
+        HqProgressStatus.Stressful => "hq-progress-circle--status-stressful",
+        HqProgressStatus.Careful   => "hq-progress-circle--status-careful",
+        HqProgressStatus.Positive  => "hq-progress-circle--status-positive",
+        _                          => "hq-progress-circle--status-default"
+    };
+}

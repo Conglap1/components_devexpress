@@ -1,0 +1,81 @@
+.text-field-demo {
+    color: var(--color-on-surface);
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-12x);
+    padding: var(--spacing-12x);
+}
+
+.text-field-demo .demo-section {
+    background: var(--color-surface);
+    border: 1px solid var(--color-outline-1);
+    border-radius: var(--radius-6x);
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-8x);
+    max-width: 960px;
+    padding: var(--spacing-8x);
+}
+
+.section-heading {
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-2x);
+}
+
+.text-field-demo h2 {
+    font-size: var(--text-title-md-size);
+    line-height: var(--text-title-md-lh);
+    margin: 0;
+}
+
+.text-field-demo p {
+    color: var(--color-on-surface-1);
+    font-size: var(--text-body-md-size);
+    line-height: var(--text-body-md-lh);
+    margin: 0;
+}
+
+.demo-columns {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--spacing-12x);
+}
+
+.demo-columns--text-area {
+    max-width: 620px;
+}
+
+.demo-column {
+    border: 1px dashed var(--color-outline-2);
+    border-radius: var(--radius-6x);
+    display: flex;
+    flex: 1 1 364px;
+    flex-direction: column;
+    gap: var(--spacing-6x);
+    max-width: 364px;
+    padding: var(--spacing-6x);
+}
+
+.demo-column h3 {
+    font-size: var(--text-label-lg-size);
+    line-height: var(--text-label-lg-lh);
+    margin: 0;
+}
+
+.sample-label {
+    color: var(--color-on-surface-1);
+    font-size: var(--text-label-md-size);
+    line-height: var(--text-label-md-lh);
+}
+
+.text-field-sample {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-3x);
+}
+
+.text-area-sample {
+    width: 100%;
+}

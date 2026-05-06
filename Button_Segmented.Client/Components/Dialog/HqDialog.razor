@@ -1,0 +1,158 @@
+@namespace Button_Segmented.Client.Components.Dialog
+
+<DxPopup CssClass="@RootCssClass"
+         Visible="@Visible"
+         VisibleChanged="@HandleVisibleChanged"
+         CloseOnOutsideClick="@CloseOnOutsideClick"
+         ShowCloseButton="false"
+         ShowHeader="false"
+         ShowFooter="false"
+         Width="@DialogWidth"
+         MinWidth="@DialogWidth"
+         MaxWidth="@DialogWidth"
+         BodyCssClass="hq-dialog__body-host">
+    <BodyContentTemplate>
+        <div class="hq-dialog__panel">
+
+            @* Header *@
+            <div class="hq-dialog__header" role="heading" aria-level="2">
+                @if (!string.IsNullOrEmpty(PrefixIconClass))
+                {
+                    <i class="hq-dialog__prefix-icon @PrefixIconClass" aria-hidden="true"></i>
+                }
+
+                <span class="hq-dialog__title">@Title</span>
+
+                <button class="hq-dialog__close-btn"
+                        type="button"
+                        aria-label="Đóng"
+                        @onclick="CloseDialog">
+                    <i class="fa-solid fa-xmark" aria-hidden="true"></i>
+                </button>
+            </div>
+
+            @* Content *@
+            <div class="hq-dialog__content">
+                @ChildContent
+            </div>
+
+            @* Footer (optional) *@
+            @if (HasFooter)
+            {
+                <div class="hq-dialog__footer">
+                    @if (FooterLeftContent != null)
+                    {
+                        <div class="hq-dialog__footer-left">
+                            @FooterLeftContent
+                        </div>
+                    }
+                    <div class="hq-dialog__footer-right">
+                        @if (FooterContent != null)
+                        {
+                            @FooterContent
+                        }
+                        else
+                        {
+                            <HqButton Text="@(CancelText ?? "Cancel")"
+                                      Variant="HqButtonVariant.Secondary"
+                                      Size="HqButtonSize.Sm"
+                                      Click="HandleCancel" />
+                            <HqButton Text="@(ConfirmText ?? "Save")"
+                                      Variant="HqButtonVariant.Primary"
+                                      Size="HqButtonSize.Sm"
+                                      Click="HandleConfirm" />
+                        }
+                    </div>
+                </div>
+            }
+
+        </div>
+    </BodyContentTemplate>
+</DxPopup>
+
+@code {
+    /// <summary>Hiển thị / ẩn dialog.</summary>
+    [Parameter] public bool Visible { get; set; }
+    [Parameter] public EventCallback<bool> VisibleChanged { get; set; }
+
+    /// <summary>Tiêu đề hiển thị trong header.</summary>
+    [Parameter] public string? Title { get; set; }
+
+    /// <summary>CSS class Font Awesome cho icon prefix trong header, ví dụ "fa-solid fa-circle-check".</summary>
+    [Parameter] public string? PrefixIconClass { get; set; }
+
+    /// <summary>Nội dung chính của dialog.</summary>
+    [Parameter] public RenderFragment? ChildContent { get; set; }
+
+    /// <summary>Có hiển thị footer không (mặc định: true).</summary>
+    [Parameter] public bool HasFooter { get; set; } = true;
+
+    /// <summary>Nội dung footer tuỳ chỉnh — khi set, sẽ thay thế nút Cancel/Confirm mặc định.</summary>
+    [Parameter] public RenderFragment? FooterContent { get; set; }
+
+    /// <summary>Nội dung phần bên trái của footer (tuỳ chọn).</summary>
+    [Parameter] public RenderFragment? FooterLeftContent { get; set; }
+
+    /// <summary>Label nút Cancel (mặc định: "Cancel").</summary>
+    [Parameter] public string? CancelText { get; set; }
+
+    /// <summary>Label nút Confirm/Save (mặc định: "Save").</summary>
+    [Parameter] public string? ConfirmText { get; set; }
+
+    /// <summary>Kích thước dialog: Sm=432px, Md=504px, Lg=720px, Xl=1152px.</summary>
+    [Parameter] public HqDialogSize Size { get; set; } = HqDialogSize.Md;
+
+    /// <summary>Cho phép đóng khi click bên ngoài (mặc định: true).</summary>
+    [Parameter] public bool CloseOnOutsideClick { get; set; } = true;
+
+    /// <summary>CSS class bổ sung cho root.</summary>
+    [Parameter] public string? Class { get; set; }
+
+    /// <summary>Callback khi nhấn nút Cancel hoặc close.</summary>
+    [Parameter] public EventCallback Cancel { get; set; }
+
+    /// <summary>Callback khi nhấn nút Confirm/Save.</summary>
+    [Parameter] public EventCallback Confirm { get; set; }
+
+    private string DialogWidth => Size switch
+    {
+        HqDialogSize.Sm => "432px",
+        HqDialogSize.Md => "504px",
+        HqDialogSize.Lg => "720px",
+        HqDialogSize.Xl => "1152px",
+        _ => "504px"
+    };
+
+    private string RootCssClass => string.Join(" ",
+        "hq-dialog",
+        $"hq-dialog--{Size.ToString().ToLowerInvariant()}",
+        Class ?? string.Empty).Trim();
+
+    private async Task HandleVisibleChanged(bool visible)
+    {
+        if (VisibleChanged.HasDelegate)
+            await VisibleChanged.InvokeAsync(visible);
+    }
+
+    private async Task CloseDialog()
+    {
+        if (Cancel.HasDelegate)
+            await Cancel.InvokeAsync();
+        if (VisibleChanged.HasDelegate)
+            await VisibleChanged.InvokeAsync(false);
+    }
+
+    private async Task HandleCancel()
+    {
+        if (Cancel.HasDelegate)
+            await Cancel.InvokeAsync();
+        if (VisibleChanged.HasDelegate)
+            await VisibleChanged.InvokeAsync(false);
+    }
+
+    private async Task HandleConfirm()
+    {
+        if (Confirm.HasDelegate)
+            await Confirm.InvokeAsync();
+    }
+}

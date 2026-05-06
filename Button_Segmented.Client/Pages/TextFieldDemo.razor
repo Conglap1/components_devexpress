@@ -1,0 +1,211 @@
+@page "/text-field-demo"
+
+<PageTitle>Text Field, Text Area & Combobox Demo</PageTitle>
+
+<div class="text-field-demo">
+    <section class="demo-section">
+        <div class="section-heading">
+            <h2>Text field</h2>
+            <p>Gộp chung phần textbox, select và text area, chỉ giữ 2 trạng thái: enabled và disabled.</p>
+        </div>
+
+        <div class="demo-columns">
+            <section class="demo-column">
+                <h3>Enabled</h3>
+
+                <div class="text-field-sample">
+                    <div class="sample-label">Size md</div>
+                    <HqTextField Label="Label"
+                                 HasRequired="true"
+                                 Placeholder="Text"
+                                 SupportingText="Supporting text"
+                                 State="HqTextFieldState.Enabled"
+                                 Size="HqTextFieldSize.Md" />
+                </div>
+
+                <div class="text-field-sample">
+                    <div class="sample-label">Size sm</div>
+                    <HqTextField Label="Label"
+                                 HasRequired="true"
+                                 Placeholder="Text"
+                                 SupportingText="Supporting text"
+                                 State="HqTextFieldState.Enabled"
+                                 Size="HqTextFieldSize.Sm" />
+                </div>
+            </section>
+
+            <section class="demo-column">
+                <h3>Validation (nhập thử)</h3>
+
+                <div class="text-field-sample">
+                    <div class="sample-label">Chỉ cho phép số — nhập chữ sẽ báo lỗi</div>
+                    <HqTextField Label="Số điện thoại"
+                                 HasRequired="true"
+                                 Placeholder="Nhập số..."
+                                 SupportingText="@_phoneSupporting"
+                                 State="@_phoneState"
+                                 Size="HqTextFieldSize.Md"
+                                 Value="@_phoneValue"
+                                 ValueChanged="OnPhoneChanged" />
+                </div>
+            </section>
+
+            <section class="demo-column">
+                <h3>Disabled</h3>
+
+                <div class="text-field-sample">
+                    <div class="sample-label">Size md</div>
+                    <HqTextField Label="Label"
+                                 HasRequired="true"
+                                 Placeholder="Text"
+                                 SupportingText="Supporting text"
+                                 State="HqTextFieldState.Disabled"
+                                 Size="HqTextFieldSize.Md" />
+                </div>
+
+                <div class="text-field-sample">
+                    <div class="sample-label">Size sm</div>
+                    <HqTextField Label="Label"
+                                 HasRequired="true"
+                                 Placeholder="Text"
+                                 SupportingText="Supporting text"
+                                 State="HqTextFieldState.Disabled"
+                                 Size="HqTextFieldSize.Sm" />
+                </div>
+            </section>
+        </div>
+    </section>
+
+    <section class="demo-section">
+        <div class="section-heading">
+            <h2>Text area</h2>
+            <p>Giữ cùng nguyên tắc hiển thị: chỉ demo enabled và disabled.</p>
+        </div>
+
+        <div class="demo-columns demo-columns--text-area">
+            <section class="demo-column">
+                <h3>Enabled</h3>
+
+                <div class="text-area-sample">
+                    <HqTextArea Label="Label"
+                                HasRequired="true"
+                                Placeholder="Text"
+                                SupportingText="Supporting text"
+                                State="HqTextAreaState.Enabled"
+                                Value=""
+                                MaxLength="300" />
+                </div>
+            </section>
+
+            <section class="demo-column">
+                <h3>Disabled</h3>
+
+                <div class="text-area-sample">
+                    <HqTextArea Label="Label"
+                                HasRequired="true"
+                                Placeholder="Text"
+                                SupportingText="Supporting text"
+                                State="HqTextAreaState.Disabled"
+                                Value=""
+                                MaxLength="300" />
+                </div>
+            </section>
+        </div>
+    </section>
+
+    <section class="demo-section">
+        <div class="section-heading">
+            <h2>Combobox (Select)</h2>
+            <p>Combobox theo cùng kiểu visual với Text field: viền bo tròn, focus xanh, error đỏ, disabled xám.</p>
+        </div>
+
+        <div class="demo-columns">
+            <section class="demo-column">
+                <h3>Enabled</h3>
+
+                <div class="text-field-sample">
+                    <div class="sample-label">Size md — placeholder</div>
+                    <HqComboBox Label="Label"
+                                HasRequired="true"
+                                Placeholder="Select an option"
+                                SupportingText="Supporting text"
+                                Items="ComboItems" />
+                </div>
+
+                <div class="text-field-sample">
+                    <div class="sample-label">Size md — filled</div>
+                    <HqComboBox Label="Label"
+                                HasRequired="true"
+                                Placeholder="Select an option"
+                                SupportingText="Supporting text"
+                                Items="ComboItems"
+                                Value="Option 1" />
+                </div>
+
+                <div class="text-field-sample">
+                    <div class="sample-label">Size sm</div>
+                    <HqComboBox Label="Label"
+                                HasRequired="true"
+                                Placeholder="Select an option"
+                                SupportingText="Supporting text"
+                                Size="HqTextFieldSize.Sm"
+                                Items="ComboItems" />
+                </div>
+            </section>
+
+            <section class="demo-column">
+                <h3>Disabled</h3>
+
+                <div class="text-field-sample">
+                    <div class="sample-label">Disabled (empty)</div>
+                    <HqComboBox Label="Label"
+                                HasRequired="true"
+                                Placeholder="Select an option"
+                                SupportingText="Supporting text"
+                                Disabled="true"
+                                Items="ComboItems" />
+                </div>
+
+                <div class="text-field-sample">
+                    <div class="sample-label">Disabled (filled)</div>
+                    <HqComboBox Label="Label"
+                                HasRequired="true"
+                                Placeholder="Select an option"
+                                SupportingText="Supporting text"
+                                Disabled="true"
+                                Items="ComboItems"
+                                Value="Option 1" />
+                </div>
+            </section>
+        </div>
+    </section>
+</div>
+
+@code {
+    private string? _phoneValue;
+    private HqTextFieldState _phoneState = HqTextFieldState.Enabled;
+    private string _phoneSupporting = "Chỉ nhập số 0-9";
+
+    private void OnPhoneChanged(string? value)
+    {
+        _phoneValue = value;
+        if (!string.IsNullOrEmpty(value) && !System.Text.RegularExpressions.Regex.IsMatch(value, @"^\d*$"))
+        {
+            _phoneState = HqTextFieldState.Error;
+            _phoneSupporting = "Chỉ được nhập số, không được nhập chữ";
+        }
+        else
+        {
+            _phoneState = HqTextFieldState.Enabled;
+            _phoneSupporting = "Chỉ nhập số 0-9";
+        }
+    }
+
+    private static readonly IReadOnlyList<string> ComboItems = [
+        "Option 1",
+        "Option 2",
+        "Option 3",
+        "Option 4",
+        "Option 5"
+    ];
+}

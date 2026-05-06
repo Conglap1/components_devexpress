@@ -1,0 +1,107 @@
+/* ===== Track (container) ===== */
+.hq-seg {
+    align-items: stretch;
+    background: var(--segmented-track-bg);
+    border-radius: var(--segmented-radius);
+    display: inline-flex;
+    gap: var(--segmented-gap);
+    padding: var(--segmented-track-padding);
+    width: fit-content;
+}
+
+.hq-seg--full-width {
+    display: flex;
+    width: 100%;
+}
+
+.hq-seg--full-width .hq-seg-item {
+    flex: 1 1 0;
+}
+
+.hq-seg--disabled {
+    cursor: not-allowed;
+    opacity: var(--segmented-disabled-opacity);
+    pointer-events: none;
+}
+
+/* ===== Item (button) ===== */
+.hq-seg-item {
+    align-items: center;
+    appearance: none;
+    background: transparent;
+    border: none;
+    border-radius: var(--segmented-radius);
+    color: var(--segmented-text-color);
+    column-gap: var(--spacing-4x);
+    cursor: pointer;
+    display: inline-flex;
+    font-family: var(--font-family-base);
+    justify-content: center;
+    line-height: 1;
+    margin: 0;
+    outline: none;
+    transition: background-color 0.15s ease, color 0.15s ease;
+}
+
+/* Size: md */
+.hq-seg--md .hq-seg-item {
+    font-size: var(--segmented-md-font-size);
+    height: var(--segmented-md-item-height);
+    min-width: var(--segmented-md-min-width);
+    padding: var(--segmented-md-padding-y) var(--segmented-md-padding-x);
+}
+
+/* Size: sm */
+.hq-seg--sm .hq-seg-item {
+    font-size: var(--segmented-sm-font-size);
+    height: var(--segmented-sm-item-height);
+    min-width: var(--segmented-sm-min-width);
+    padding: var(--segmented-sm-padding-y) var(--segmented-sm-padding-x);
+}
+
+/* Selected state */
+.hq-seg-item--selected {
+    background: var(--segmented-selected-bg);
+    color: var(--segmented-selected-text-color);
+}
+
+/* Hover — unselected only */
+.hq-seg-item:not(.hq-seg-item--selected):hover {
+    background: var(--segmented-hover-bg);
+}
+
+/* Pressed — unselected only */
+.hq-seg-item:not(.hq-seg-item--selected):active {
+    background: var(--segmented-pressed-bg);
+}
+
+/* Selected stays stable on hover/active */
+.hq-seg-item--selected:hover,
+.hq-seg-item--selected:active {
+    background: var(--segmented-selected-bg);
+    color: var(--segmented-selected-text-color);
+}
+
+/* Disabled item */
+.hq-seg-item:disabled {
+    cursor: not-allowed;
+    opacity: var(--segmented-disabled-opacity);
+    pointer-events: none;
+}
+
+/* ===== Icon ===== */
+.hq-seg-item__icon {
+    flex-shrink: 0;
+    height: 16px;
+    width: 16px;
+}
+
+.hq-seg--sm .hq-seg-item__icon {
+    height: 14px;
+    width: 14px;
+}
+
+/* ===== Label ===== */
+.hq-seg-item__label {
+    white-space: nowrap;
+}

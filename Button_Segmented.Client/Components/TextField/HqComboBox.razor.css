@@ -1,0 +1,211 @@
+/* ===== HqComboBox — Host layout ===== */
+.hq-combo-box-host {
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-4x);
+    min-width: 0;
+}
+
+.hq-combo-box-host--sm {
+    gap: var(--spacing-3x);
+}
+
+/* ===== Label ===== */
+.hq-combo-box__label-row {
+    align-items: center;
+    display: flex;
+}
+
+.hq-combo-box__label {
+    align-items: center;
+    color: var(--color-on-surface);
+    display: inline-flex;
+    font-family: var(--font-family-base);
+    font-size: var(--text-label-lg-size);
+    font-weight: 400;
+    gap: var(--spacing-3x);
+    letter-spacing: var(--font-letter-spacing);
+    line-height: var(--text-label-lg-lh);
+}
+
+.hq-combo-box__label.is-disabled {
+    color: var(--color-on-surface-2);
+}
+
+.hq-combo-box__required {
+    color: var(--color-stressful);
+}
+
+/* ===== Shell — same shape as HqTextField ===== */
+.hq-combo-box__shell {
+    --hq-cb-bg: var(--color-surface);
+    --hq-cb-border: var(--color-outline);
+    --hq-cb-value: var(--color-on-surface);
+    --hq-cb-placeholder: var(--color-on-surface-2);
+    --hq-cb-icon: var(--color-on-surface-2);
+    align-items: center;
+    background: var(--hq-cb-bg);
+    border: 1px solid var(--hq-cb-border);
+    border-radius: var(--radius-6x);
+    box-sizing: border-box;
+    display: flex;
+    min-width: 0;
+    transition: border-color .15s ease, background-color .15s ease;
+}
+
+/* Size md */
+.hq-combo-box__shell--md {
+    height: var(--text-field-height-md);
+}
+
+/* Size sm */
+.hq-combo-box__shell--sm {
+    height: var(--text-field-height-sm);
+}
+
+/* State: focused (native focus-within) */
+.hq-combo-box__shell:focus-within {
+    --hq-cb-border: var(--color-useful);
+}
+
+/* State: disabled */
+.hq-combo-box__shell.is-disabled {
+    --hq-cb-bg: var(--color-surface-1);
+    --hq-cb-border: var(--color-outline-1);
+    --hq-cb-value: var(--color-on-surface-2);
+    --hq-cb-placeholder: var(--color-on-surface-2);
+    --hq-cb-icon: var(--color-on-surface-2);
+    cursor: not-allowed;
+    pointer-events: none;
+}
+
+/* ===== Flatten internal DxComboBox ===== */
+::deep .hq-combo-box__editor.dxbl-text-edit,
+::deep .hq-combo-box__editor.dxbl-text-edit.dxbl-focused,
+::deep .hq-combo-box__editor.dxbl-text-edit.dx-state-focused,
+::deep .hq-combo-box__editor.dxbl-text-edit:focus-within,
+::deep .hq-combo-box__editor.dxbl-text-edit.dxbl-invalid {
+    background: transparent !important;
+    border: 0 !important;
+    border-color: transparent !important;
+    box-shadow: none !important;
+    color: var(--hq-cb-value);
+    font-family: var(--font-family-base);
+    font-size: var(--text-body-lg-size);
+    font-weight: 400;
+    gap: var(--spacing-6x);
+    letter-spacing: var(--font-letter-spacing);
+    line-height: var(--text-body-lg-lh);
+    outline: none !important;
+    padding: 0 !important;
+    padding-left: var(--text-field-padding-x-md) !important;
+    width: 100%;
+}
+
+::deep .hq-combo-box__shell--sm .hq-combo-box__editor.dxbl-text-edit {
+    font-size: var(--text-body-md-size);
+    gap: var(--spacing-4x);
+    line-height: var(--text-body-md-lh);
+    padding: 0 !important;
+    padding-left: var(--text-field-padding-x-sm) !important;
+}
+
+/* Hide DX pseudo-elements */
+::deep .hq-combo-box__editor.dxbl-text-edit::before,
+::deep .hq-combo-box__editor.dxbl-text-edit::after {
+    display: none !important;
+}
+
+/* Input element */
+::deep .hq-combo-box__editor.dxbl-text-edit > .dxbl-text-edit-input,
+::deep .hq-combo-box__editor.dxbl-text-edit input.dxbl-text-edit-input {
+    background: transparent !important;
+    border: 0 !important;
+    box-shadow: none !important;
+    color: inherit;
+    cursor: pointer;
+    font: inherit;
+    letter-spacing: inherit;
+    line-height: inherit;
+    outline: none !important;
+    padding: 0 !important;
+}
+
+::deep .hq-combo-box__editor.dxbl-text-edit > .dxbl-text-edit-input:focus,
+::deep .hq-combo-box__editor.dxbl-text-edit > .dxbl-text-edit-input:focus-visible,
+::deep .hq-combo-box__editor.dxbl-text-edit > .dxbl-text-edit-input:hover {
+    background: transparent !important;
+    border: 0 !important;
+    box-shadow: none !important;
+    outline: none !important;
+}
+
+::deep .hq-combo-box__editor.dxbl-text-edit > .dxbl-text-edit-input::placeholder {
+    color: var(--hq-cb-placeholder);
+    opacity: 1;
+}
+
+/* Dropdown & clear buttons — kill ALL DX default borders */
+::deep .hq-combo-box__editor.dxbl-text-edit .dxbl-btn-container {
+    background: transparent !important;
+    border: 0 !important;
+    border-left: 0 !important;
+    border-inline-start: 0 !important;
+    margin: 0 !important;
+    padding: 0 !important;
+}
+
+::deep .hq-combo-box__editor.dxbl-text-edit .dxbl-edit-btn {
+    align-items: center;
+    background: transparent !important;
+    border: 0 !important;
+    border-left: 0 !important;
+    border-inline-start: 0 !important;
+    border-radius: 0 !important;
+    box-shadow: none !important;
+    color: var(--hq-cb-icon) !important;
+    display: inline-flex;
+    justify-content: center;
+    margin: 0 !important;
+    min-width: auto;
+    padding: 0 var(--text-field-padding-x-md) 0 0 !important;
+}
+
+::deep .hq-combo-box__editor.dxbl-text-edit .dxbl-edit-btn::before,
+::deep .hq-combo-box__editor.dxbl-text-edit .dxbl-edit-btn::after,
+::deep .hq-combo-box__editor.dxbl-text-edit .dxbl-btn-container::before,
+::deep .hq-combo-box__editor.dxbl-text-edit .dxbl-btn-container::after {
+    display: none !important;
+    border: 0 !important;
+}
+
+::deep .hq-combo-box__editor.dxbl-text-edit .dxbl-edit-btn:hover:not(.dxbl-disabled):not(:disabled) {
+    background: transparent !important;
+    color: var(--color-on-surface) !important;
+}
+
+::deep .hq-combo-box__editor.dxbl-text-edit .dxbl-edit-btn .dxbl-image,
+::deep .hq-combo-box__editor.dxbl-text-edit .dxbl-edit-btn svg {
+    color: inherit !important;
+    height: var(--text-field-icon-size-md);
+    opacity: 1 !important;
+    width: var(--text-field-icon-size-md);
+}
+
+::deep .hq-combo-box__shell--sm .hq-combo-box__editor.dxbl-text-edit .dxbl-edit-btn .dxbl-image,
+::deep .hq-combo-box__shell--sm .hq-combo-box__editor.dxbl-text-edit .dxbl-edit-btn svg {
+    height: var(--text-field-icon-size-sm);
+    width: var(--text-field-icon-size-sm);
+}
+
+/* ===== Supporting text ===== */
+.hq-combo-box__supporting-text {
+    color: var(--color-on-surface-1);
+    font-family: var(--font-family-base);
+    font-size: var(--text-label-md-size);
+    letter-spacing: var(--font-letter-spacing);
+    line-height: var(--text-label-md-lh);
+    min-height: var(--text-label-md-lh);
+}
+
+

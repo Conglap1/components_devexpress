@@ -1,0 +1,224 @@
+@page "/tree-demo"
+@namespace Button_Segmented.Client.Pages
+
+<PageTitle>Tree Demo</PageTitle>
+
+<h2 class="demo-title">Tree Demo</h2>
+<p class="demo-subtitle">HqTreeView — Wraps DxTreeView with HQSOFT Design System styling.</p>
+
+@* ===== Section 1: Checkbox mode (no icons) ===== *@
+<section class="demo-section">
+    <h3 class="demo-section-title">Checkbox mode (no icons)</h3>
+    <p class="demo-section-desc">Matches popup tree usage in Companies → Geography / SalesChannel selection.</p>
+
+    <div class="demo-card">
+        <HqTreeView Data="@_geographyData"
+                     ShowCheckboxes="true"
+                     IconMode="HqTreeIconMode.None" />
+    </div>
+</section>
+
+@* ===== Section 2: Folder icon mode ===== *@
+<section class="demo-section">
+    <h3 class="demo-section-title">Folder icon mode</h3>
+    <p class="demo-section-desc">Each node shows folder (collapsed) / folder-open (expanded) / file-data (leaf) icon.</p>
+
+    <div class="demo-card">
+        <HqTreeView Data="@_salesChannelData"
+                     ShowCheckboxes="true"
+                     IconMode="HqTreeIconMode.Folder" />
+    </div>
+</section>
+
+@* ===== Section 3: No checkboxes — selectable ===== *@
+<section class="demo-section">
+    <h3 class="demo-section-title">Selection mode (no checkboxes)</h3>
+    <p class="demo-section-desc">Navigation tree: click to select, no checkboxes. Matches sidebar tree usage.</p>
+
+    <div class="demo-card">
+        <HqTreeView Data="@_companyTreeData"
+                     ShowCheckboxes="false"
+                     AllowSelectNodes="true"
+                     IconMode="HqTreeIconMode.Folder" />
+    </div>
+</section>
+
+@* ===== Section 4: Disabled items ===== *@
+<section class="demo-section">
+    <h3 class="demo-section-title">Disabled items</h3>
+    <p class="demo-section-desc">Some nodes are disabled (non-interactive, grayed out).</p>
+
+    <div class="demo-card">
+        <HqTreeView Data="@_disabledData"
+                     ShowCheckboxes="true"
+                     IconMode="HqTreeIconMode.Folder" />
+    </div>
+</section>
+
+@code {
+    // ── Geography-like hierarchy (checkbox mode, no icons) ──
+    private List<HqTreeNode> _geographyData = new()
+    {
+        new HqTreeNode
+        {
+            Key = "1", Text = "34 - 12414"
+        },
+        new HqTreeNode
+        {
+            Key = "2", Text = "345 - 123123"
+        },
+        new HqTreeNode
+        {
+            Key = "3", Text = "CHTC - Cửa Hàng Tự Chọn new",
+            Children = new()
+            {
+                new HqTreeNode { Key = "3-1", Text = "CHTC01 - Cửa hàng tự chọn 01" },
+                new HqTreeNode { Key = "3-2", Text = "CHTC3 - Cửa hàng tự chọn 3" },
+            }
+        },
+        new HqTreeNode
+        {
+            Key = "4", Text = "GT - General Trade",
+            Children = new()
+            {
+                new HqTreeNode
+                {
+                    Key = "4-1", Text = "GT02 - GT 02",
+                    Children = new()
+                    {
+                        new HqTreeNode { Key = "4-1-1", Text = "GT02_01 - GT02_01" },
+                        new HqTreeNode { Key = "4-1-2", Text = "GT03 - gt 03" },
+                        new HqTreeNode { Key = "4-1-3", Text = "GT04 - GT 04" },
+                    }
+                },
+                new HqTreeNode
+                {
+                    Key = "4-2", Text = "GT_100 - Wholesaler",
+                    Children = new()
+                    {
+                        new HqTreeNode { Key = "4-2-1", Text = "TH01 - Tạp hóa 01" },
+                        new HqTreeNode
+                        {
+                            Key = "4-2-2", Text = "TH02 - Tạp hóa 02",
+                            Children = new()
+                            {
+                                new HqTreeNode { Key = "4-2-2-1", Text = "THL - Tạp hóa lớn" },
+                            }
+                        },
+                    }
+                },
+                new HqTreeNode { Key = "4-3", Text = "GT_200 - Key" },
+                new HqTreeNode { Key = "4-4", Text = "GT_300 - Retailer" },
+                new HqTreeNode { Key = "4-5", Text = "GT_400 - Small Restaurant" },
+            }
+        },
+        new HqTreeNode
+        {
+            Key = "5", Text = "HRC - Nhà hàng, khách sạn",
+            Children = new()
+            {
+                new HqTreeNode { Key = "5-1", Text = "HRC01 - Nhà hàng cao cấp" },
+            }
+        },
+        new HqTreeNode { Key = "6", Text = "MOFD - MOFT" },
+        new HqTreeNode
+        {
+            Key = "7", Text = "NT - Nhà thầu",
+            Children = new()
+            {
+                new HqTreeNode { Key = "7-1", Text = "NT01 - Nhà thầu xây dựng" },
+            }
+        },
+        new HqTreeNode { Key = "8", Text = "SDL - Sỉ Đông Lạnh" },
+        new HqTreeNode { Key = "9", Text = "THC - Tạp Hoá Chợ" },
+    };
+
+    // ── SalesChannel-like hierarchy (folder icon mode) ──
+    private List<HqTreeNode> _salesChannelData = new()
+    {
+        new HqTreeNode
+        {
+            Key = "sc1", Text = "Direct Sales",
+            Children = new()
+            {
+                new HqTreeNode { Key = "sc1-1", Text = "Retail Stores" },
+                new HqTreeNode { Key = "sc1-2", Text = "Online Shop" },
+                new HqTreeNode
+                {
+                    Key = "sc1-3", Text = "Showroom",
+                    Children = new()
+                    {
+                        new HqTreeNode { Key = "sc1-3-1", Text = "Showroom Hà Nội" },
+                        new HqTreeNode { Key = "sc1-3-2", Text = "Showroom HCM" },
+                    }
+                },
+            }
+        },
+        new HqTreeNode
+        {
+            Key = "sc2", Text = "Distribution",
+            Children = new()
+            {
+                new HqTreeNode { Key = "sc2-1", Text = "Wholesale" },
+                new HqTreeNode { Key = "sc2-2", Text = "Key Accounts" },
+            }
+        },
+        new HqTreeNode { Key = "sc3", Text = "E-Commerce" },
+    };
+
+    // ── Company-like hierarchy (selection mode) ──
+    private List<HqTreeNode> _companyTreeData = new()
+    {
+        new HqTreeNode
+        {
+            Key = "c1", Text = "HQSOFT Corporation",
+            Children = new()
+            {
+                new HqTreeNode
+                {
+                    Key = "c1-1", Text = "HQSOFT Vietnam",
+                    Children = new()
+                    {
+                        new HqTreeNode { Key = "c1-1-1", Text = "HCM Branch" },
+                        new HqTreeNode { Key = "c1-1-2", Text = "Hanoi Branch" },
+                    }
+                },
+                new HqTreeNode { Key = "c1-2", Text = "HQSOFT Singapore" },
+                new HqTreeNode { Key = "c1-3", Text = "HQSOFT Japan" },
+            }
+        },
+        new HqTreeNode
+        {
+            Key = "c2", Text = "Partner Companies",
+            Children = new()
+            {
+                new HqTreeNode { Key = "c2-1", Text = "TechViet JSC" },
+                new HqTreeNode { Key = "c2-2", Text = "DigiSoft Ltd" },
+            }
+        },
+    };
+
+    // ── Disabled items demo ──
+    private List<HqTreeNode> _disabledData = new()
+    {
+        new HqTreeNode
+        {
+            Key = "d1", Text = "Enabled Parent",
+            Children = new()
+            {
+                new HqTreeNode { Key = "d1-1", Text = "Enabled Child" },
+                new HqTreeNode { Key = "d1-2", Text = "Disabled Child", IsDisabled = true },
+                new HqTreeNode { Key = "d1-3", Text = "Another Enabled" },
+            }
+        },
+        new HqTreeNode
+        {
+            Key = "d2", Text = "Disabled Parent", IsDisabled = true,
+            Children = new()
+            {
+                new HqTreeNode { Key = "d2-1", Text = "Child of Disabled" },
+            }
+        },
+        new HqTreeNode { Key = "d3", Text = "Enabled Leaf" },
+    };
+}

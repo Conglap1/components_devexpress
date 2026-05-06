@@ -1,0 +1,19 @@
+@namespace Button_Segmented.Client.Components.ListItem
+
+<div class="@RootClass" style="@Style">
+    <span class="hq-list-item-row__label">@Label</span>
+    <div class="hq-list-item-row__trailing">
+        @ChildContent
+    </div>
+</div>
+
+@code {
+    [Parameter] public string? Label { get; set; }
+    [Parameter] public RenderFragment? ChildContent { get; set; }
+    [Parameter] public string? Class { get; set; }
+    [Parameter] public string? Style { get; set; }
+
+    private string RootClass => string.IsNullOrWhiteSpace(Class)
+        ? "hq-list-item-row"
+        : $"hq-list-item-row {Class}";
+}

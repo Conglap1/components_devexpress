@@ -1,0 +1,78 @@
+@namespace Button_Segmented.Client.Components.TextField
+
+<div class="hq-combo-box-host @HostClass">
+    @if (HasLabel && !string.IsNullOrWhiteSpace(Label))
+    {
+        <div class="hq-combo-box__label-row">
+            <label class="hq-combo-box__label @(IsDisabledState ? "is-disabled" : null)">
+                <span>@Label</span>
+
+                @if (HasRequired)
+                {
+                    <span class="hq-combo-box__required" aria-hidden="true">*</span>
+                }
+            </label>
+        </div>
+    }
+
+    <div class="@GetShellClass()">
+        <DxComboBox TData="string" TValue="string"
+                    Data="@Items"
+                    CssClass="hq-combo-box__editor"
+                    NullText="@Placeholder"
+                    Value="@Value"
+                    ValueChanged="HandleValueChanged"
+                    AllowUserInput="false"
+                    Enabled="@IsEnabled"
+                    DropDownWidthMode="DropDownWidthMode.EditorWidth"
+                    ClearButtonDisplayMode="@ClearButtonDisplayMode" />
+    </div>
+
+    @if (HasSupportingText)
+    {
+        <div class="hq-combo-box__supporting-text">
+            @SupportingText
+        </div>
+    }
+</div>
+
+@code {
+    [Parameter] public IReadOnlyList<string> Items { get; set; } = [];
+    [Parameter] public string? Value { get; set; }
+    [Parameter] public EventCallback<string?> ValueChanged { get; set; }
+    [Parameter] public string? Label { get; set; }
+    [Parameter] public bool HasLabel { get; set; } = true;
+    [Parameter] public bool HasRequired { get; set; }
+    [Parameter] public string? Placeholder { get; set; }
+    [Parameter] public string? SupportingText { get; set; }
+    [Parameter] public bool HasSupportingText { get; set; } = true;
+    [Parameter] public bool Disabled { get; set; }
+    [Parameter] public HqTextFieldSize Size { get; set; } = HqTextFieldSize.Md;
+    [Parameter] public DataEditorClearButtonDisplayMode ClearButtonDisplayMode { get; set; } = DataEditorClearButtonDisplayMode.Never;
+    [Parameter] public string? Class { get; set; }
+
+    private bool IsEnabled => !Disabled;
+    private bool IsDisabledState => !IsEnabled;
+
+    private string HostClass => string.Join(
+        " ",
+        $"hq-combo-box-host--{Size.ToString().ToLowerInvariant()}",
+        Class).Trim();
+
+    private string GetShellClass()
+    {
+        var stateClass = IsDisabledState
+            ? "is-disabled"
+            : !string.IsNullOrWhiteSpace(Value)
+                ? "is-filled"
+                : "is-enabled";
+
+        return string.Join(" ", "hq-combo-box__shell", $"hq-combo-box__shell--{Size.ToString().ToLowerInvariant()}", stateClass);
+    }
+
+    private async Task HandleValueChanged(string? value)
+    {
+        Value = value;
+        await ValueChanged.InvokeAsync(value);
+    }
+}

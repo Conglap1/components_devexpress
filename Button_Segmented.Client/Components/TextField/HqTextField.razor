@@ -1,0 +1,141 @@
+@namespace Button_Segmented.Client.Components.TextField
+
+<div class="hq-text-field-host @HostClass">
+    @if (HasLabel && !string.IsNullOrWhiteSpace(Label))
+    {
+        <div class="hq-text-field__label-row">
+            <label class="hq-text-field__label @(IsDisabledState ? "is-disabled" : null)" for="@InputId">
+                @if (!string.IsNullOrWhiteSpace(LabelIconCssClass))
+                {
+                    <span class="@($"icon {LabelIconCssClass}")" aria-hidden="true"></span>
+                }
+
+                <span>@Label</span>
+
+                @if (HasRequired)
+                {
+                    <span class="hq-text-field__required" aria-hidden="true">*</span>
+                }
+            </label>
+        </div>
+    }
+
+    <div class="@GetShellClass()">
+        @if (!string.IsNullOrWhiteSpace(EffectiveLeadingIconCssClass))
+        {
+            <span class="hq-text-field__icon hq-text-field__icon--leading @($"icon {EffectiveLeadingIconCssClass}")" aria-hidden="true"></span>
+        }
+
+        @if (!string.IsNullOrWhiteSpace(Prefix))
+        {
+            <span class="hq-text-field__prefix">@Prefix</span>
+        }
+
+        <DxTextBox Id="@InputId"
+                   CssClass="hq-text-field__editor"
+                   NullText="@Placeholder"
+                   Text="@Value"
+                   TextChanged="HandleInput"
+                   BindValueMode="BindValueMode.OnInput"
+                   Enabled="@IsEnabled"
+                   InputAttributes="InputAttributes" />
+
+        @if (!string.IsNullOrWhiteSpace(EffectiveTrailingIconCssClass))
+        {
+            <span class="hq-text-field__icon hq-text-field__icon--trailing @($"icon {EffectiveTrailingIconCssClass}")" aria-hidden="true"></span>
+        }
+    </div>
+
+    @if (HasSupportingText)
+    {
+        <div id="@SupportingTextId" class="hq-text-field__supporting-text @(IsError ? "is-error" : null)">
+            @SupportingText
+        </div>
+    }
+</div>
+
+@code {
+    private readonly string _inputId = $"hq-text-field-{Guid.NewGuid():N}";
+    private readonly string _supportingTextId = $"hq-text-field-supporting-{Guid.NewGuid():N}";
+
+    [Parameter] public string? Value { get; set; }
+    [Parameter] public EventCallback<string?> ValueChanged { get; set; }
+    [Parameter] public string? Label { get; set; }
+    [Parameter] public bool HasLabel { get; set; } = true;
+    [Parameter] public bool HasRequired { get; set; }
+    [Parameter] public string? LabelIconCssClass { get; set; }
+    [Parameter] public string? LeadingIconCssClass { get; set; }
+    [Parameter] public string? SwapLeadingIconCssClass { get; set; }
+    [Parameter] public string? TrailingIconCssClass { get; set; }
+    [Parameter] public string? SwapTrailingIconCssClass { get; set; }
+    [Parameter] public string? Prefix { get; set; }
+    [Parameter] public string? Placeholder { get; set; }
+    [Parameter] public string? SupportingText { get; set; }
+    [Parameter] public bool HasSupportingText { get; set; } = true;
+    [Parameter] public bool Disabled { get; set; }
+    [Parameter] public HqTextFieldState State { get; set; } = HqTextFieldState.Enabled;
+    [Parameter] public HqTextFieldSize Size { get; set; } = HqTextFieldSize.Md;
+    [Parameter] public string? Class { get; set; }
+
+    private string InputId => _inputId;
+
+    private string SupportingTextId => _supportingTextId;
+
+    private bool IsEnabled => !Disabled && State != HqTextFieldState.Disabled;
+    private bool IsDisabledState => !IsEnabled;
+
+    private bool IsError => State == HqTextFieldState.Error;
+
+    private string EffectiveLeadingIconCssClass => string.IsNullOrWhiteSpace(SwapLeadingIconCssClass)
+        ? LeadingIconCssClass ?? string.Empty
+        : SwapLeadingIconCssClass;
+
+    private string EffectiveTrailingIconCssClass => string.IsNullOrWhiteSpace(SwapTrailingIconCssClass)
+        ? TrailingIconCssClass ?? string.Empty
+        : SwapTrailingIconCssClass;
+
+    private string HostClass => string.Join(
+        " ",
+        "hq-text-field-host",
+        $"hq-text-field-host--{Size.ToString().ToLowerInvariant()}",
+        Class);
+
+    private string GetShellClass()
+    {
+        var stateClass = Disabled || State == HqTextFieldState.Disabled
+            ? "is-disabled"
+            : State == HqTextFieldState.Error || IsError
+                ? "is-error"
+                : State == HqTextFieldState.Focused
+                    ? "is-focused"
+                    : State == HqTextFieldState.Filled || !string.IsNullOrWhiteSpace(Value)
+                        ? "is-filled"
+                        : "is-enabled";
+
+        return string.Join(" ", "hq-text-field__shell", $"hq-text-field__shell--{Size.ToString().ToLowerInvariant()}", stateClass);
+    }
+
+    private IReadOnlyDictionary<string, object> InputAttributes
+    {
+        get
+        {
+            var attributes = new Dictionary<string, object>
+            {
+                ["aria-invalid"] = IsError.ToString().ToLowerInvariant()
+            };
+
+            if (HasSupportingText)
+            {
+                attributes["aria-describedby"] = SupportingTextId;
+            }
+
+            return attributes;
+        }
+    }
+
+    private async Task HandleInput(string? value)
+    {
+        Value = value;
+        await ValueChanged.InvokeAsync(value);
+    }
+}

@@ -1,0 +1,68 @@
+@namespace Button_Segmented.Client.Components.ProgressBar
+
+<span class="@HostClass" style="@HostStyle">
+    <DxProgressBar MinValue="0"
+                   MaxValue="100"
+                   Value="@Progress"
+                   Size="@DxSize"
+                   Type="ProgressBarType.Circular"
+                   ShowLabel="@(Type == HqProgressCircleType.Label && !IsSmallSize)"
+                   ShowIcon="false"
+                   CssClass="@DxClass" />
+    @if (Type == HqProgressCircleType.Label && IsSmallSize)
+    {
+        <span class="hq-progress-circle__outside-label">@DisplayText</span>
+    }
+    @if (Type == HqProgressCircleType.Icon)
+    {
+        <span class="hq-progress-circle__icon-overlay" aria-hidden="true">
+            <i class="@EffectiveIconCssClass"></i>
+        </span>
+    }
+</span>
+
+@code {
+    [Parameter] public HqProgressCircleType Type { get; set; } = HqProgressCircleType.Label;
+    [Parameter] public HqProgressCircleSize Size { get; set; } = HqProgressCircleSize.Md;
+    [Parameter] public int Progress { get; set; } = 50;
+    [Parameter] public string? Text { get; set; }
+    [Parameter] public string? IconCssClass { get; set; }
+    [Parameter] public string? AriaLabel { get; set; }
+    [Parameter] public string? Class { get; set; }
+
+    private int ClampedProgress => Math.Clamp(Progress, 0, 100);
+    private bool IsSmallSize => Size == HqProgressCircleSize.Sm;
+
+    private string DisplayText => string.IsNullOrWhiteSpace(Text)
+        ? $"{ClampedProgress}%"
+        : Text.Trim();
+
+    private string EffectiveIconCssClass => string.IsNullOrWhiteSpace(IconCssClass)
+        ? "fa-solid fa-circle"
+        : IconCssClass;
+
+    private static readonly Dictionary<HqProgressCircleSize, int> _sizes = new()
+    {
+        [HqProgressCircleSize.Sm] = 24,
+        [HqProgressCircleSize.Md] = 44,
+        [HqProgressCircleSize.Lg] = 64,
+        [HqProgressCircleSize.Xl] = 90
+    };
+
+    private int Diameter => _sizes[Size];
+
+    private string HostClass => string.Join(" ",
+        new[]
+        {
+            "hq-progress-circle-host",
+            $"hq-progress-circle-host--{Size.ToString().ToLowerInvariant()}",
+            $"hq-progress-circle-host--{Type.ToString().ToLowerInvariant()}",
+            Class
+        }.Where(c => !string.IsNullOrWhiteSpace(c)));
+
+    private string HostStyle => $"--hq-pc-size: {Diameter}px";
+
+    private string DxSize => $"{Diameter}px";
+
+    private string DxClass => "hq-progress-circle";
+}

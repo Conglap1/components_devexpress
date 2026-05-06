@@ -1,0 +1,104 @@
+@page "/progress-bar-demo"
+@namespace Button_Segmented.Client.Pages
+
+<PageTitle>Progress Bar Demo</PageTitle>
+
+<h2 class="demo-title">Progress Bar Demo</h2>
+<p class="demo-subtitle">All progress bar variants — Progress Line, Progress KPI (circle &amp; line), Progress Count, Progress Circle.</p>
+
+@* ===== Interactive slider ===== *@
+<section class="demo-section">
+    <h3 class="demo-section-title">Interactive controls</h3>
+    <div class="demo-card">
+        <label class="pb-demo-label" for="pb-slider">Value: @_value / @_max</label>
+        <div class="pb-demo-control-row">
+            <input id="pb-slider" type="range" min="0" max="@_max" step="1"
+                   @bind="_value" @bind:event="oninput" class="pb-demo-slider" />
+            <span class="pb-demo-value-chip">@_value</span>
+        </div>
+    </div>
+</section>
+
+@* ===== Progress Line ===== *@
+<section class="demo-section">
+    <h3 class="demo-section-title">Progress Line</h3>
+    <div class="demo-card pb-demo-frame">
+        <div class="pb-demo-frame__header pb-demo-frame__header--line">
+            <div class="pb-demo-frame__cell">Text</div>
+            <div class="pb-demo-frame__cell">@CurrentStatusLabel</div>
+            <div class="pb-demo-frame__cell pb-demo-frame__cell--value">
+                <span class="pb-demo-frame__value-current">@_value</span>
+                <span class="pb-demo-frame__value-sep">/</span>
+                <span class="pb-demo-frame__value-max">@_max</span>
+            </div>
+        </div>
+        <div class="pb-demo-line-status-list">
+            <HqProgressLine Value="@_value" Max="@_max" Size="HqProgressLineSize.Md" Status="@CurrentStatus" ShowInfo="true" Description="Text" Label="@($"{_value}%")" />
+            <HqProgressLine Value="@_value" Max="@_max" Size="HqProgressLineSize.Sm" Status="@CurrentStatus" ShowInfo="true" Description="Text" Label="@($"{_value}%")" />
+        </div>
+    </div>
+</section>
+
+@* ===== Progress KPI — type=circle ===== *@
+<section class="demo-section">
+    <h3 class="demo-section-title">Progress KPI</h3>
+    <div class="demo-card pb-demo-frame pb-demo-kpi-live-grid">
+        <HqProgressKpi Type="HqProgressKpiType.Circle"
+                       Status="@CurrentStatus"
+                       Value="@_value"
+                       Max="@_max"
+                       Description="Text" />
+        <HqProgressKpi Type="HqProgressKpiType.Line"
+                       Status="@CurrentStatus"
+                       Value="@_value"
+                       Max="@_max"
+                       Description="Text" />
+    </div>
+</section>
+
+@* ===== Progress Count ===== *@
+<section class="demo-section">
+    <h3 class="demo-section-title">Progress Count</h3>
+    <p class="demo-section-desc">Flat bar (18px) with overlaid current / max text.</p>
+    <div class="demo-card">
+        <div class="pb-demo-bar-wrapper">
+            <HqProgressCount Value="@_value" Max="@_max" />
+        </div>
+    </div>
+</section>
+
+@* ===== Progress Circle — all sizes ===== *@
+<section class="demo-section">
+    <h3 class="demo-section-title">Progress Circle — sizes</h3>
+    <div class="demo-card pb-demo-frame pb-demo-frame--circle-sizes">
+        <div class="pb-demo-circle-row">
+            <HqProgressCircle Type="HqProgressCircleType.Label" Size="HqProgressCircleSize.Sm" Progress="@_value" />
+            <HqProgressCircle Type="HqProgressCircleType.Label" Size="HqProgressCircleSize.Md" Progress="@_value" />
+            <HqProgressCircle Type="HqProgressCircleType.Label" Size="HqProgressCircleSize.Lg" Progress="@_value" />
+            <HqProgressCircle Type="HqProgressCircleType.Label" Size="HqProgressCircleSize.Xl" Progress="@_value" />
+            <HqProgressCircle Type="HqProgressCircleType.Icon"  Size="HqProgressCircleSize.Md" Progress="@_value" IconCssClass="fa-solid fa-chart-simple" />
+        </div>
+    </div>
+</section>
+
+@code {
+    private int _value = 50;
+    private int _max = 100;
+
+    private HqProgressStatus CurrentStatus => _value switch
+    {
+        > 80 => HqProgressStatus.Positive,
+        > 50 => HqProgressStatus.Careful,
+        > 40 => HqProgressStatus.Stressful,
+        _ => HqProgressStatus.Default
+    };
+
+    private string CurrentStatusLabel => CurrentStatus switch
+    {
+        HqProgressStatus.Positive => "Positive",
+        HqProgressStatus.Careful => "Careful",
+        HqProgressStatus.Stressful => "Stressful",
+        _ => "Default"
+    };
+
+}

@@ -1,0 +1,63 @@
+@namespace Button_Segmented.Client.Components.Segmented
+
+<div class="@RootClass" role="group" aria-label="@AriaLabel">
+    @for (var i = 0; i < Items.Count; i++)
+    {
+        var index = i;
+        var item = Items[i];
+        var isSelected = index == EffectiveSelectedIndex;
+        var isItemDisabled = Disabled || item.Disabled;
+
+        <button type="button"
+                class="@ItemClass(isSelected)"
+                disabled="@isItemDisabled"
+                aria-pressed="@isSelected"
+                @onclick="() => OnItemClick(index)">
+            @if (!string.IsNullOrWhiteSpace(item.LeadingIconCssClass) || !string.IsNullOrWhiteSpace(item.IconCssClass))
+            {
+                <span class="hq-seg-item__icon @(item.LeadingIconCssClass ?? item.IconCssClass)" aria-hidden="true"></span>
+            }
+            @if (!string.IsNullOrWhiteSpace(item.Text))
+            {
+                <span class="hq-seg-item__label">@item.Text</span>
+            }
+            @if (!string.IsNullOrWhiteSpace(item.TrailingIconCssClass))
+            {
+                <span class="hq-seg-item__icon @item.TrailingIconCssClass" aria-hidden="true"></span>
+            }
+        </button>
+    }
+</div>
+
+@code {
+    [Parameter] public string AriaLabel { get; set; } = "Segmented control";
+    [Parameter] public List<HqSegmentedItem> Items { get; set; } = [];
+    [Parameter] public int SelectedIndex { get; set; }
+    [Parameter] public EventCallback<int> SelectedIndexChanged { get; set; }
+    [Parameter] public HqButtonSize Size { get; set; } = HqButtonSize.Md;
+    [Parameter] public bool FullWidth { get; set; }
+    [Parameter] public bool Disabled { get; set; }
+
+    private int EffectiveSelectedIndex => Items.Count == 0
+        ? -1
+        : Math.Clamp(SelectedIndex, 0, Items.Count - 1);
+
+    private string RootClass => string.Join(" ",
+        "hq-seg",
+        $"hq-seg--{Size.ToString().ToLowerInvariant()}",
+        FullWidth ? "hq-seg--full-width" : null,
+        Disabled ? "hq-seg--disabled" : null);
+
+    private string ItemClass(bool isSelected) => string.Join(" ",
+        "hq-seg-item",
+        isSelected ? "hq-seg-item--selected" : null);
+
+    private async Task OnItemClick(int index)
+    {
+        if (Disabled || index < 0 || index >= Items.Count || Items[index].Disabled || index == EffectiveSelectedIndex)
+            return;
+
+        SelectedIndex = index;
+        await SelectedIndexChanged.InvokeAsync(index);
+    }
+}

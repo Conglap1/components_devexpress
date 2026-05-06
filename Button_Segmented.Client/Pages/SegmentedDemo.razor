@@ -5,23 +5,66 @@
 <div class="segmented-page">
     <h1>Segmented component</h1>
     <p class="segmented-subtitle">
-        Thường sử dụng trong trường hợp thay đổi chế độ xem của các dữ liệu liên quan. Ví dụ như xem dữ liệu theo ngày, tháng hoặc kiểu hiển thị.
+        Thường sử dụng trong trường hợp thay đổi chế độ xem của các dữ liệu liên quan. Ví dụ như xem dữ liệu theo Ngày/Tháng/Năm, hay xem dạng List/Card.
     </p>
 
     <section class="segmented-section">
         <h2>Sizes</h2>
         <div class="segmented-stack">
-            <HqSegmentedButtonGroup Items="@TwoItems" @bind-SelectedIndex="@SelectedMd" Size="HqButtonSize.Md" />
-            <HqSegmentedButtonGroup Items="@TwoItems" @bind-SelectedIndex="@SelectedSm" Size="HqButtonSize.Sm" />
+            <div class="segmented-row">
+                <span class="segmented-label">md</span>
+                <HqSegmentedButtonGroup Items="@SizeItems" @bind-SelectedIndex="@SelectedMd" Size="HqButtonSize.Md" />
+            </div>
+            <div class="segmented-row">
+                <span class="segmented-label">sm</span>
+                <HqSegmentedButtonGroup Items="@SizeItems" @bind-SelectedIndex="@SelectedSm" Size="HqButtonSize.Sm" />
+            </div>
         </div>
     </section>
 
     <section class="segmented-section">
-        <h2>2 / 4 / 8 options</h2>
+        <h2>Quantity: 2 / 4 / 8 options</h2>
         <div class="segmented-stack">
-            <HqSegmentedButtonGroup Items="@TwoItems" @bind-SelectedIndex="@Selected2" Size="HqButtonSize.Md" />
-            <HqSegmentedButtonGroup Items="@FourItems" @bind-SelectedIndex="@Selected4" Size="HqButtonSize.Md" />
-            <HqSegmentedButtonGroup Items="@EightItems" @bind-SelectedIndex="@Selected8" Size="HqButtonSize.Md" />
+            <div class="segmented-row">
+                <span class="segmented-label">2</span>
+                <HqSegmentedButtonGroup Items="@TwoItems" @bind-SelectedIndex="@Selected2" Size="HqButtonSize.Md" />
+            </div>
+            <div class="segmented-row">
+                <span class="segmented-label">4</span>
+                <HqSegmentedButtonGroup Items="@FourItems" @bind-SelectedIndex="@Selected4" Size="HqButtonSize.Md" />
+            </div>
+            <div class="segmented-row">
+                <span class="segmented-label">8</span>
+                <HqSegmentedButtonGroup Items="@EightItems" @bind-SelectedIndex="@Selected8" Size="HqButtonSize.Md" />
+            </div>
+        </div>
+    </section>
+
+    <section class="segmented-section">
+        <h2>Full width</h2>
+        <div class="segmented-stack">
+            <HqSegmentedButtonGroup Items="@FourItems" @bind-SelectedIndex="@SelectedFull" Size="HqButtonSize.Md" FullWidth="true" />
+        </div>
+    </section>
+
+    <section class="segmented-section">
+        <h2>Disabled</h2>
+        <div class="segmented-stack">
+            <div class="segmented-row">
+                <span class="segmented-label">md</span>
+                <HqSegmentedButtonGroup Items="@FourItems" @bind-SelectedIndex="@SelectedDisabled" Size="HqButtonSize.Md" Disabled="true" />
+            </div>
+            <div class="segmented-row">
+                <span class="segmented-label">sm</span>
+                <HqSegmentedButtonGroup Items="@FourItems" @bind-SelectedIndex="@SelectedDisabledSm" Size="HqButtonSize.Sm" Disabled="true" />
+            </div>
+        </div>
+    </section>
+
+    <section class="segmented-section">
+        <h2>Interactive (selected: @SelectedInteractive)</h2>
+        <div class="segmented-stack">
+            <HqSegmentedButtonGroup Items="@InteractiveItems" @bind-SelectedIndex="@SelectedInteractive" Size="HqButtonSize.Md" />
         </div>
     </section>
 </div>
@@ -32,30 +75,49 @@
     private int Selected2 = 0;
     private int Selected4 = 0;
     private int Selected8 = 0;
+    private int SelectedFull = 1;
+    private int SelectedDisabled = 0;
+    private int SelectedDisabledSm = 0;
+    private int SelectedInteractive = 0;
+
+    private List<HqSegmentedItem> SizeItems =>
+    [
+        new() { Text = "Day" },
+        new() { Text = "Week" },
+        new() { Text = "Month" }
+    ];
 
     private List<HqSegmentedItem> TwoItems =>
     [
-        new() { Text = "Text" },
-        new() { Text = "Text" }
+        new() { Text = "List" },
+        new() { Text = "Card" }
     ];
 
     private List<HqSegmentedItem> FourItems =>
     [
-        new() { Text = "Text" },
-        new() { Text = "Text" },
-        new() { Text = "Text" },
-        new() { Text = "Text" }
+        new() { Text = "Day" },
+        new() { Text = "Week" },
+        new() { Text = "Month" },
+        new() { Text = "Year" }
     ];
 
     private List<HqSegmentedItem> EightItems =>
     [
-        new() { Text = "Text" },
-        new() { Text = "Text" },
-        new() { Text = "Text" },
-        new() { Text = "Text" },
-        new() { Text = "Text" },
-        new() { Text = "Text" },
-        new() { Text = "Text" },
-        new() { Text = "Text" }
+        new() { Text = "Mon" },
+        new() { Text = "Tue" },
+        new() { Text = "Wed" },
+        new() { Text = "Thu" },
+        new() { Text = "Fri" },
+        new() { Text = "Sat" },
+        new() { Text = "Sun" },
+        new() { Text = "All" }
+    ];
+
+    private List<HqSegmentedItem> InteractiveItems =>
+    [
+        new() { Text = "Overview" },
+        new() { Text = "Details" },
+        new() { Text = "Analytics" },
+        new() { Text = "Settings" }
     ];
 }

@@ -1,4 +1,5 @@
 ﻿using Button_Segmented.Components;
+using MudBlazor.Services;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -11,6 +12,8 @@ builder.Services.AddDevExpressBlazor(options =>
 {
     options.SizeMode = DevExpress.Blazor.SizeMode.Medium;
 });
+
+builder.Services.AddMudServices();
 
 builder.Services.AddMvc();
 

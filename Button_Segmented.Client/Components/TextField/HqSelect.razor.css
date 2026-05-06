@@ -1,0 +1,203 @@
+/* ===== HqSelect — Host layout ===== */
+.hq-select-host {
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-4x);
+    min-width: 0;
+}
+
+.hq-select-host--sm {
+    gap: var(--spacing-3x);
+}
+
+/* ===== Label ===== */
+.hq-select__label-row {
+    align-items: center;
+    display: flex;
+}
+
+.hq-select__label {
+    align-items: center;
+    color: var(--color-on-surface);
+    display: inline-flex;
+    font-family: var(--font-family-base);
+    font-size: var(--text-label-lg-size);
+    font-weight: 400;
+    gap: var(--spacing-3x);
+    letter-spacing: var(--font-letter-spacing);
+    line-height: var(--text-label-lg-lh);
+}
+
+.hq-select__label.is-disabled {
+    color: var(--color-on-surface-2);
+}
+
+.hq-select__required {
+    color: var(--color-stressful);
+}
+
+/* ===== DxComboBox shell — override DevExpress ===== */
+::deep .hq-select.dxbl-text-edit {
+    --hq-sel-bg: var(--color-surface);
+    --hq-sel-border: var(--color-outline);
+    --hq-sel-value: var(--color-on-surface);
+    --hq-sel-placeholder: var(--color-on-surface-2);
+    --hq-sel-icon: var(--color-on-surface-2);
+    background-color: var(--hq-sel-bg) !important;
+    border: 1px solid var(--hq-sel-border) !important;
+    border-radius: var(--radius-6x) !important;
+    box-shadow: none !important;
+    color: var(--hq-sel-value) !important;
+    font-family: var(--font-family-base);
+    font-size: var(--text-body-lg-size);
+    font-weight: 400;
+    letter-spacing: var(--font-letter-spacing);
+    line-height: var(--text-body-lg-lh);
+    gap: var(--spacing-6x);
+    padding: 0 var(--spacing-8x) !important;
+    transition: border-color .15s ease, background-color .15s ease;
+}
+
+/* Size md */
+::deep .hq-select--md.dxbl-text-edit {
+    height: var(--text-field-height-md);
+}
+
+/* Size sm */
+::deep .hq-select--sm.dxbl-text-edit {
+    font-size: var(--text-body-md-size);
+    gap: var(--spacing-4x);
+    height: var(--text-field-height-sm);
+    line-height: var(--text-body-md-lh);
+    padding: 0 var(--spacing-6x) !important;
+}
+
+/* ===== State: filled ===== */
+::deep .hq-select.is-filled.dxbl-text-edit {
+    --hq-sel-value: var(--color-on-surface);
+}
+
+/* ===== State: focused ===== */
+::deep .hq-select.is-focused.dxbl-text-edit,
+::deep .hq-select.dxbl-text-edit.dx-state-focused,
+::deep .hq-select.dxbl-text-edit.dxbl-focused,
+::deep .hq-select.dxbl-text-edit:focus-within {
+    --hq-sel-border: var(--color-useful);
+}
+
+/* ===== State: error ===== */
+::deep .hq-select.is-error.dxbl-text-edit,
+::deep .hq-select.dxbl-text-edit.dxbl-invalid {
+    --hq-sel-border: var(--color-stressful);
+}
+
+/* ===== State: error + focused ===== */
+::deep .hq-select.is-error.dxbl-text-edit.dx-state-focused,
+::deep .hq-select.is-error.dxbl-text-edit.dxbl-focused,
+::deep .hq-select.is-error.dxbl-text-edit:focus-within {
+    --hq-sel-border: var(--color-stressful);
+}
+
+/* ===== State: disabled ===== */
+::deep .hq-select.is-disabled.dxbl-text-edit,
+::deep .hq-select.dxbl-text-edit.dx-state-disabled {
+    --hq-sel-bg: var(--color-surface-1);
+    --hq-sel-border: var(--color-outline-1);
+    --hq-sel-value: var(--color-on-surface-2);
+    --hq-sel-placeholder: var(--color-on-surface-2);
+    --hq-sel-icon: var(--color-on-surface-2);
+    cursor: not-allowed;
+    opacity: 1;
+    pointer-events: none;
+}
+
+/* ===== Hide DX pseudo-elements ===== */
+::deep .hq-select.dxbl-text-edit::before,
+::deep .hq-select.dxbl-text-edit::after {
+    display: none !important;
+}
+
+/* ===== Input element ===== */
+::deep .hq-select.dxbl-text-edit > .dxbl-text-edit-input,
+::deep .hq-select.dxbl-text-edit input.dxbl-text-edit-input {
+    background: transparent !important;
+    border: 0 !important;
+    box-shadow: none !important;
+    color: inherit;
+    cursor: pointer;
+    font: inherit;
+    letter-spacing: inherit;
+    line-height: inherit;
+    outline: none !important;
+    padding: 0 !important;
+}
+
+::deep .hq-select.dxbl-text-edit > .dxbl-text-edit-input:focus,
+::deep .hq-select.dxbl-text-edit > .dxbl-text-edit-input:focus-visible,
+::deep .hq-select.dxbl-text-edit > .dxbl-text-edit-input:hover {
+    background: transparent !important;
+    border: 0 !important;
+    box-shadow: none !important;
+    outline: none !important;
+}
+
+::deep .hq-select.dxbl-text-edit > .dxbl-text-edit-input::placeholder {
+    color: var(--hq-sel-placeholder);
+    opacity: 1;
+}
+
+/* ===== Dropdown & clear buttons ===== */
+::deep .hq-select.dxbl-text-edit .dxbl-btn-container {
+    background: transparent !important;
+    border: 0 !important;
+    margin: 0 !important;
+    padding: 0 !important;
+}
+
+::deep .hq-select.dxbl-text-edit .dxbl-edit-btn {
+    align-items: center;
+    align-self: stretch;
+    background: transparent !important;
+    border: 0 !important;
+    border-radius: 0 !important;
+    box-shadow: none !important;
+    color: var(--hq-sel-icon) !important;
+    display: inline-flex;
+    justify-content: center;
+    margin: 0 !important;
+    min-width: auto;
+    padding: 0 !important;
+}
+
+::deep .hq-select.dxbl-text-edit .dxbl-edit-btn:hover:not(.dxbl-disabled):not(:disabled) {
+    background: transparent !important;
+    color: var(--color-on-surface) !important;
+}
+
+::deep .hq-select.dxbl-text-edit .dxbl-edit-btn .dxbl-image,
+::deep .hq-select.dxbl-text-edit .dxbl-edit-btn svg {
+    color: inherit !important;
+    height: var(--text-field-icon-size-md);
+    opacity: 1 !important;
+    width: var(--text-field-icon-size-md);
+}
+
+::deep .hq-select--sm.dxbl-text-edit .dxbl-edit-btn .dxbl-image,
+::deep .hq-select--sm.dxbl-text-edit .dxbl-edit-btn svg {
+    height: var(--text-field-icon-size-sm);
+    width: var(--text-field-icon-size-sm);
+}
+
+/* ===== Supporting text ===== */
+.hq-select__supporting-text {
+    color: var(--color-on-surface-1);
+    font-family: var(--font-family-base);
+    font-size: var(--text-label-md-size);
+    letter-spacing: var(--font-letter-spacing);
+    line-height: var(--text-label-md-lh);
+    min-height: var(--text-label-md-lh);
+}
+
+.hq-select__supporting-text.is-error {
+    color: var(--color-stressful);
+}

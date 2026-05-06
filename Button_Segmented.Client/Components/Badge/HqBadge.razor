@@ -1,0 +1,121 @@
+@namespace Button_Segmented.Client.Components.Badge
+
+@if (Variant == HqBadgeVariant.Dot)
+{
+    <span class="@CssClass">
+        <MudBadge Dot="true" Visible="true" Color="MudBlazor.Color.Default">
+            <span class="hq-badge__anchor"></span>
+        </MudBadge>
+    </span>
+}
+else if (Variant == HqBadgeVariant.Counter)
+{
+    <span class="@CssClass">
+        <MudBadge Content="@CounterText" Visible="true" Color="MudBlazor.Color.Default">
+            <span class="hq-badge__anchor"></span>
+        </MudBadge>
+    </span>
+}
+else if (Variant == HqBadgeVariant.InfoCounter)
+{
+    <span class="@CssClass">
+        <MudBadge Content="@InfoCounterText" Visible="true" Color="MudBlazor.Color.Default">
+            <span class="hq-badge__anchor"></span>
+        </MudBadge>
+    </span>
+}
+else
+{
+    <span class="@CssClass">
+        @if (InfoRequireType == HqBadgeInfoRequireType.Done)
+        {
+            <i class="fa-solid fa-circle-check hq-badge__info-require-icon" aria-hidden="true"></i>
+        }
+        else
+        {
+            @InfoRequireText
+        }
+    </span>
+}
+
+@code {
+    [Parameter] public HqBadgeVariant Variant { get; set; } = HqBadgeVariant.Dot;
+
+    [Parameter] public HqBadgeDotSize Size { get; set; } = HqBadgeDotSize.Md;
+    [Parameter] public HqBadgeDotColor Color { get; set; } = HqBadgeDotColor.Navy;
+
+    [Parameter] public HqBadgeCounterType CounterType { get; set; } = HqBadgeCounterType.SingleDigit;
+    [Parameter] public int Count { get; set; } = 1;
+    [Parameter] public bool ReverseColor { get; set; }
+    [Parameter] public bool HasStroke { get; set; }
+
+    [Parameter] public HqBadgeInfoCounterType InfoCounterType { get; set; } = HqBadgeInfoCounterType.Current;
+    [Parameter] public HqBadgeInfoRequireType InfoRequireType { get; set; } = HqBadgeInfoRequireType.Require;
+
+    [Parameter] public string? Class { get; set; }
+    [Parameter] public string? Style { get; set; }
+
+    private string InfoCounterText => Math.Clamp(Count, 0, 9).ToString();
+    private string InfoRequireText => "*";
+
+    private string CounterText => CounterType switch
+    {
+        HqBadgeCounterType.SingleDigit => Math.Clamp(Count, 0, 9).ToString(),
+        _ => Count >= 99 ? "99+" : Math.Max(0, Count).ToString()
+    };
+
+    private string CounterTypeClass => CounterType switch
+    {
+        HqBadgeCounterType.SingleDigit => "hq-badge--single-digit",
+        _ => "hq-badge--multiple-digit"
+    };
+
+    private string InfoCounterTypeClass => InfoCounterType switch
+    {
+        HqBadgeInfoCounterType.Current => "hq-badge--info-current",
+        HqBadgeInfoCounterType.Selected => "hq-badge--info-selected",
+        HqBadgeInfoCounterType.Available => "hq-badge--info-available",
+        _ => "hq-badge--info-important"
+    };
+
+    private string InfoRequireTypeClass => InfoRequireType switch
+    {
+        HqBadgeInfoRequireType.Done => "hq-badge--info-require-done",
+        _ => "hq-badge--info-require-require"
+    };
+
+    private string CssClass => Variant switch
+    {
+        HqBadgeVariant.Counter => string.Join(
+            " ",
+            "hq-badge",
+            "hq-badge--counter",
+            CounterTypeClass,
+            ReverseColor ? "hq-badge--reverse" : null,
+            HasStroke ? "hq-badge--has-stroke" : null,
+            Class),
+
+        HqBadgeVariant.InfoCounter => string.Join(
+            " ",
+            "hq-badge",
+            "hq-badge--info-counter",
+            InfoCounterTypeClass,
+            Class),
+
+        HqBadgeVariant.InfoRequire => string.Join(
+            " ",
+            "hq-badge",
+            "hq-badge--info-require",
+            InfoRequireTypeClass,
+            Class),
+
+        _ => string.Join(
+            " ",
+            "hq-badge",
+            "hq-badge--dot",
+            $"hq-badge--{Size.ToString().ToLowerInvariant()}",
+            $"hq-badge--{Color.ToString().ToLowerInvariant()}",
+            HasStroke ? "hq-badge--has-stroke" : null,
+            Class)
+    };
+}

@@ -1,0 +1,63 @@
+@page "/divider-demo"
+
+<PageTitle>Divider Demo</PageTitle>
+
+<div class="divider-demo">
+    <section class="demo-section">
+        <div class="section-heading">
+            <h2>Divider</h2>
+            <p>MudBlazor-based divider với 4 biến thể từ spec: horizontal, vertical, solid, dashed.</p>
+        </div>
+
+        <div class="demo-columns">
+            <section class="demo-column">
+                <h3>Horizontal</h3>
+
+                <div class="divider-sample divider-sample--stacked">
+                    <div class="sample-block">
+                        <span>Solid</span>
+                        <HqDivider />
+                    </div>
+
+                    <div class="sample-block">
+                        <span>Dashed</span>
+                        <HqDivider Dashed="true" />
+                    </div>
+                </div>
+            </section>
+
+            <section class="demo-column demo-column--vertical">
+                <h3>Vertical</h3>
+
+                <div class="divider-sample divider-sample--inline">
+                    <span>Left</span>
+                    <HqDivider Vertical="true" />
+                    <span>Center</span>
+                    <HqDivider Vertical="true" Dashed="true" />
+                    <span>Right</span>
+                </div>
+            </section>
+        </div>
+    </section>
+
+    <section class="demo-section">
+        <div class="section-heading">
+            <h2>List item usage</h2>
+            <p>Divider đứng độc lập, không còn gộp component hay route với list item.</p>
+        </div>
+
+        <div class="demo-card">
+            <HqListItemRow Label="Mã số">
+                <span class="demo-value">NPP001</span>
+            </HqListItemRow>
+            <HqDivider />
+            <HqListItemRow Label="Tên công ty">
+                <span class="demo-value">Công ty TNHH ABC</span>
+            </HqListItemRow>
+            <HqDivider />
+            <HqListItemRow Label="Đang hoạt động">
+                <HqCheckbox Value="true" Size="HqCheckboxSize.Md" Disabled="true" />
+            </HqListItemRow>
+        </div>
+    </section>
+</div>

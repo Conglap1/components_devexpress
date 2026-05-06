@@ -1,0 +1,84 @@
+.dialog-demo {
+    padding: var(--spacing-12x);
+    max-width: 1200px;
+    margin: 0 auto;
+    font-family: var(--font-family-base);
+}
+
+.demo-title {
+    font-size: var(--text-heading-lg-size);
+    font-weight: 700;
+    color: var(--color-on-surface);
+    margin: 0 0 var(--spacing-4x);
+    letter-spacing: var(--font-letter-spacing);
+}
+
+.demo-desc {
+    font-size: var(--text-body-md-size);
+    color: var(--color-on-surface-1);
+    margin: 0 0 var(--spacing-12x);
+    letter-spacing: var(--font-letter-spacing);
+}
+
+.demo-desc a {
+    color: var(--color-useful);
+}
+
+.demo-section {
+    margin-bottom: var(--spacing-16x);
+    padding-bottom: var(--spacing-12x);
+    border-bottom: 1px solid var(--color-outline-1);
+}
+
+.demo-section h2 {
+    font-size: var(--text-title-lg-size);
+    font-weight: 700;
+    color: var(--color-on-surface);
+    margin: 0 0 var(--spacing-2x);
+    letter-spacing: var(--font-letter-spacing);
+}
+
+.demo-section p {
+    font-size: var(--text-body-md-size);
+    color: var(--color-on-surface-1);
+    margin: 0 0 var(--spacing-8x);
+    letter-spacing: var(--font-letter-spacing);
+}
+
+.demo-row {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--spacing-6x);
+    align-items: center;
+}
+
+/* Trigger buttons for demo (not HqButton — kept simple) */
+.trigger-btn {
+    display: inline-flex;
+    align-items: center;
+    padding: var(--spacing-4x) var(--spacing-8x);
+    font-family: var(--font-family-base);
+    font-size: var(--text-title-sm-size);
+    font-weight: 500;
+    letter-spacing: var(--font-letter-spacing);
+    border: 1px solid var(--color-outline);
+    border-radius: var(--radius-4x);
+    background-color: var(--color-surface);
+    color: var(--color-on-surface);
+    cursor: pointer;
+    transition: background-color .15s ease;
+}
+
+.trigger-btn:hover {
+    background-color: var(--color-surface-1);
+}
+
+.trigger-btn--primary {
+    background-color: var(--color-primary);
+    color: var(--color-on-primary);
+    border-color: transparent;
+}
+
+.trigger-btn--primary:hover {
+    background-color: var(--color-primary-hover);
+}

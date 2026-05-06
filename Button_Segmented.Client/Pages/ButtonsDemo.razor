@@ -7,7 +7,7 @@
         <h2>Button matrix from Figma</h2>
         <div class="matrix-header">
             <span>State</span>
-            <span>Text + icon (md/sm/xs)</span>
+            <span>Text + 2 icons (md/sm/xs)</span>
             <span>Icon-only rounded-medium (md/sm/xs)</span>
             <span>Icon-only rounded-full (md/sm/xs)</span>
         </div>
@@ -27,7 +27,8 @@
                                           Size="@size"
                                           Shape="@GetBaseShape(variant)"
                                           Text="Text"
-                                          IconCssClass="icon-menu" />
+                                          LeadingIconCssClass="icon-menu"
+                                          TrailingIconCssClass="icon-menu" />
                             </div>
                         }
                     </div>
@@ -74,7 +75,8 @@
                                           State="HqButtonVisualState.Disabled"
                                           Shape="@GetBaseShape(variant)"
                                           Text="Text"
-                                          IconCssClass="icon-menu" />
+                                          LeadingIconCssClass="icon-menu"
+                                          TrailingIconCssClass="icon-menu" />
                             </div>
                         }
                     </div>
@@ -112,6 +114,33 @@
                 </div>
             </div>
         }
+    </section>
+
+    <section class="demo-section">
+        <h2>Content combinations</h2>
+        <div class="content-combos">
+            <div class="content-combo">
+                <div class="content-combo-label">Text only</div>
+                <HqButton Variant="HqButtonVariant.Primary" Text="Text" />
+            </div>
+            <div class="content-combo">
+                <div class="content-combo-label">Icon only</div>
+                <HqButton Variant="HqButtonVariant.Primary" IconOnly="true" IconCssClass="icon-menu" />
+            </div>
+            <div class="content-combo">
+                <div class="content-combo-label">1 icon + text</div>
+                <HqButton Variant="HqButtonVariant.Primary"
+                          Text="Text"
+                          LeadingIconCssClass="icon-menu" />
+            </div>
+            <div class="content-combo">
+                <div class="content-combo-label">2 icons + text</div>
+                <HqButton Variant="HqButtonVariant.Primary"
+                          Text="Text"
+                          LeadingIconCssClass="icon-menu"
+                          TrailingIconCssClass="icon-menu" />
+            </div>
+        </div>
     </section>
 </div>
 

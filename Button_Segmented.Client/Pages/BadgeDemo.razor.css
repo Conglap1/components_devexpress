@@ -1,0 +1,91 @@
+.badge-page {
+    color: var(--color-on-background);
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-8x);
+    padding: var(--spacing-12x);
+}
+
+.badge-page h1 {
+    font-size: var(--text-heading-lg-size);
+    line-height: var(--text-heading-lg-lh);
+    margin: 0;
+}
+
+.badge-subtitle {
+    color: var(--color-on-surface-1);
+    font-size: var(--text-body-md-size);
+    line-height: var(--text-body-md-lh);
+    margin: 0;
+}
+
+.badge-section {
+    background: var(--color-surface);
+    border: 1px solid var(--color-outline-1);
+    border-radius: var(--radius-6x);
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-4x);
+    padding: var(--spacing-8x);
+}
+
+.badge-section h2 {
+    font-size: var(--text-title-md-size);
+    line-height: var(--text-title-md-lh);
+    margin: 0;
+}
+
+.badge-table-header,
+.badge-table-row {
+    align-items: center;
+    column-gap: var(--spacing-6x);
+    display: grid;
+    grid-template-columns: 120px repeat(4, minmax(0, 80px));
+}
+
+.badge-counter-header,
+.badge-counter-row {
+    align-items: center;
+    column-gap: var(--spacing-6x);
+    display: grid;
+    grid-template-columns: 120px 120px 120px;
+}
+
+.badge-table-header,
+.badge-counter-header {
+    color: var(--color-on-surface-1);
+    font-size: var(--text-label-md-size);
+    line-height: var(--text-label-md-lh);
+}
+
+.badge-table-row,
+.badge-counter-row {
+    border-top: 1px solid var(--color-outline-2);
+    min-height: 36px;
+    padding-top: var(--spacing-2x);
+}
+
+.badge-color-name {
+    font-size: var(--text-body-sm-size);
+    line-height: var(--text-body-sm-lh);
+}
+
+.badge-info-row {
+    align-items: center;
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--spacing-6x);
+}
+
+.badge-info-item {
+    align-items: center;
+    display: inline-flex;
+    gap: var(--spacing-2x);
+}
+
+.badge-info-label {
+    color: var(--color-on-surface-1);
+    font-size: var(--text-label-md-size);
+    line-height: var(--text-label-md-lh);
+    text-transform: lowercase;
+}

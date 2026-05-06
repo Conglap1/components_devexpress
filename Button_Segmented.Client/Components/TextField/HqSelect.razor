@@ -1,0 +1,126 @@
+@namespace Button_Segmented.Client.Components.TextField
+
+<div class="hq-select-host @HostClass">
+    @if (HasLabel && !string.IsNullOrWhiteSpace(Label))
+    {
+        <div class="hq-select__label-row">
+            <label class="hq-select__label @(IsDisabledState ? "is-disabled" : null)" for="@InputId">
+                @if (!string.IsNullOrWhiteSpace(LabelIconCssClass))
+                {
+                    <span class="@($"icon {LabelIconCssClass}")" aria-hidden="true"></span>
+                }
+
+                <span>@Label</span>
+
+                @if (HasRequired)
+                {
+                    <span class="hq-select__required" aria-hidden="true">*</span>
+                }
+            </label>
+        </div>
+    }
+
+    <DxComboBox TData="string" TValue="string"
+                Data="@Items"
+                CssClass="@EditorCssClass"
+                NullText="@Placeholder"
+                Value="@Value"
+                ValueChanged="HandleValueChanged"
+                AllowUserInput="false"
+                Enabled="@IsEnabled"
+                DropDownCssClass="hq-select-dropdown"
+                DropDownWidthMode="DropDownWidthMode.EditorWidth"
+                ClearButtonDisplayMode="@ClearButtonDisplayMode"
+                InputAttributes="InputAttributes">
+        <ItemDisplayTemplate Context="item">
+            <div class="hq-select-dropdown__item @(string.Equals(item.DataItem, Value, StringComparison.Ordinal) ? "is-selected" : null)">
+                @item.DisplayText
+            </div>
+        </ItemDisplayTemplate>
+    </DxComboBox>
+
+    @if (HasSupportingText)
+    {
+        <div id="@SupportingTextId" class="hq-select__supporting-text @(IsError ? "is-error" : null)">
+            @SupportingText
+        </div>
+    }
+</div>
+
+@code {
+    private readonly string _inputId = $"hq-select-{Guid.NewGuid():N}";
+    private readonly string _supportingTextId = $"hq-select-supporting-{Guid.NewGuid():N}";
+
+    [Parameter] public IReadOnlyList<string> Items { get; set; } = [];
+    [Parameter] public string? Value { get; set; }
+    [Parameter] public EventCallback<string?> ValueChanged { get; set; }
+    [Parameter] public string? Label { get; set; }
+    [Parameter] public bool HasLabel { get; set; } = true;
+    [Parameter] public bool HasRequired { get; set; }
+    [Parameter] public string? LabelIconCssClass { get; set; }
+    [Parameter] public string? Placeholder { get; set; }
+    [Parameter] public string? SupportingText { get; set; }
+    [Parameter] public bool HasSupportingText { get; set; } = true;
+    [Parameter] public bool HasLeadingIcon { get; set; }
+    [Parameter] public string? LeadingIconCssClass { get; set; }
+    [Parameter] public bool Disabled { get; set; }
+    [Parameter] public HqTextFieldState State { get; set; } = HqTextFieldState.Enabled;
+    [Parameter] public HqTextFieldSize Size { get; set; } = HqTextFieldSize.Md;
+    [Parameter] public DataEditorClearButtonDisplayMode ClearButtonDisplayMode { get; set; } = DataEditorClearButtonDisplayMode.Never;
+    [Parameter] public string? Class { get; set; }
+
+    private string InputId => _inputId;
+    private string SupportingTextId => _supportingTextId;
+
+    private bool IsEnabled => !Disabled && State != HqTextFieldState.Disabled;
+    private bool IsDisabledState => !IsEnabled;
+    private bool IsError => State == HqTextFieldState.Error;
+    private bool IsFocused => State == HqTextFieldState.Focused;
+
+    private string HostClass => string.Join(
+        " ",
+        $"hq-select-host--{Size.ToString().ToLowerInvariant()}",
+        Class).Trim();
+
+    private string EditorCssClass
+    {
+        get
+        {
+            var stateClass = IsDisabledState
+                ? "is-disabled"
+                : IsError
+                    ? "is-error"
+                    : IsFocused
+                        ? "is-focused"
+                        : !string.IsNullOrWhiteSpace(Value)
+                            ? "is-filled"
+                            : "is-enabled";
+
+            return string.Join(" ", "hq-select", $"hq-select--{Size.ToString().ToLowerInvariant()}", stateClass);
+        }
+    }
+
+    private IReadOnlyDictionary<string, object> InputAttributes
+    {
+        get
+        {
+            var attributes = new Dictionary<string, object>
+            {
+                ["aria-invalid"] = IsError.ToString().ToLowerInvariant()
+            };
+
+            if (HasSupportingText)
+            {
+                attributes["aria-describedby"] = SupportingTextId;
+            }
+
+            return attributes;
+        }
+    }
+
+    private async Task HandleValueChanged(string? value)
+    {
+        Value = value;
+        await ValueChanged.InvokeAsync(value);
+    }
+}

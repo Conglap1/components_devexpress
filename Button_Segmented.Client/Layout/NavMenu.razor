@@ -2,11 +2,18 @@
 @implements IDisposable
 
 <div>
-    <DxMenu Orientation="@Orientation.Vertical" CssClass="menu">
+    <DxMenu Orientation="@DevExpress.Blazor.Orientation.Vertical" CssClass="menu">
         <Items>
             <DxMenuItem NavigateUrl="/" Text="Home" CssClass="@MenuItemCssClass("/")" IconCssClass="icon icon-home"></DxMenuItem>
             <DxMenuItem NavigateUrl="/buttons-demo" Text="Buttons Demo" CssClass="@MenuItemCssClass("/buttons-demo")" IconCssClass="icon icon-docs"></DxMenuItem>
+            <DxMenuItem NavigateUrl="/text-field-demo" Text="Text Field, Text Area & Combobox" CssClass="@MenuItemCssClass("/text-field-demo")" IconCssClass="icon icon-docs"></DxMenuItem>
             <DxMenuItem NavigateUrl="/segmented-demo" Text="Segmented Demo" CssClass="@MenuItemCssClass("/segmented-demo")" IconCssClass="icon icon-docs"></DxMenuItem>
+            <DxMenuItem NavigateUrl="/badge-demo" Text="Badge Demo" CssClass="@MenuItemCssClass("/badge-demo")" IconCssClass="icon icon-docs"></DxMenuItem>
+            <DxMenuItem NavigateUrl="/progress-bar-demo" Text="Progress Bar Demo" CssClass="@MenuItemCssClass("/progress-bar-demo")" IconCssClass="icon icon-docs"></DxMenuItem>
+            <DxMenuItem NavigateUrl="/checkbox-demo" Text="Checkbox Demo" CssClass="@MenuItemCssClass("/checkbox-demo")" IconCssClass="icon icon-docs"></DxMenuItem>
+            <DxMenuItem NavigateUrl="/divider-demo" Text="Divider Demo" CssClass="@MenuItemCssClass("/divider-demo")" IconCssClass="icon icon-docs"></DxMenuItem>
+            <DxMenuItem NavigateUrl="/tree-demo" Text="Tree Demo" CssClass="@MenuItemCssClass("/tree-demo")" IconCssClass="icon icon-docs"></DxMenuItem>
+            <DxMenuItem NavigateUrl="/dialog-demo" Text="Dialog Demo" CssClass="@MenuItemCssClass("/dialog-demo")" IconCssClass="icon icon-docs"></DxMenuItem>
             <DxMenuItem NavigateUrl="/counter" Text="Counter" CssClass="@MenuItemCssClass("/counter")" IconCssClass="icon icon-counter"></DxMenuItem>
             <DxMenuItem NavigateUrl="/weather" Text="Weather" CssClass="@MenuItemCssClass("/weather")" IconCssClass="icon icon-weather"></DxMenuItem>
         </Items>

@@ -1,0 +1,28 @@
+@namespace Button_Segmented.Client.Components.Divider
+
+<span class="@HostCssClass" style="@Style">
+    <MudDivider Vertical="@Vertical" Class="@DividerCssClass" />
+</span>
+
+@code {
+    [Parameter] public bool Vertical { get; set; }
+    [Parameter] public bool Dashed { get; set; }
+    [Parameter] public string? Class { get; set; }
+    [Parameter] public string? Style { get; set; }
+
+    private string DividerCssClass => string.Join(" ",
+        new[]
+        {
+            "hq-divider",
+            Vertical ? "hq-divider--vertical" : "hq-divider--horizontal",
+            Dashed ? "hq-divider--dashed" : null,
+        }.Where(c => !string.IsNullOrWhiteSpace(c)));
+
+    private string HostCssClass => string.Join(" ",
+        new[]
+        {
+            "hq-divider-host",
+            Vertical ? "hq-divider-host--vertical" : "hq-divider-host--horizontal",
+            Class
+        }.Where(c => !string.IsNullOrWhiteSpace(c)));
+}

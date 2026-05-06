@@ -1,0 +1,33 @@
+@namespace Button_Segmented.Client.Components.ProgressBar
+
+@* Progress bar - count: flat 18px bar, "current / max" text centered inside *@
+
+<span class="@HostClass" style="@Style">
+    <DxProgressBar MinValue="0"
+                   MaxValue="@Max"
+                   Value="@Value"
+                   ShowLabel="false"
+                   CssClass="hq-progress-count" />
+    <span class="hq-progress-count__label" aria-hidden="true">
+        @if (!string.IsNullOrWhiteSpace(OverlayLabel))
+        {
+            @OverlayLabel
+        }
+        else
+        {
+            @($"{Math.Clamp(Value, 0, Math.Max(Max, 1))} / {Max}")
+        }
+    </span>
+</span>
+
+@code {
+    [Parameter] public int Value { get; set; }
+    [Parameter] public int Max { get; set; } = 100;
+    [Parameter] public string? OverlayLabel { get; set; }
+    [Parameter] public string? AriaLabel { get; set; }
+    [Parameter] public string? Class { get; set; }
+    [Parameter] public string? Style { get; set; }
+
+    private string HostClass => string.Join(" ",
+        new[] { "hq-progress-count-host", Class }.Where(c => !string.IsNullOrWhiteSpace(c)));
+}

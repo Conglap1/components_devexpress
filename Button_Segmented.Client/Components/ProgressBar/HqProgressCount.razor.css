@@ -1,0 +1,45 @@
+/* ===== HqProgressCount — wraps DxProgressBar (Horizontal) ===== */
+
+.hq-progress-count-host {
+    display: block;
+    position: relative;
+    width: 100%;
+}
+
+/* DxProgressBar overrides */
+::deep .hq-progress-count.dxbl-progressbar {
+    border-radius: var(--progress-count-radius);
+    height: var(--progress-count-height);
+    overflow: hidden;
+}
+
+::deep .hq-progress-count.dxbl-progressbar .dxbl-progressbar-track {
+    background-color: color-mix(in srgb, var(--color-on-surface) 10%, transparent) !important;
+    border-radius: inherit;
+    height: 100%;
+}
+
+::deep .hq-progress-count.dxbl-progressbar .dxbl-progressbar-indicator {
+    background-color: var(--color-careful) !important;
+    border-radius: inherit;
+    transition: width 0.3s ease;
+}
+
+/* Centered overlay label */
+.hq-progress-count__label {
+    align-items: center;
+    bottom: 0;
+    color: var(--color-on-surface);
+    display: flex;
+    font-family: var(--font-family-base);
+    font-size: var(--text-label-md-size);
+    font-weight: 400;
+    justify-content: center;
+    left: 0;
+    letter-spacing: var(--font-letter-spacing);
+    pointer-events: none;
+    position: absolute;
+    right: 0;
+    top: 0;
+    white-space: nowrap;
+}

@@ -1,0 +1,80 @@
+/* ===== HqProgressLine — wraps DxProgressBar (Horizontal) ===== */
+
+/* Host div controls size variant */
+.hq-progress-line-host {
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-4x);
+    width: 100%;
+}
+
+/* Size: sm uses smaller gap */
+.hq-progress-line-host--sm {
+    gap: var(--spacing-2x);
+}
+
+/* ── Info row (description + label) ── */
+.hq-progress-line__info {
+    align-items: center;
+    display: flex;
+    justify-content: space-between;
+}
+
+.hq-progress-line__desc {
+    color: var(--color-on-surface-1);
+    font-family: var(--font-family-base);
+    font-size: var(--text-label-lg-size);
+    font-weight: 400;
+    letter-spacing: var(--font-letter-spacing);
+    line-height: var(--text-label-lg-lh);
+}
+
+.hq-progress-line__label {
+    color: var(--color-on-surface);
+    font-family: var(--font-family-base);
+    font-size: var(--text-label-lg-size);
+    font-weight: 400;
+    letter-spacing: var(--font-letter-spacing);
+    line-height: var(--text-label-lg-lh);
+}
+
+/* Size=sm uses smaller label font */
+.hq-progress-line-host--sm .hq-progress-line__desc,
+.hq-progress-line-host--sm .hq-progress-line__label {
+    font-size: var(--text-label-md-size);
+    line-height: var(--text-label-md-lh);
+}
+
+/* ── Base DxProgressBar track override ── */
+::deep .hq-progress-line.dxbl-progress-bar {
+    --hq-line-color: var(--progress-line-color-default);
+    border-radius: var(--progress-line-radius-md);
+    height: var(--progress-line-height-md);
+    overflow: hidden;
+    width: 100%;
+}
+
+/* Size: sm */
+.hq-progress-line-host--sm ::deep .hq-progress-line.dxbl-progress-bar {
+    border-radius: var(--progress-line-radius-sm);
+    height: var(--progress-line-height-sm);
+}
+
+/* Status modifiers */
+::deep .hq-progress-line--stressful.dxbl-progress-bar { --hq-line-color: var(--progress-line-color-stressful); }
+::deep .hq-progress-line--careful.dxbl-progress-bar   { --hq-line-color: var(--progress-line-color-careful); }
+::deep .hq-progress-line--positive.dxbl-progress-bar  { --hq-line-color: var(--progress-line-color-positive); }
+
+/* Track (empty background) */
+::deep .hq-progress-line.dxbl-progress-bar .dxbl-progress-bar-track {
+    background-color: color-mix(in srgb, var(--hq-line-color) 10%, transparent) !important;
+    border-radius: inherit;
+    height: 100%;
+}
+
+/* Indicator (filled bar) */
+::deep .hq-progress-line.dxbl-progress-bar .dxbl-progress-bar-indicator {
+    background-color: var(--hq-line-color) !important;
+    border-radius: inherit;
+    transition: width 0.3s ease;
+}

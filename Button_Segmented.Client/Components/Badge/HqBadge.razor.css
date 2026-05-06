@@ -1,0 +1,183 @@
+/* ===== Base: make MudBadge standalone ===== */
+.hq-badge {
+    display: inline-flex;
+    justify-self: start;
+    width: fit-content;
+}
+
+.hq-badge ::deep .hq-badge__anchor {
+    display: none;
+}
+
+.hq-badge ::deep .mud-badge-root {
+    display: inline-flex !important;
+    width: fit-content !important;
+    height: fit-content !important;
+}
+
+.hq-badge ::deep .mud-badge-wrapper {
+    position: static !important;
+    width: fit-content !important;
+    height: fit-content !important;
+}
+
+.hq-badge ::deep .mud-badge {
+    position: static !important;
+    transform: none !important;
+    transition: none !important;
+    flex-shrink: 0 !important;
+    font-family: var(--font-family-base) !important;
+    letter-spacing: var(--font-letter-spacing) !important;
+}
+
+/* ===== Dot variant ===== */
+.hq-badge--dot {
+    --hq-badge-dot-color: var(--badge-dot-color-navy);
+}
+
+.hq-badge--dot ::deep .mud-badge {
+    background-color: var(--hq-badge-dot-color) !important;
+    border-radius: 999px !important;
+    min-width: unset !important;
+    min-height: unset !important;
+    height: var(--badge-dot-size-md) !important;
+    width: var(--badge-dot-size-md) !important;
+    padding: 0 !important;
+    box-shadow: none !important;
+}
+
+.hq-badge--dot.hq-badge--lg ::deep .mud-badge {
+    height: var(--badge-dot-size-lg) !important;
+    width: var(--badge-dot-size-lg) !important;
+}
+
+.hq-badge--dot.hq-badge--has-stroke ::deep .mud-badge {
+    box-shadow: 0 0 0 var(--badge-dot-stroke-width) var(--badge-dot-stroke-color) !important;
+}
+
+/* Dot colors */
+.hq-badge--navy { --hq-badge-dot-color: var(--badge-dot-color-navy); }
+.hq-badge--red { --hq-badge-dot-color: var(--badge-dot-color-red); }
+.hq-badge--green { --hq-badge-dot-color: var(--badge-dot-color-green); }
+.hq-badge--blue { --hq-badge-dot-color: var(--badge-dot-color-blue); }
+.hq-badge--yellow { --hq-badge-dot-color: var(--badge-dot-color-yellow); }
+.hq-badge--orange { --hq-badge-dot-color: var(--badge-dot-color-orange); }
+.hq-badge--pink { --hq-badge-dot-color: var(--badge-dot-color-pink); }
+.hq-badge--purple { --hq-badge-dot-color: var(--badge-dot-color-purple); }
+.hq-badge--sky { --hq-badge-dot-color: var(--badge-dot-color-sky); }
+.hq-badge--brown { --hq-badge-dot-color: var(--badge-dot-color-brown); }
+.hq-badge--grey { --hq-badge-dot-color: var(--badge-dot-color-grey); }
+
+/* ===== Counter variant ===== */
+.hq-badge--counter ::deep .mud-badge {
+    align-items: center !important;
+    background-color: var(--badge-counter-bg) !important;
+    border: 1px solid transparent !important;
+    border-radius: var(--badge-counter-radius) !important;
+    color: var(--badge-counter-text-color) !important;
+    display: inline-flex !important;
+    font-size: var(--badge-counter-font-size) !important;
+    font-weight: 400 !important;
+    height: var(--badge-counter-height) !important;
+    justify-content: center !important;
+    line-height: var(--badge-counter-height) !important;
+    min-width: var(--badge-counter-min-width) !important;
+    min-height: unset !important;
+    padding: 0 var(--badge-counter-padding-x) !important;
+    white-space: nowrap !important;
+    box-shadow: none !important;
+}
+
+.hq-badge--counter.hq-badge--single-digit ::deep .mud-badge {
+    padding-inline: 0 !important;
+    width: var(--badge-counter-single-width) !important;
+    min-width: unset !important;
+}
+
+.hq-badge--counter.hq-badge--multiple-digit ::deep .mud-badge {
+    min-width: var(--badge-counter-multiple-min-width) !important;
+}
+
+.hq-badge--counter.hq-badge--reverse ::deep .mud-badge {
+    background-color: var(--badge-counter-bg-reverse) !important;
+    color: var(--badge-counter-text-color-reverse) !important;
+}
+
+.hq-badge--counter.hq-badge--has-stroke ::deep .mud-badge {
+    border-color: var(--badge-counter-stroke-color) !important;
+}
+
+.hq-badge--counter.hq-badge--reverse.hq-badge--has-stroke ::deep .mud-badge {
+    border-color: var(--badge-counter-stroke-color-reverse) !important;
+}
+
+/* ===== Info/Counter variant ===== */
+.hq-badge--info-counter ::deep .mud-badge {
+    align-items: center !important;
+    border: 1px solid transparent !important;
+    border-radius: var(--badge-info-counter-radius) !important;
+    display: inline-flex !important;
+    font-size: var(--badge-info-counter-font-size) !important;
+    font-weight: 400 !important;
+    height: var(--badge-info-counter-size) !important;
+    justify-content: center !important;
+    line-height: var(--badge-info-counter-size) !important;
+    min-width: unset !important;
+    min-height: unset !important;
+    width: var(--badge-info-counter-size) !important;
+    padding: 0 !important;
+    box-shadow: none !important;
+}
+
+.hq-badge--info-current ::deep .mud-badge {
+    background-color: var(--badge-info-counter-current-bg) !important;
+    border-color: var(--badge-info-counter-current-border) !important;
+    color: var(--badge-info-counter-current-text-color) !important;
+}
+
+.hq-badge--info-selected ::deep .mud-badge {
+    background-color: var(--badge-info-counter-selected-bg) !important;
+    border-color: var(--badge-info-counter-selected-border) !important;
+    color: var(--badge-info-counter-selected-text-color) !important;
+}
+
+.hq-badge--info-available ::deep .mud-badge {
+    background-color: var(--badge-info-counter-available-bg) !important;
+    border-color: var(--badge-info-counter-available-border) !important;
+    color: var(--badge-info-counter-available-text-color) !important;
+}
+
+.hq-badge--info-important ::deep .mud-badge {
+    background-color: var(--badge-info-counter-important-bg) !important;
+    border-color: var(--badge-info-counter-important-border) !important;
+    color: var(--badge-info-counter-important-text-color) !important;
+}
+
+/* ===== Info/Require variant (raw HTML, no MudBadge) ===== */
+.hq-badge--info-require {
+    align-items: center;
+    display: inline-flex;
+    font-family: var(--font-family-base);
+    font-size: var(--badge-info-require-font-size);
+    font-weight: 400;
+    height: var(--badge-info-require-size);
+    justify-content: center;
+    letter-spacing: var(--font-letter-spacing);
+    line-height: 1;
+    width: var(--badge-info-require-size);
+}
+
+.hq-badge--info-require-require {
+    background: transparent;
+    color: var(--badge-info-require-require-color);
+}
+
+.hq-badge--info-require-done {
+    background: transparent;
+    color: var(--badge-info-require-done-bg);
+}
+
+.hq-badge__info-require-icon {
+    font-size: var(--badge-info-require-done-icon-size);
+    line-height: 1;
+}

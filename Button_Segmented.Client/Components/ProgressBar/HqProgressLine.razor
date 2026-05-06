@@ -1,0 +1,45 @@
+@namespace Button_Segmented.Client.Components.ProgressBar
+
+<div class="@HostClass" style="@Style">
+    @if (ShowInfo)
+    {
+        <div class="hq-progress-line__info">
+            <span class="hq-progress-line__desc">@Description</span>
+            <span class="hq-progress-line__label">@(string.IsNullOrWhiteSpace(Label) ? $"{PercentInt}%" : Label)</span>
+        </div>
+    }
+    <DxProgressBar MinValue="0"
+                   MaxValue="@Max"
+                   Value="@Value"
+                   ShowLabel="false"
+                   CssClass="@DxClass" />
+</div>
+
+@code {
+    [Parameter] public int Value { get; set; }
+    [Parameter] public int Max { get; set; } = 100;
+    [Parameter] public HqProgressLineSize Size { get; set; } = HqProgressLineSize.Md;
+    [Parameter] public HqProgressStatus Status { get; set; } = HqProgressStatus.Default;
+    [Parameter] public bool ShowInfo { get; set; }
+    [Parameter] public string? Description { get; set; }
+    [Parameter] public string? Label { get; set; }
+    [Parameter] public string? Class { get; set; }
+    [Parameter] public string? Style { get; set; }
+
+    private int PercentInt => Max <= 0 ? 0 : (int)Math.Round(Math.Clamp(Value, 0, Max) * 100.0 / Max);
+
+    private string HostClass => string.Join(" ",
+        new[]
+        {
+            "hq-progress-line-host",
+            $"hq-progress-line-host--{Size.ToString().ToLowerInvariant()}",
+            Class
+        }.Where(c => !string.IsNullOrWhiteSpace(c)));
+
+    private string DxClass => string.Join(" ",
+        new[]
+        {
+            "hq-progress-line",
+            $"hq-progress-line--{Status.ToString().ToLowerInvariant()}"
+        });
+}

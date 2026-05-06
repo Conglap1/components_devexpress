@@ -1,0 +1,147 @@
+@page "/dialog-demo"
+@namespace Button_Segmented.Client.Pages
+
+<PageTitle>Dialog Demo</PageTitle>
+
+<div class="dialog-demo">
+    <h1 class="demo-title">Modal Dialog</h1>
+    <p class="demo-desc">Component <code>HqDialog</code> — wrap DevExpress <code>DxPopup</code>, override CSS theo HQSOFT Design System.<br />
+        Figma: <a href="https://www.figma.com/design/5wO57mOv5R62xRh618Soly/HQSOFT-Design-System--Xspire-?node-id=8511-14516" target="_blank" rel="noopener">node-id=8511-14516</a>
+    </p>
+
+    @* =====================================================================
+       Section 1 — Sizes
+       ===================================================================== *@
+    <section class="demo-section">
+        <h2>Sizes</h2>
+        <p>4 kích thước: sm (432px), md (504px), lg (720px), xl (1152px).</p>
+        <div class="demo-row">
+            <button class="trigger-btn" @onclick="() => OpenDialog(HqDialogSize.Sm)">Open sm (432px)</button>
+            <button class="trigger-btn" @onclick="() => OpenDialog(HqDialogSize.Md)">Open md (504px)</button>
+            <button class="trigger-btn" @onclick="() => OpenDialog(HqDialogSize.Lg)">Open lg (720px)</button>
+            <button class="trigger-btn" @onclick="() => OpenDialog(HqDialogSize.Xl)">Open xl (1152px)</button>
+        </div>
+    </section>
+
+    @* =====================================================================
+       Section 2 — Variants
+       ===================================================================== *@
+    <section class="demo-section">
+        <h2>Variants</h2>
+        <div class="demo-row">
+            <button class="trigger-btn" @onclick="OpenWithIcon">With prefix icon</button>
+            <button class="trigger-btn" @onclick="OpenNoFooter">No footer</button>
+            <button class="trigger-btn" @onclick="OpenCustomFooter">Custom footer slot</button>
+            <button class="trigger-btn" @onclick="OpenLongContent">Long scrollable content</button>
+        </div>
+    </section>
+
+    @* =====================================================================
+       Section 3 — Close on outside click
+       ===================================================================== *@
+    <section class="demo-section">
+        <h2>Close behaviour</h2>
+        <div class="demo-row">
+            <button class="trigger-btn" @onclick="OpenNoOutsideClose">Disable outside-click close</button>
+        </div>
+    </section>
+</div>
+
+@* =====================================================================
+   HqDialog instances
+   ===================================================================== *@
+
+@* — Size demo dialog *@
+<HqDialog @bind-Visible="sizeDialogVisible"
+          Title="@sizeDialogTitle"
+          PrefixIconClass="fa-solid fa-circle-check"
+          Size="@sizeDialogSize"
+          ConfirmText="Save"
+          CancelText="Cancel"
+          Confirm="HandleConfirm">
+    <p>Đây là nội dung của dialog kích thước <strong>@sizeDialogSize</strong>.</p>
+    <p>Width: @(sizeDialogSize switch { HqDialogSize.Sm => "432px", HqDialogSize.Md => "504px", HqDialogSize.Lg => "720px", _ => "1152px" }).</p>
+</HqDialog>
+
+@* — With icon dialog *@
+<HqDialog @bind-Visible="iconDialogVisible"
+          Title="Dialog with prefix icon"
+          PrefixIconClass="fa-solid fa-circle-check"
+          Size="HqDialogSize.Md"
+          ConfirmText="Confirm"
+          CancelText="Dismiss">
+    <p>Header có icon prefix màu positive (<code>--color-positive</code>).</p>
+</HqDialog>
+
+@* — No footer *@
+<HqDialog @bind-Visible="noFooterVisible"
+          Title="No footer dialog"
+          HasFooter="false"
+          Size="HqDialogSize.Md">
+    <p>Dialog không hiển thị footer. Đóng bằng nút X hoặc click bên ngoài.</p>
+</HqDialog>
+
+@* — Custom footer *@
+<HqDialog @bind-Visible="customFooterVisible"
+          Title="Custom footer"
+          Size="HqDialogSize.Md">
+    <ChildContent>
+        <p>Footer được thay thế bằng slot tuỳ chỉnh.</p>
+    </ChildContent>
+    <FooterContent>
+        <button class="trigger-btn" @onclick="() => customFooterVisible = false">Close (custom)</button>
+        <button class="trigger-btn trigger-btn--primary" @onclick="() => customFooterVisible = false">Submit (custom)</button>
+    </FooterContent>
+</HqDialog>
+
+@* — Long content *@
+<HqDialog @bind-Visible="longContentVisible"
+          Title="Long scrollable content"
+          PrefixIconClass="fa-solid fa-circle-check"
+          Size="HqDialogSize.Md"
+          ConfirmText="OK">
+    @for (int i = 1; i <= 20; i++)
+    {
+        int line = i;
+        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Dòng nội dung số @line.</p>
+    }
+</HqDialog>
+
+@* — No outside close *@
+<HqDialog @bind-Visible="noOutsideCloseVisible"
+          Title="Must click X to close"
+          CloseOnOutsideClick="false"
+          Size="HqDialogSize.Md"
+          ConfirmText="OK">
+    <p>Dialog này không đóng khi click bên ngoài — chỉ đóng qua nút X hoặc OK.</p>
+</HqDialog>
+
+@code {
+    private bool sizeDialogVisible;
+    private HqDialogSize sizeDialogSize = HqDialogSize.Md;
+    private string sizeDialogTitle = "Modal dialog — md";
+
+    private bool iconDialogVisible;
+    private bool noFooterVisible;
+    private bool customFooterVisible;
+    private bool longContentVisible;
+    private bool noOutsideCloseVisible;
+
+    private void OpenDialog(HqDialogSize size)
+    {
+        sizeDialogSize = size;
+        sizeDialogTitle = $"Modal dialog — {size.ToString().ToLowerInvariant()}";
+        sizeDialogVisible = true;
+    }
+
+    private void OpenWithIcon() => iconDialogVisible = true;
+    private void OpenNoFooter() => noFooterVisible = true;
+    private void OpenCustomFooter() => customFooterVisible = true;
+    private void OpenLongContent() => longContentVisible = true;
+    private void OpenNoOutsideClose() => noOutsideCloseVisible = true;
+
+    private void HandleConfirm()
+    {
+        sizeDialogVisible = false;
+    }
+}

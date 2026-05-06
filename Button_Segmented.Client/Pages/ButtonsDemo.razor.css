@@ -99,3 +99,26 @@
     line-height: var(--text-label-sm-lh);
     text-transform: uppercase;
 }
+
+.content-combos {
+    display: grid;
+    gap: var(--spacing-4x);
+    grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+}
+
+.content-combo {
+    align-items: flex-start;
+    background: var(--color-surface-1);
+    border: 1px dashed var(--color-outline);
+    border-radius: var(--radius-4x);
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-2x);
+    padding: var(--spacing-4x);
+}
+
+.content-combo-label {
+    color: var(--color-on-surface-1);
+    font-size: var(--text-label-md-size);
+    line-height: var(--text-label-md-lh);
+}

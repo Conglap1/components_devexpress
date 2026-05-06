@@ -40,3 +40,15 @@
     flex-direction: column;
     gap: var(--spacing-6x);
 }
+
+.segmented-row {
+    align-items: center;
+    display: flex;
+    gap: var(--spacing-6x);
+}
+
+.segmented-label {
+    color: var(--color-on-surface-1);
+    font-size: var(--text-body-sm-size);
+    min-width: 32px;
+}

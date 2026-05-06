@@ -1,0 +1,23 @@
+.hq-list-item-row {
+    align-items: center;
+    display: flex;
+    gap: var(--list-item-gap);
+    justify-content: space-between;
+    min-height: var(--list-item-row-min-height);
+    width: 100%;
+}
+
+.hq-list-item-row__label {
+    color: var(--list-item-label-color);
+    font-family: var(--font-family-base);
+    font-size: var(--list-item-label-font-size);
+    font-weight: 400;
+    letter-spacing: var(--font-letter-spacing);
+    line-height: var(--list-item-label-lh);
+}
+
+.hq-list-item-row__trailing {
+    align-items: center;
+    display: flex;
+    flex-shrink: 0;
+}

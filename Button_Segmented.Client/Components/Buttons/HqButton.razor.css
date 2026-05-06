@@ -21,6 +21,7 @@
     --hq-btn-icon-size: var(--button-icon-size-md);
     --hq-btn-radius: var(--radius-6x);
     --hq-btn-content-padding-x: 0px;
+    --hq-btn-label-offset-y: -2px;
 
     align-items: center;
     background-color: var(--hq-bg) !important;
@@ -64,6 +65,13 @@
     line-height: inherit;
 }
 
+::deep .hq-btn.dxbl-btn .hq-btn__label {
+    align-items: center;
+    display: inline-flex;
+    line-height: 1;
+    transform: translateY(var(--hq-btn-label-offset-y));
+}
+
 ::deep .hq-btn.hq-btn--full-width.dxbl-btn {
     width: 100%;
 }
@@ -88,6 +96,7 @@
     --hq-btn-gap: var(--spacing-4x);
     --hq-btn-icon-size: var(--button-icon-size-md);
     --hq-btn-radius: var(--radius-6x);
+    --hq-btn-label-offset-y: -2px;
     font-size: var(--text-title-md-size);
     line-height: var(--text-title-md-lh);
 }
@@ -98,6 +107,7 @@
     --hq-btn-gap: var(--spacing-4x);
     --hq-btn-icon-size: var(--button-icon-size-sm);
     --hq-btn-radius: var(--radius-4x);
+    --hq-btn-label-offset-y: -1px;
     font-size: var(--text-title-sm-size);
     line-height: var(--text-title-sm-lh);
 }
@@ -108,6 +118,7 @@
     --hq-btn-gap: var(--spacing-4x);
     --hq-btn-icon-size: var(--button-icon-size-xs);
     --hq-btn-radius: var(--radius-4x);
+    --hq-btn-label-offset-y: -1px;
     font-size: var(--text-title-sm-size);
     line-height: var(--text-title-sm-lh);
 }

@@ -1,0 +1,143 @@
+@page "/checkbox-demo"
+@namespace Button_Segmented.Client.Pages
+
+<PageTitle>Checkbox Demo</PageTitle>
+
+<div class="cbx-demo">
+    <h1 class="cbx-demo__title">HqCheckbox — Demo</h1>
+
+    <!-- ========== SIZE × STATE matrix (enabled, unchecked) ========== -->
+    <section class="cbx-demo__section">
+        <h2 class="cbx-demo__section-title">Sizes — Enabled / Unchecked</h2>
+        <div class="cbx-demo__row">
+            <HqCheckbox Size="HqCheckboxSize.Xs" Label="xs" />
+            <HqCheckbox Size="HqCheckboxSize.Sm" Label="sm" />
+            <HqCheckbox Size="HqCheckboxSize.Md" Label="md" />
+        </div>
+    </section>
+
+    <!-- ========== Checked ========== -->
+    <section class="cbx-demo__section">
+        <h2 class="cbx-demo__section-title">Sizes — Enabled / Checked</h2>
+        <div class="cbx-demo__row">
+            <HqCheckbox Size="HqCheckboxSize.Xs" Label="xs" Value="true" />
+            <HqCheckbox Size="HqCheckboxSize.Sm" Label="sm" Value="true" />
+            <HqCheckbox Size="HqCheckboxSize.Md" Label="md" Value="true" />
+        </div>
+    </section>
+
+    <!-- ========== Indeterminate ========== -->
+    <section class="cbx-demo__section">
+        <h2 class="cbx-demo__section-title">Sizes — Enabled / Indeterminate</h2>
+        <div class="cbx-demo__row">
+            <HqCheckbox Size="HqCheckboxSize.Xs" Label="xs" Indeterminate="true" />
+            <HqCheckbox Size="HqCheckboxSize.Sm" Label="sm" Indeterminate="true" />
+            <HqCheckbox Size="HqCheckboxSize.Md" Label="md" Indeterminate="true" />
+        </div>
+    </section>
+
+    <!-- ========== Disabled / Unchecked ========== -->
+    <section class="cbx-demo__section">
+        <h2 class="cbx-demo__section-title">Sizes — Disabled / Unchecked</h2>
+        <div class="cbx-demo__row">
+            <HqCheckbox Size="HqCheckboxSize.Xs" Label="xs" Disabled="true" />
+            <HqCheckbox Size="HqCheckboxSize.Sm" Label="sm" Disabled="true" />
+            <HqCheckbox Size="HqCheckboxSize.Md" Label="md" Disabled="true" />
+        </div>
+    </section>
+
+    <!-- ========== Disabled / Checked ========== -->
+    <section class="cbx-demo__section">
+        <h2 class="cbx-demo__section-title">Sizes — Disabled / Checked</h2>
+        <div class="cbx-demo__row">
+            <HqCheckbox Size="HqCheckboxSize.Xs" Label="xs" Disabled="true" Value="true" />
+            <HqCheckbox Size="HqCheckboxSize.Sm" Label="sm" Disabled="true" Value="true" />
+            <HqCheckbox Size="HqCheckboxSize.Md" Label="md" Disabled="true" Value="true" />
+        </div>
+    </section>
+
+    <!-- ========== Disabled / Indeterminate ========== -->
+    <section class="cbx-demo__section">
+        <h2 class="cbx-demo__section-title">Sizes — Disabled / Indeterminate</h2>
+        <div class="cbx-demo__row">
+            <HqCheckbox Size="HqCheckboxSize.Xs" Label="xs" Disabled="true" Indeterminate="true" />
+            <HqCheckbox Size="HqCheckboxSize.Sm" Label="sm" Disabled="true" Indeterminate="true" />
+            <HqCheckbox Size="HqCheckboxSize.Md" Label="md" Disabled="true" Indeterminate="true" />
+        </div>
+    </section>
+
+    <!-- ========== Without label ========== -->
+    <section class="cbx-demo__section">
+        <h2 class="cbx-demo__section-title">Without label</h2>
+        <div class="cbx-demo__row">
+            <HqCheckbox Size="HqCheckboxSize.Xs" />
+            <HqCheckbox Size="HqCheckboxSize.Sm" />
+            <HqCheckbox Size="HqCheckboxSize.Md" />
+            <HqCheckbox Size="HqCheckboxSize.Xs" Value="true" />
+            <HqCheckbox Size="HqCheckboxSize.Sm" Value="true" />
+            <HqCheckbox Size="HqCheckboxSize.Md" Value="true" />
+        </div>
+    </section>
+
+    <!-- ========== Interactive ========== -->
+    <section class="cbx-demo__section">
+        <h2 class="cbx-demo__section-title">Interactive</h2>
+        <div class="cbx-demo__row cbx-demo__row--col">
+            <HqCheckbox @bind-Value="_check1" Size="HqCheckboxSize.Md" Label="Option A (md)" />
+            <HqCheckbox @bind-Value="_check2" Size="HqCheckboxSize.Sm" Label="Option B (sm)" />
+            <HqCheckbox @bind-Value="_check3" Size="HqCheckboxSize.Xs" Label="Option C (xs)" />
+            <p class="cbx-demo__caption">
+                A=@_check1 &nbsp; B=@_check2 &nbsp; C=@_check3
+            </p>
+        </div>
+    </section>
+
+    <!-- ========== ChildContent slot ========== -->
+    <section class="cbx-demo__section">
+        <h2 class="cbx-demo__section-title">ChildContent label slot</h2>
+        <div class="cbx-demo__row">
+            <HqCheckbox @bind-Value="_check4" Size="HqCheckboxSize.Md">
+                I agree to the <strong>Terms &amp; Conditions</strong>
+            </HqCheckbox>
+        </div>
+    </section>
+
+    <!-- ========== Grid with Select-All (DxGrid) ========== -->
+    <section class="cbx-demo__section">
+        <h2 class="cbx-demo__section-title">Grid — Select All / Indeterminate</h2>
+        <DxGrid Data="@_gridItems"
+                @bind-SelectedDataItems="@_selectedItems"
+                SelectionMode="GridSelectionMode.Multiple"
+                KeyFieldName="Id"
+                CssClass="cbx-grid">
+            <Columns>
+                <DxGridSelectionColumn Width="60px" />
+                <DxGridDataColumn FieldName="Name" Caption="TÊN" />
+            </Columns>
+        </DxGrid>
+    </section>
+</div>
+
+@code {
+    private bool _check1 = false;
+    private bool _check2 = true;
+    private bool _check3 = false;
+    private bool _check4 = false;
+
+    private List<GridItem> _gridItems = new()
+    {
+        new() { Id = 1, Name = "DIST" },
+        new() { Id = 2, Name = "SS" },
+        new() { Id = 3, Name = "ACME Corp" },
+        new() { Id = 4, Name = "Globex Inc" },
+        new() { Id = 5, Name = "Initech" },
+    };
+
+    private IReadOnlyList<object> _selectedItems = new List<object>();
+
+    private class GridItem
+    {
+        public int Id { get; set; }
+        public string Name { get; set; } = "";
+    }
+}

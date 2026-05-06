@@ -1,0 +1,176 @@
+.hq-text-area-host {
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-4x);
+    min-width: 0;
+    width: 100%;
+}
+
+.hq-text-area__label-row {
+    align-items: center;
+    display: flex;
+}
+
+.hq-text-area__label {
+    align-items: center;
+    color: var(--color-on-surface);
+    display: inline-flex;
+    font-family: var(--font-family-base);
+    font-size: var(--text-label-lg-size);
+    font-weight: 400;
+    gap: var(--spacing-3x);
+    letter-spacing: var(--font-letter-spacing);
+    line-height: var(--text-label-lg-lh);
+}
+
+.hq-text-area__label.is-disabled {
+    color: var(--color-on-surface-2);
+}
+
+.hq-text-area__required {
+    color: var(--color-stressful);
+}
+
+.hq-text-area__shell {
+    --hq-text-area-bg: var(--color-surface);
+    --hq-text-area-border: var(--color-outline);
+    --hq-text-area-value: var(--color-on-surface);
+    --hq-text-area-placeholder: var(--color-on-surface-2);
+    background: var(--hq-text-area-bg);
+    border: 1px solid var(--hq-text-area-border);
+    border-radius: var(--radius-6x);
+    box-sizing: border-box;
+    display: flex;
+    min-height: var(--text-area-min-height-md);
+    padding: var(--text-area-padding-y-md) var(--text-area-padding-x-md);
+    transition: border-color .15s ease, background-color .15s ease;
+    width: 100%;
+}
+
+.hq-text-area__shell:focus-within,
+.hq-text-area__shell.is-focused {
+    --hq-text-area-border: var(--color-useful);
+}
+
+.hq-text-area__shell.is-error {
+    --hq-text-area-border: var(--color-stressful);
+}
+
+.hq-text-area__shell.is-disabled {
+    --hq-text-area-bg: var(--color-surface-1);
+    --hq-text-area-border: var(--color-outline-1);
+    --hq-text-area-value: var(--color-on-surface-2);
+    --hq-text-area-placeholder: var(--color-on-surface-2);
+    cursor: not-allowed;
+}
+
+.hq-text-area__editor {
+    flex: 1 1 auto;
+    min-width: 0;
+    width: 100%;
+}
+
+::deep .hq-text-area__editor.dxbl-memo,
+::deep .hq-text-area__editor.dxbl-text-edit,
+::deep .hq-text-area__editor.dxbl-memo.dxbl-focused,
+::deep .hq-text-area__editor.dxbl-text-edit.dxbl-focused,
+::deep .hq-text-area__editor.dxbl-memo.dx-state-focused,
+::deep .hq-text-area__editor.dxbl-text-edit.dx-state-focused,
+::deep .hq-text-area__editor.dxbl-memo.dxbl-invalid,
+::deep .hq-text-area__editor.dxbl-text-edit.dxbl-invalid {
+    --dxbl-text-edit-bg: transparent;
+    --dxbl-text-edit-border-color: transparent;
+    --dxbl-text-edit-border-width: 0;
+    --dxbl-text-edit-focus-border-color: transparent;
+    --dxbl-text-edit-focus-box-shadow: none;
+    --dxbl-text-edit-hover-border-color: transparent;
+    --dxbl-text-edit-invalid-border-color: transparent;
+    --dxbl-text-edit-padding-left: 0;
+    --dxbl-text-edit-padding-right: 0;
+    --dxbl-text-edit-padding-y: 0;
+    background: transparent !important;
+    border: 0 !important;
+    box-shadow: none !important;
+    color: var(--hq-text-area-value);
+    font-family: var(--font-family-base);
+    font-size: var(--text-body-lg-size);
+    font-weight: 400;
+    letter-spacing: var(--font-letter-spacing);
+    line-height: var(--text-body-lg-lh);
+    outline: none !important;
+    width: 100%;
+}
+
+::deep .hq-text-area__editor.dxbl-memo::before,
+::deep .hq-text-area__editor.dxbl-memo::after,
+::deep .hq-text-area__editor.dxbl-text-edit::before,
+::deep .hq-text-area__editor.dxbl-text-edit::after {
+    display: none !important;
+}
+
+::deep .hq-text-area__editor.dxbl-memo .dxbl-text-edit-input,
+::deep .hq-text-area__editor.dxbl-text-edit .dxbl-text-edit-input,
+::deep .hq-text-area__editor.dxbl-memo textarea.dxbl-text-edit-input,
+::deep .hq-text-area__editor.dxbl-text-edit textarea.dxbl-text-edit-input,
+::deep .hq-text-area__editor textarea {
+    background: transparent !important;
+    border: 0 !important;
+    border-color: transparent !important;
+    border-radius: 0 !important;
+    box-shadow: none !important;
+    color: inherit;
+    font-family: inherit;
+    font-size: inherit;
+    font-weight: inherit;
+    letter-spacing: inherit;
+    line-height: inherit;
+    min-height: var(--text-area-content-min-height);
+    outline: none !important;
+    padding: 0 !important;
+    resize: none;
+    width: 100%;
+}
+
+::deep .hq-text-area__editor.dxbl-memo .dxbl-text-edit-input::placeholder,
+::deep .hq-text-area__editor.dxbl-text-edit .dxbl-text-edit-input::placeholder,
+::deep .hq-text-area__editor textarea::placeholder {
+    color: var(--hq-text-area-placeholder);
+    opacity: 1;
+}
+
+.hq-text-area__supporting-row {
+    align-items: center;
+    display: flex;
+    gap: var(--spacing-6x);
+    min-height: var(--text-label-md-lh);
+    width: 100%;
+}
+
+.hq-text-area__supporting-text {
+    color: var(--color-on-surface-1);
+    flex: 1 1 auto;
+    font-family: var(--font-family-base);
+    font-size: var(--text-label-md-size);
+    font-weight: 400;
+    letter-spacing: var(--font-letter-spacing);
+    line-height: var(--text-label-md-lh);
+    min-width: 0;
+}
+
+.hq-text-area__supporting-text.is-error {
+    color: var(--color-stressful);
+}
+
+.hq-text-area__supporting-spacer {
+    flex: 1 1 auto;
+}
+
+.hq-text-area__counter {
+    color: var(--color-on-surface-2);
+    flex: 0 0 auto;
+    font-family: var(--font-family-base);
+    font-size: var(--text-label-md-size);
+    font-weight: 400;
+    letter-spacing: var(--font-letter-spacing);
+    line-height: var(--text-label-md-lh);
+}

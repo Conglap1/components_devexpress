@@ -78,3 +78,93 @@ html, body {
     justify-content: center;
     width: 100%;
 }
+
+/* ===== HqSelect dropdown popup ===== */
+.hq-select-dropdown {
+    background: var(--color-surface) !important;
+    border: none !important;
+    border-radius: var(--radius-6x) !important;
+    box-shadow: var(--elevation-bottom-2) !important;
+    overflow: hidden;
+    margin-top: var(--spacing-4x);
+}
+
+/* Reset DX dropdown wrapper */
+.hq-select-dropdown .dxbl-edit-dropdown-body,
+.hq-select-dropdown .dxbl-dropdown-body {
+    background: var(--color-surface) !important;
+    padding: 0 !important;
+}
+
+/* Reset DX listbox inside dropdown */
+.hq-select-dropdown .dxbl-listbox {
+    --dxbl-listbox-bg: transparent !important;
+    --dxbl-listbox-border-width: 0 !important;
+    background: transparent !important;
+    border: 0 !important;
+    box-shadow: none !important;
+}
+
+/* Override DX listbox item — remove selected highlight ring */
+.hq-select-dropdown .dxbl-listbox .dxbl-listbox-item,
+.hq-select-dropdown .dxbl-listbox div.dxbl-listbox-item {
+    background: transparent !important;
+    border: 0 !important;
+    border-radius: 0 !important;
+    box-shadow: none !important;
+    outline: none !important;
+    padding: 0 !important;
+}
+
+.hq-select-dropdown .dxbl-listbox .dxbl-listbox-item:focus,
+.hq-select-dropdown .dxbl-listbox .dxbl-listbox-item:focus-visible,
+.hq-select-dropdown .dxbl-listbox .dxbl-listbox-item.dxbl-focused {
+    background: transparent !important;
+    border: 0 !important;
+    box-shadow: none !important;
+    outline: none !important;
+}
+
+/* Hover state for listbox items */
+.hq-select-dropdown .dxbl-listbox .dxbl-listbox-item:hover {
+    background: var(--color-surface-1) !important;
+}
+
+/* Custom item template inside DX items */
+.hq-select-dropdown__item {
+    border-bottom: 1px solid var(--color-surface-1);
+    color: var(--color-on-surface);
+    font-family: var(--font-family-base);
+    font-size: var(--text-body-lg-size);
+    font-weight: 400;
+    letter-spacing: var(--font-letter-spacing);
+    line-height: var(--text-body-lg-lh);
+    padding: var(--spacing-6x) var(--spacing-8x);
+}
+
+.hq-select-dropdown__item.is-selected {
+    background: var(--color-surface-1);
+}
+
+.hq-select-dropdown .dxbl-listbox .dxbl-listbox-item:last-child .hq-select-dropdown__item {
+    border-bottom: 0;
+}
+
+/* ===== HqComboBox — kill DX default divider on dropdown button ===== */
+.hq-combo-box__shell .dxbl-edit-btn,
+.hq-combo-box__shell .dxbl-edit-btn-dropdown,
+.hq-combo-box__shell .dxbl-btn.dxbl-edit-btn-dropdown {
+    border: 0 !important;
+    border-left: 0 !important;
+    border-inline-start: 0 !important;
+    background: transparent !important;
+    box-shadow: none !important;
+}
+
+.hq-combo-box__shell .dxbl-edit-btn::before,
+.hq-combo-box__shell .dxbl-edit-btn-dropdown::before {
+    display: none !important;
+    border: 0 !important;
+    content: none !important;
+}
+

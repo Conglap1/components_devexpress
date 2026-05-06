@@ -1,0 +1,122 @@
+@namespace Button_Segmented.Client.Components.TextArea
+
+<div class="hq-text-area-host @Class">
+    @if (HasLabel && !string.IsNullOrWhiteSpace(Label))
+    {
+        <div class="hq-text-area__label-row">
+            <label class="hq-text-area__label @(IsDisabledState ? "is-disabled" : null)" for="@InputId">
+                <span>@Label</span>
+                @if (HasRequired)
+                {
+                    <span class="hq-text-area__required" aria-hidden="true">*</span>
+                }
+            </label>
+        </div>
+    }
+
+    <div class="@ShellClass">
+        <DxMemo Id="@InputId"
+                CssClass="hq-text-area__editor"
+                NullText="@Placeholder"
+                Text="@Value"
+                TextChanged="HandleInput"
+                BindValueMode="BindValueMode.OnInput"
+                Enabled="@IsEnabled"
+                Rows="@Rows"
+                InputAttributes="InputAttributes" />
+    </div>
+
+    @if (HasSupportingText || ShowCounter)
+    {
+        <div class="hq-text-area__supporting-row">
+            @if (HasSupportingText)
+            {
+                <div id="@SupportingTextId" class="hq-text-area__supporting-text @(IsError ? "is-error" : null)">
+                    @SupportingText
+                </div>
+            }
+            else
+            {
+                <div class="hq-text-area__supporting-spacer"></div>
+            }
+
+            @if (ShowCounter)
+            {
+                <div class="hq-text-area__counter">@CounterText</div>
+            }
+        </div>
+    }
+</div>
+
+@code {
+    private readonly string _inputId = $"hq-text-area-{Guid.NewGuid():N}";
+    private readonly string _supportingTextId = $"hq-text-area-supporting-{Guid.NewGuid():N}";
+
+    [Parameter] public string? Value { get; set; }
+    [Parameter] public EventCallback<string?> ValueChanged { get; set; }
+    [Parameter] public string? Label { get; set; }
+    [Parameter] public bool HasLabel { get; set; } = true;
+    [Parameter] public bool HasRequired { get; set; }
+    [Parameter] public string? Placeholder { get; set; }
+    [Parameter] public string? SupportingText { get; set; } = "Supporting text";
+    [Parameter] public bool HasSupportingText { get; set; } = true;
+    [Parameter] public bool Disabled { get; set; }
+    [Parameter] public HqTextAreaState State { get; set; } = HqTextAreaState.Enabled;
+    [Parameter] public int Rows { get; set; } = 4;
+    [Parameter] public int? MaxLength { get; set; } = 300;
+    [Parameter] public bool ShowCounter { get; set; } = true;
+    [Parameter] public string? Class { get; set; }
+
+    private string InputId => _inputId;
+    private string SupportingTextId => _supportingTextId;
+    private bool IsEnabled => !Disabled && State != HqTextAreaState.Disabled;
+    private bool IsDisabledState => !IsEnabled;
+    private bool IsError => State == HqTextAreaState.Error;
+    private string CounterText => MaxLength is > 0 ? $"{(Value?.Length ?? 0)}/{MaxLength}" : $"{Value?.Length ?? 0}";
+
+    private string ShellClass
+    {
+        get
+        {
+            var stateClass = Disabled || State == HqTextAreaState.Disabled
+                ? "is-disabled"
+                : IsError
+                    ? "is-error"
+                    : State == HqTextAreaState.Focused
+                        ? "is-focused"
+                        : State == HqTextAreaState.Filled || !string.IsNullOrWhiteSpace(Value)
+                            ? "is-filled"
+                            : "is-enabled";
+            return string.Join(" ", "hq-text-area__shell", stateClass);
+        }
+    }
+
+    private IReadOnlyDictionary<string, object> InputAttributes
+    {
+        get
+        {
+            var attributes = new Dictionary<string, object>
+            {
+                ["aria-invalid"] = IsError.ToString().ToLowerInvariant()
+            };
+
+            if (HasSupportingText)
+            {
+                attributes["aria-describedby"] = SupportingTextId;
+            }
+
+            if (MaxLength is > 0)
+            {
+                attributes["maxlength"] = MaxLength.Value;
+            }
+
+            return attributes;
+        }
+    }
+
+    private async Task HandleInput(string? value)
+    {
+        Value = value;
+        await ValueChanged.InvokeAsync(value);
+    }
+}

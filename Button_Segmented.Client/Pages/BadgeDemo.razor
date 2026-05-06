@@ -1,0 +1,124 @@
+@page "/badge-demo"
+
+<PageTitle>Badge Demo</PageTitle>
+
+<div class="badge-page">
+    <h1>Badge - Dot & Counter</h1>
+    <p class="badge-subtitle">Dot: 11 màu × 4 kiểu. Counter: single/multiple digit với reverse-color và stroke.</p>
+
+    @* ── Dot matrix ── *@
+    <section class="badge-section">
+        <h2>Dot matrix</h2>
+
+        <div class="badge-table-header">
+            <span>Color</span>
+            <span>md, no stroke</span>
+            <span>md, stroke</span>
+            <span>lg, no stroke</span>
+            <span>lg, stroke</span>
+        </div>
+
+        @foreach (var color in DotColors)
+        {
+            <div class="badge-table-row">
+                <span class="badge-color-name">@color.ToString().ToLowerInvariant()</span>
+                <HqBadge Color="@color" Size="HqBadgeDotSize.Md" HasStroke="false" />
+                <HqBadge Color="@color" Size="HqBadgeDotSize.Md" HasStroke="true" />
+                <HqBadge Color="@color" Size="HqBadgeDotSize.Lg" HasStroke="false" />
+                <HqBadge Color="@color" Size="HqBadgeDotSize.Lg" HasStroke="true" />
+            </div>
+        }
+    </section>
+
+    @* ── Counter matrix ── *@
+    <section class="badge-section">
+        <h2>Counter (digit) matrix</h2>
+
+        <div class="badge-counter-header">
+            <span>State</span>
+            <span>single-digit</span>
+            <span>multiple-digit</span>
+        </div>
+
+        <div class="badge-counter-row">
+            <span class="badge-color-name">default</span>
+            <HqBadge Variant="HqBadgeVariant.Counter" CounterType="HqBadgeCounterType.SingleDigit" Count="1" />
+            <HqBadge Variant="HqBadgeVariant.Counter" CounterType="HqBadgeCounterType.MultipleDigit" Count="128" />
+        </div>
+
+        <div class="badge-counter-row">
+            <span class="badge-color-name">stroke</span>
+            <HqBadge Variant="HqBadgeVariant.Counter" CounterType="HqBadgeCounterType.SingleDigit" Count="1" HasStroke="true" />
+            <HqBadge Variant="HqBadgeVariant.Counter" CounterType="HqBadgeCounterType.MultipleDigit" Count="128" HasStroke="true" />
+        </div>
+
+        <div class="badge-counter-row">
+            <span class="badge-color-name">reverse</span>
+            <HqBadge Variant="HqBadgeVariant.Counter" CounterType="HqBadgeCounterType.SingleDigit" Count="1" ReverseColor="true" />
+            <HqBadge Variant="HqBadgeVariant.Counter" CounterType="HqBadgeCounterType.MultipleDigit" Count="128" ReverseColor="true" />
+        </div>
+
+        <div class="badge-counter-row">
+            <span class="badge-color-name">reverse + stroke</span>
+            <HqBadge Variant="HqBadgeVariant.Counter" CounterType="HqBadgeCounterType.SingleDigit" Count="1" ReverseColor="true" HasStroke="true" />
+            <HqBadge Variant="HqBadgeVariant.Counter" CounterType="HqBadgeCounterType.MultipleDigit" Count="128" ReverseColor="true" HasStroke="true" />
+        </div>
+    </section>
+
+    @* ── Info/Counter ── *@
+    <section class="badge-section">
+        <h2>Info/Counter</h2>
+
+        <div class="badge-info-row">
+            <div class="badge-info-item">
+                <span class="badge-info-label">current</span>
+                <HqBadge Variant="HqBadgeVariant.InfoCounter" InfoCounterType="HqBadgeInfoCounterType.Current" Count="1" />
+            </div>
+            <div class="badge-info-item">
+                <span class="badge-info-label">selected</span>
+                <HqBadge Variant="HqBadgeVariant.InfoCounter" InfoCounterType="HqBadgeInfoCounterType.Selected" Count="1" />
+            </div>
+            <div class="badge-info-item">
+                <span class="badge-info-label">available</span>
+                <HqBadge Variant="HqBadgeVariant.InfoCounter" InfoCounterType="HqBadgeInfoCounterType.Available" Count="1" />
+            </div>
+            <div class="badge-info-item">
+                <span class="badge-info-label">important</span>
+                <HqBadge Variant="HqBadgeVariant.InfoCounter" InfoCounterType="HqBadgeInfoCounterType.Important" Count="1" />
+            </div>
+        </div>
+    </section>
+
+    @* ── Info/Require ── *@
+    <section class="badge-section">
+        <h2>Info/Require</h2>
+
+        <div class="badge-info-row">
+            <div class="badge-info-item">
+                <span class="badge-info-label">done</span>
+                <HqBadge Variant="HqBadgeVariant.InfoRequire" InfoRequireType="HqBadgeInfoRequireType.Done" />
+            </div>
+            <div class="badge-info-item">
+                <span class="badge-info-label">require</span>
+                <HqBadge Variant="HqBadgeVariant.InfoRequire" InfoRequireType="HqBadgeInfoRequireType.Require" />
+            </div>
+        </div>
+    </section>
+</div>
+
+@code {
+    private static readonly HqBadgeDotColor[] DotColors =
+    [
+        HqBadgeDotColor.Navy,
+        HqBadgeDotColor.Red,
+        HqBadgeDotColor.Green,
+        HqBadgeDotColor.Blue,
+        HqBadgeDotColor.Yellow,
+        HqBadgeDotColor.Orange,
+        HqBadgeDotColor.Pink,
+        HqBadgeDotColor.Purple,
+        HqBadgeDotColor.Sky,
+        HqBadgeDotColor.Brown,
+        HqBadgeDotColor.Grey
+    ];
+}

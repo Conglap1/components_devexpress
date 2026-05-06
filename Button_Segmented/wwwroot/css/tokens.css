@@ -279,6 +279,196 @@
   --button-icon-size-sm: 16px;
   --button-icon-size-xs: 16px;
 
+  /* ===== Text field component tokens ===== */
+  --text-field-height-md: 44px;
+  --text-field-height-sm: 36px;
+  --text-field-padding-x-md: var(--spacing-6x);
+  --text-field-padding-x-sm: var(--spacing-5x);
+  --text-field-icon-size-md: 20px;
+  --text-field-icon-size-sm: 16px;
+
+  /* ===== Text area component tokens ===== */
+  --text-area-min-height-md: 100px;
+  --text-area-content-min-height: 72px;
+  --text-area-padding-y-md: var(--spacing-6x);
+  --text-area-padding-x-md: var(--spacing-8x);
+
+  /* ===== Segmented component tokens ===== */
+  --segmented-track-bg: var(--color-surface-1);
+  --segmented-selected-bg: var(--color-primary);
+  --segmented-selected-text-color: var(--color-on-primary);
+  --segmented-text-color: var(--color-on-surface);
+  --segmented-radius: var(--radius-4x);
+  --segmented-track-padding: var(--spacing-2x);
+  --segmented-gap: var(--spacing-2x);
+  --segmented-md-item-height: 32px;
+  --segmented-sm-item-height: 24px;
+  --segmented-md-min-width: 51px;
+  --segmented-sm-min-width: 43px;
+  --segmented-md-font-size: 14px;
+  --segmented-sm-font-size: 12px;
+  --segmented-md-padding-x: var(--spacing-6x);
+  --segmented-md-padding-y: var(--spacing-4x);
+  --segmented-sm-padding-x: var(--spacing-4x);
+  --segmented-sm-padding-y: var(--spacing-2x);
+  --segmented-hover-bg: rgba(0, 0, 0, 0.05);
+  --segmented-pressed-bg: rgba(0, 0, 0, 0.10);
+  --segmented-disabled-opacity: 0.4;
+
+  /* ===== Badge component tokens ===== */
+  --badge-dot-size-md: 8px;
+  --badge-dot-size-lg: 10px;
+  --badge-dot-stroke-width: 1px;
+  --badge-dot-stroke-color: var(--color-surface);
+  --badge-dot-color-navy: var(--color-primary);
+  --badge-dot-color-red: var(--color-red-60);
+  --badge-dot-color-green: var(--color-green-60);
+  --badge-dot-color-blue: var(--color-blue-60);
+  --badge-dot-color-yellow: var(--color-yellow-60);
+  --badge-dot-color-orange: var(--color-orange-60);
+  --badge-dot-color-pink: var(--color-pink-60);
+  --badge-dot-color-purple: var(--color-purple-60);
+  --badge-dot-color-sky: var(--color-sky-60);
+  --badge-dot-color-brown: var(--color-brown-60);
+  --badge-dot-color-grey: var(--color-black-40);
+  --badge-counter-height: 16px;
+  --badge-counter-single-width: 16px;
+  --badge-counter-min-width: 16px;
+  --badge-counter-multiple-min-width: 25px;
+  --badge-counter-padding-x: var(--radius-2x);
+  --badge-counter-radius: var(--radius-4x);
+  --badge-counter-font-size: var(--text-label-sm-size);
+  --badge-counter-bg: var(--color-red-60);
+  --badge-counter-text-color: var(--color-on-stressful);
+  --badge-counter-bg-reverse: var(--color-surface);
+  --badge-counter-text-color-reverse: var(--color-red-60);
+  --badge-counter-stroke-color: var(--color-surface);
+  --badge-counter-stroke-color-reverse: var(--color-red-60);
+  --badge-info-counter-size: 16px;
+  --badge-info-counter-radius: var(--radius-4x);
+  --badge-info-counter-font-size: var(--text-label-sm-size);
+  --badge-info-counter-current-bg: var(--color-primary);
+  --badge-info-counter-current-border: var(--color-primary);
+  --badge-info-counter-current-text-color: var(--color-on-primary);
+  --badge-info-counter-selected-bg: var(--color-surface);
+  --badge-info-counter-selected-border: var(--color-primary);
+  --badge-info-counter-selected-text-color: var(--color-primary);
+  --badge-info-counter-available-bg: color-mix(in srgb, var(--color-on-surface) 12%, transparent);
+  --badge-info-counter-available-border: color-mix(in srgb, var(--color-on-surface) 12%, transparent);
+  --badge-info-counter-available-text-color: var(--color-on-surface);
+  --badge-info-counter-important-bg: color-mix(in srgb, var(--color-red-60) 12%, transparent);
+  --badge-info-counter-important-border: color-mix(in srgb, var(--color-red-60) 12%, transparent);
+  --badge-info-counter-important-text-color: var(--color-red-60);
+  --badge-info-require-size: 16px;
+  --badge-info-require-radius: 999px;
+  --badge-info-require-font-size: var(--text-title-sm-size);
+  --badge-info-require-done-icon-size: 16px;
+  --badge-info-require-require-color: var(--color-stressful);
+  --badge-info-require-done-bg: var(--color-positive);
+  --badge-info-require-done-color: var(--color-on-positive);
+
+  /* ===== Checkbox component tokens ===== */
+  --checkbox-icon-size-md: 24px;
+  --checkbox-icon-size-sm: 20px;
+  --checkbox-icon-size-xs: 16px;
+  --checkbox-gap: var(--spacing-4x);
+  --checkbox-icon-color: var(--color-on-surface-1);
+  --checkbox-icon-color-checked: var(--color-primary);
+  --checkbox-icon-color-disabled: var(--color-on-surface-3);
+  --checkbox-label-color: var(--color-on-surface);
+  --checkbox-label-color-disabled: var(--color-on-surface-1);
+  --checkbox-label-font-size: var(--text-label-lg-size);
+  --checkbox-label-lh: var(--text-label-lg-lh);
+
+  /* ===== List item component tokens ===== */
+  --list-item-gap: var(--spacing-4x);
+  --list-item-label-color: var(--color-on-surface);
+  --list-item-label-font-size: var(--text-label-lg-size);
+  --list-item-label-lh: var(--text-label-lg-lh);
+  --list-item-row-gap: var(--spacing-2x);
+  --list-item-row-min-height: 40px;
+
+  /* ===== Tab component tokens ===== */
+  --tab-height: 40px;
+  --tab-gap: 0px;
+  --tab-border-color: var(--color-outline-1);
+  --tab-item-padding: var(--spacing-3x) var(--spacing-4x);
+  --tab-item-font-size: var(--text-label-lg-size);
+  --tab-item-font-weight: 500;
+  --tab-item-lh: var(--text-label-lg-lh);
+  --tab-item-color: var(--color-on-surface-1);
+  --tab-item-color-active: var(--color-primary);
+  --tab-item-indicator-height: 3px;
+  --tab-item-indicator-color: var(--color-primary);
+  --tab-item-indicator-radius: 4px 4px 0 0;
+
+  /* ===== Tree component tokens ===== */
+  --tree-item-gap: var(--spacing-4x);
+  --tree-item-padding-y: 0;
+  --tree-item-padding-x-end: var(--spacing-6x);
+  --tree-indent-per-level: 20px;
+  --tree-element-padding: var(--spacing-2x);
+  --tree-item-font-size: var(--text-title-sm-size);
+  --tree-item-font-weight: 400;
+  --tree-item-lh: var(--text-title-sm-lh);
+  --tree-item-color: var(--color-on-surface);
+  --tree-item-color-disabled: var(--color-on-surface-2);
+  --tree-expand-icon-color: var(--color-on-surface-2);
+  --tree-expand-icon-size: 16px;
+  --tree-folder-icon-color: var(--color-careful);
+  --tree-folder-icon-color-disabled: var(--color-on-surface-2);
+  --tree-folder-icon-size: 16px;
+  --tree-checkbox-color: var(--color-primary);
+  --tree-checkbox-color-disabled: var(--color-on-surface-3);
+  --tree-item-hover-bg: var(--color-surface-1);
+  --tree-item-selected-bg: var(--color-navy-10);
+  --tree-item-selected-color: var(--color-primary);
+  --tree-item-border-radius: var(--radius-3x);
+  --tree-content-height: 24px;
+  --tree-content-gap: 10px;
+
+  /* ===== Progress bar component tokens ===== */
+  --progress-line-height-md: 6px;
+  --progress-line-height-sm: 4px;
+  --progress-line-radius-md: var(--radius-2x);
+  --progress-line-radius-sm: var(--radius-1x);
+  --progress-line-track-opacity: 0.1;
+  --progress-line-color-default: var(--color-on-surface-1);
+  --progress-line-color-stressful: var(--color-stressful);
+  --progress-line-color-careful: var(--color-careful);
+  --progress-line-color-positive: var(--color-positive);
+  --progress-count-height: 18px;
+  --progress-count-radius: var(--radius-6x);
+  --progress-kpi-gap: var(--spacing-6x);
+  --progress-kpi-info-gap: var(--spacing-4x);
+  --progress-kpi-desc-color: var(--color-on-surface-1);
+  --progress-kpi-value-color-default: var(--color-on-surface-1);
+  --progress-kpi-value-color-stressful: var(--color-stressful);
+  --progress-kpi-value-color-careful: var(--color-careful);
+  --progress-kpi-value-color-positive: var(--color-positive);
+
+  /* ===== Divider component tokens ===== */
+  --divider-color: var(--color-white-60); /* Figma fill_A6BYCA = #D6D6D8 = --color-white-60 */
+  --divider-weight: 1px;
+  --divider-style: solid;
+
+  /* ===== Icon font size tokens ===== */
+  --icon-font-xs-size: 16px;
+  --icon-font-sm-size: 20px;
+  --icon-font-md-size: 24px;
+  --icon-font-lg-size: 32px;
+
+  /* ===== Modal dialog tokens ===== */
+  --modal-radius: var(--radius-6x);                     /* 12px — border-radius dialog panel */
+  --modal-header-padding: var(--spacing-8x) var(--spacing-12x); /* 16px 24px */
+  --modal-header-gap: var(--spacing-6x);                /* 12px */
+  --modal-content-padding: var(--spacing-12x);          /* 24px */
+  --modal-content-gap: var(--spacing-6x);               /* 12px */
+  --modal-footer-padding: var(--spacing-8x) var(--spacing-12x); /* 16px 24px */
+  --modal-footer-gap: var(--spacing-6x);                /* 12px */
+  --modal-prefix-icon-size: 24px;                       /* icon-font/md/900 — prefix icon in header */
+  --modal-close-icon-size: var(--button-icon-size-sm);  /* 16px — xmark inside close button */
+
   /* ===== Elevation tokens ===== */
   --elevation-bottom-1: 0 2px 2px 0 rgba(15, 15, 41, 0.06);
   --elevation-bottom-2: 0 4px 10px -1px rgba(15, 15, 41, 0.10);

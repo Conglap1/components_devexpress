@@ -1,0 +1,102 @@
+@namespace Button_Segmented.Client.Components.Tree
+
+<div class="@RootCssClass" style="@Style">
+    <DxTreeView @ref="_treeViewRef"
+                Data="@Data"
+                CheckMode="@(ShowCheckboxes ? TreeViewCheckMode.Multiple : TreeViewCheckMode.Disabled)"
+                CheckNodeByClick="@CheckNodeByClick"
+                AllowSelectNodes="@AllowSelectNodes"
+                AnimationType="LayoutAnimationType.Slide"
+                ShowExpandButtons="true"
+                ExpandButtonIconCssClass="fa-solid fa-caret-right"
+                CollapseButtonIconCssClass="fa-solid fa-caret-down"
+                CssClass="hq-tree__dx"
+                SelectionChanged="@OnSelectionChanged"
+                NodeClick="@OnNodeClick"
+                AfterExpand="@OnAfterExpand"
+                AfterCollapse="@OnAfterCollapse">
+        <DataMappings>
+            <DxTreeViewDataMapping Key="@nameof(HqTreeNode.Key)"
+                                   Text="@nameof(HqTreeNode.Text)"
+                                   Children="@nameof(HqTreeNode.Children)"
+                                   Enabled="@nameof(HqTreeNode.IsEnabled)" />
+        </DataMappings>
+        <NodeTextTemplate>
+            @{
+                var node = (HqTreeNode)context.DataItem;
+                var isExpanded = _expandedKeys.Contains(node.Key);
+            }
+            <div class="hq-tree-item__content">
+                @if (IconMode == HqTreeIconMode.Folder)
+                {
+                    <span class="hq-tree-item__icon" aria-hidden="true">
+                        @if (node.IsParent && isExpanded)
+                        {
+                            <i class="fa-solid fa-folder-open"></i>
+                        }
+                        else
+                        {
+                            <i class="fa-solid fa-folder"></i>
+                        }
+                    </span>
+                }
+                else if (IconMode == HqTreeIconMode.Custom && !string.IsNullOrEmpty(node.IconCssClass))
+                {
+                    <span class="hq-tree-item__icon hq-tree-item__icon--custom" aria-hidden="true">
+                        <i class="@node.IconCssClass"></i>
+                    </span>
+                }
+                <span class="hq-tree-item__text">@node.Text</span>
+            </div>
+        </NodeTextTemplate>
+    </DxTreeView>
+</div>
+
+@code {
+    private DxTreeView? _treeViewRef;
+    private HashSet<string> _expandedKeys = new();
+
+    [Parameter] public IEnumerable<HqTreeNode>? Data { get; set; }
+    [Parameter] public bool ShowCheckboxes { get; set; } = true;
+    [Parameter] public bool CheckNodeByClick { get; set; }
+    [Parameter] public bool AllowSelectNodes { get; set; }
+    [Parameter] public HqTreeIconMode IconMode { get; set; } = HqTreeIconMode.None;
+    [Parameter] public string? Class { get; set; }
+    [Parameter] public string? Style { get; set; }
+
+    [Parameter] public EventCallback<TreeViewNodeEventArgs> SelectionChanged { get; set; }
+    [Parameter] public EventCallback<TreeViewNodeClickEventArgs> NodeClick { get; set; }
+
+    private string RootCssClass => string.Join(" ",
+        new[]
+        {
+            "hq-tree",
+            IconMode != HqTreeIconMode.None ? "hq-tree--has-icon" : null,
+            ShowCheckboxes ? "hq-tree--has-checkbox" : null,
+            Class
+        }.Where(c => !string.IsNullOrWhiteSpace(c)));
+
+    private async Task OnSelectionChanged(TreeViewNodeEventArgs args)
+    {
+        if (SelectionChanged.HasDelegate)
+            await SelectionChanged.InvokeAsync(args);
+    }
+
+    private async Task OnNodeClick(TreeViewNodeClickEventArgs args)
+    {
+        if (NodeClick.HasDelegate)
+            await NodeClick.InvokeAsync(args);
+    }
+
+    private void OnAfterExpand(TreeViewNodeEventArgs args)
+    {
+        var node = (HqTreeNode)args.NodeInfo.DataItem;
+        _expandedKeys.Add(node.Key);
+    }
+
+    private void OnAfterCollapse(TreeViewNodeEventArgs args)
+    {
+        var node = (HqTreeNode)args.NodeInfo.DataItem;
+        _expandedKeys.Remove(node.Key);
+    }
+}

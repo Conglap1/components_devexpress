@@ -1,0 +1,178 @@
+/*
+ * HqDialog — scoped CSS override cho DxPopup (DevExpress)
+ * Figma: https://www.figma.com/design/5wO57mOv5R62xRh618Soly/...?node-id=8511-14516
+ *
+ * Anatomy:
+ *   .dxbl-popup                    — overlay backdrop (DX root)
+ *   .dxbl-popup-dialog             — dialog panel (DX inner)
+ *   .hq-dialog__panel              — full layout host (header + content + footer)
+ *   .hq-dialog__header             — header row: prefix icon + title + close btn
+ *   .hq-dialog__content            — scrollable body
+ *   .hq-dialog__footer             — footer row: left slot + right buttons
+ *   .hq-dialog__close-btn          — ✕ button in header
+ *   .hq-dialog__btn--cancel        — Cancel button
+ *   .hq-dialog__btn--confirm       — Confirm/Save button
+ */
+
+/* =====================================================================
+   Backdrop (modal overlay)
+   ===================================================================== */
+::deep .hq-dialog.dxbl-popup > .dxbl-popup-modal {
+    background-color: rgba(15, 15, 41, 0.48);
+}
+
+/* =====================================================================
+   Dialog panel shell — resets DX default styles
+   ===================================================================== */
+::deep .hq-dialog .dxbl-popup-dialog {
+    --hq-dialog-bg: var(--color-surface);
+    --hq-dialog-border: var(--color-outline-1);
+    --hq-dialog-radius: var(--modal-radius);
+    --hq-dialog-shadow: var(--elevation-bottom-2);
+
+    background-color: var(--hq-dialog-bg) !important;
+    border: 1px solid var(--hq-dialog-border) !important;
+    border-radius: var(--hq-dialog-radius) !important;
+    box-shadow: var(--hq-dialog-shadow) !important;
+    padding: 0 !important;
+    overflow: hidden;
+}
+
+/* Remove DX default header/body/footer padding & borders */
+::deep .hq-dialog .dxbl-popup-header,
+::deep .hq-dialog .dxbl-popup-body,
+::deep .hq-dialog .dxbl-popup-footer {
+    padding: 0 !important;
+    border: none !important;
+    background: transparent !important;
+}
+
+/* DxPopup body area — make it hug content */
+::deep .hq-dialog .dxbl-popup-body {
+    overflow: visible !important;
+}
+
+/* =====================================================================
+   Inner panel — column layout (header / content / footer)
+   ===================================================================== */
+::deep .hq-dialog__panel {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    font-family: var(--font-family-base);
+}
+
+/* =====================================================================
+   Header
+   Figma: padding 16px 24px, gap 12px, row, border-bottom 1px outline-1
+   ===================================================================== */
+::deep .hq-dialog__header {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: var(--modal-header-gap);
+    padding: var(--modal-header-padding);
+    border-bottom: 1px solid var(--color-outline-1);
+    background-color: var(--color-surface);
+}
+
+/* Prefix icon — positive semantic color, FA icon-font/md/900 = 24px Solid */
+::deep .hq-dialog__prefix-icon {
+    flex-shrink: 0;
+    font-size: var(--modal-prefix-icon-size); /* 24px */
+    line-height: 1;
+    color: var(--color-positive);
+}
+
+/* Title — roboto/title/lg/700 = 18px bold */
+::deep .hq-dialog__title {
+    flex: 1;
+    font-family: var(--font-family-base);
+    font-size: var(--text-title-lg-size);
+    font-weight: 700;
+    line-height: var(--text-title-lg-lh);
+    letter-spacing: var(--font-letter-spacing);
+    color: var(--color-on-surface);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+/* Close button — mirrors HqButton secondary sm icon-only (32×32, radius 4px) */
+::deep .hq-dialog__close-btn {
+    flex-shrink: 0;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: var(--button-height-sm);      /* 32px */
+    height: var(--button-height-sm);     /* 32px */
+    padding: 0;
+    background-color: var(--color-surface);
+    border: 1px solid var(--color-outline);
+    border-radius: var(--radius-4x);     /* 8px */
+    cursor: pointer;
+    transition: background-color .15s ease, border-color .15s ease;
+    color: var(--color-on-surface);
+}
+
+::deep .hq-dialog__close-btn i {
+    font-size: var(--button-icon-size-sm); /* 16px */
+    line-height: 1;
+    pointer-events: none;
+}
+
+::deep .hq-dialog__close-btn:hover {
+    background-color: #f0f0f2;
+    border-color: var(--color-outline);
+}
+
+::deep .hq-dialog__close-btn:active {
+    background-color: var(--color-surface-2);
+}
+
+::deep .hq-dialog__close-btn:focus-visible {
+    outline: 2px solid var(--color-useful);
+    outline-offset: 2px;
+}
+
+/* =====================================================================
+   Content body — padding 24px, gap 12px
+   ===================================================================== */
+::deep .hq-dialog__content {
+    padding: var(--modal-content-padding);
+    display: flex;
+    flex-direction: column;
+    gap: var(--modal-content-gap);
+    flex: 1;
+    overflow-y: auto;
+    font-family: var(--font-family-base);
+    font-size: var(--text-body-md-size);
+    color: var(--color-on-surface);
+    line-height: var(--text-body-md-lh);
+    letter-spacing: var(--font-letter-spacing);
+}
+
+/* =====================================================================
+   Footer — padding 16px 24px, gap 12px, border-top 1px outline-1
+   ===================================================================== */
+::deep .hq-dialog__footer {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: var(--modal-footer-gap);
+    padding: var(--modal-footer-padding);
+    border-top: 1px solid var(--color-outline-1);
+    background-color: var(--color-surface);
+}
+
+::deep .hq-dialog__footer-left {
+    flex: 1;
+}
+
+::deep .hq-dialog__footer-right {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: var(--modal-footer-gap);
+    margin-left: auto;
+}

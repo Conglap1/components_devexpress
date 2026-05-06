@@ -1,0 +1,182 @@
+@page "/select-demo"
+
+<PageTitle>Select (Combobox) Demo</PageTitle>
+
+<div class="select-demo">
+    <section class="demo-section">
+        <div class="section-heading">
+            <h2>Select (Combobox)</h2>
+            <p>Component dựa trên Text field, dùng cho dropdown chọn giá trị đơn.</p>
+        </div>
+
+        <div class="demo-columns">
+            <section class="demo-column">
+                <h3>Enabled (placeholder)</h3>
+
+                <div class="select-sample">
+                    <HqSelect Label="Label"
+                              HasRequired="false"
+                              Placeholder="Select an option"
+                              HasSupportingText="false"
+                              Items="SelectItems" />
+                </div>
+            </section>
+
+            <section class="demo-column">
+                <h3>Filled</h3>
+
+                <div class="select-sample">
+                    <HqSelect Label="Label"
+                              HasRequired="false"
+                              Placeholder="Select an option"
+                              HasSupportingText="false"
+                              Items="SelectItems"
+                              Value="Option 1" />
+                </div>
+            </section>
+        </div>
+
+        <div class="demo-columns">
+            <section class="demo-column">
+                <h3>Error</h3>
+
+                <div class="select-sample">
+                    <HqSelect Label="Label"
+                              HasRequired="true"
+                              Placeholder="Select an option"
+                              SupportingText="This field is required"
+                              State="HqTextFieldState.Error"
+                              Items="SelectItems" />
+                </div>
+            </section>
+
+            <section class="demo-column">
+                <h3>Disabled</h3>
+
+                <div class="select-sample">
+                    <HqSelect Label="Label"
+                              HasRequired="false"
+                              Placeholder="Select an option"
+                              HasSupportingText="false"
+                              Items="SelectItems"
+                              Disabled="true" />
+                </div>
+            </section>
+        </div>
+    </section>
+
+    <section class="demo-section">
+        <div class="section-heading">
+            <h2>With supporting text &amp; required</h2>
+            <p>Select có supporting text, label required, và dữ liệu 5 items.</p>
+        </div>
+
+        <div class="demo-columns">
+            <section class="demo-column">
+                <h3>Enabled</h3>
+
+                <div class="select-sample">
+                    <HqSelect Label="Label"
+                              HasRequired="true"
+                              Placeholder="Select an option"
+                              SupportingText="Supporting text"
+                              Items="SelectItemsLong" />
+                </div>
+            </section>
+
+            <section class="demo-column">
+                <h3>Filled</h3>
+
+                <div class="select-sample">
+                    <HqSelect Label="Label"
+                              HasRequired="true"
+                              Placeholder="Select an option"
+                              SupportingText="Supporting text"
+                              Items="SelectItemsLong"
+                              Value="Text" />
+                </div>
+            </section>
+        </div>
+
+        <div class="demo-columns">
+            <section class="demo-column">
+                <h3>Error</h3>
+
+                <div class="select-sample">
+                    <HqSelect Label="Label"
+                              HasRequired="true"
+                              Placeholder="Select an option"
+                              SupportingText="Supporting text"
+                              State="HqTextFieldState.Error"
+                              Items="SelectItemsLong" />
+                </div>
+            </section>
+
+            <section class="demo-column">
+                <h3>Disabled (filled)</h3>
+
+                <div class="select-sample">
+                    <HqSelect Label="Label"
+                              HasRequired="true"
+                              Placeholder="Select an option"
+                              SupportingText="Supporting text"
+                              Items="SelectItemsLong"
+                              Value="Text"
+                              Disabled="true" />
+                </div>
+            </section>
+        </div>
+    </section>
+
+    <section class="demo-section">
+        <div class="section-heading">
+            <h2>Size sm</h2>
+            <p>Select ở kích thước nhỏ.</p>
+        </div>
+
+        <div class="demo-columns">
+            <section class="demo-column">
+                <h3>Enabled</h3>
+
+                <div class="select-sample">
+                    <HqSelect Label="Label"
+                              HasRequired="true"
+                              Placeholder="Select an option"
+                              SupportingText="Supporting text"
+                              Size="HqTextFieldSize.Sm"
+                              Items="SelectItemsLong" />
+                </div>
+            </section>
+
+            <section class="demo-column">
+                <h3>Disabled</h3>
+
+                <div class="select-sample">
+                    <HqSelect Label="Label"
+                              HasRequired="true"
+                              Placeholder="Select an option"
+                              SupportingText="Supporting text"
+                              Size="HqTextFieldSize.Sm"
+                              Items="SelectItemsLong"
+                              Disabled="true" />
+                </div>
+            </section>
+        </div>
+    </section>
+</div>
+
+@code {
+    private static readonly IReadOnlyList<string> SelectItems = [
+        "Option 1",
+        "Option 2",
+        "Option 3"
+    ];
+
+    private static readonly IReadOnlyList<string> SelectItemsLong = [
+        "Text",
+        "Text",
+        "Text",
+        "Text",
+        "Text"
+    ];
+}

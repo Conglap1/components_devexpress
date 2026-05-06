@@ -1,0 +1,93 @@
+@namespace Button_Segmented.Client.Components.Checkbox
+
+<label class="@RootClass" style="@Style">
+    <input type="checkbox"
+           class="hq-checkbox__input"
+           checked="@CurrentValue"
+           @onchange="HandleChange"
+           disabled="@Disabled"
+           aria-checked="@(Indeterminate ? "mixed" : CurrentValue ? "true" : "false")"
+           aria-label="@(!string.IsNullOrEmpty(Label) ? Label : null)" />
+
+    <span class="hq-checkbox__icon" aria-hidden="true">
+        @if (Indeterminate)
+        {
+            <i class="fa-solid fa-square-minus"></i>
+        }
+        else if (CurrentValue)
+        {
+            <i class="fa-solid fa-square-check"></i>
+        }
+        else
+        {
+            <i class="fa-regular fa-square"></i>
+        }
+    </span>
+
+    @if (!string.IsNullOrEmpty(Label))
+    {
+        <span class="hq-checkbox__label">@Label</span>
+    }
+    else if (ChildContent is not null)
+    {
+        <span class="hq-checkbox__label">@ChildContent</span>
+    }
+</label>
+
+@code {
+    [Parameter] public bool Value { get; set; }
+    [Parameter] public EventCallback<bool> ValueChanged { get; set; }
+    [Parameter] public bool Indeterminate { get; set; }
+    [Parameter] public string? Label { get; set; }
+    [Parameter] public RenderFragment? ChildContent { get; set; }
+    [Parameter] public bool Disabled { get; set; }
+    [Parameter] public HqCheckboxSize Size { get; set; } = HqCheckboxSize.Md;
+    [Parameter] public string? Class { get; set; }
+    [Parameter] public string? Style { get; set; }
+
+    private bool _internalValue;
+    private bool _isControlled;
+
+    private bool CurrentValue => _isControlled ? Value : _internalValue;
+
+    protected override void OnParametersSet()
+    {
+        _isControlled = ValueChanged.HasDelegate;
+        if (_isControlled)
+        {
+            _internalValue = Value;
+        }
+    }
+
+    protected override void OnInitialized()
+    {
+        _internalValue = Value;
+    }
+
+    private string RootClass => string.Join(" ",
+        new[]
+        {
+            "hq-checkbox",
+            $"hq-checkbox--{Size.ToString().ToLowerInvariant()}",
+            Disabled ? "is-disabled" : null,
+            CurrentValue && !Indeterminate ? "is-checked" : null,
+            Indeterminate ? "is-indeterminate" : null,
+            Class
+        }.Where(c => !string.IsNullOrWhiteSpace(c)));
+
+    private async Task HandleChange(ChangeEventArgs e)
+    {
+        if (Disabled) return;
+        var newValue = e.Value is bool b ? b : bool.TryParse(e.Value?.ToString(), out var parsed) && parsed;
+
+        if (_isControlled)
+        {
+            await ValueChanged.InvokeAsync(newValue);
+        }
+        else
+        {
+            _internalValue = newValue;
+            Indeterminate = false;
+        }
+    }
+}

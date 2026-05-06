@@ -12,7 +12,7 @@
 
         @if (!IconOnly && !string.IsNullOrWhiteSpace(Text))
         {
-            <span>@Text</span>
+            <span class="hq-btn__label">@Text</span>
         }
 
         @if (!string.IsNullOrWhiteSpace(TrailingIconCssClass) && !IconOnly)
@@ -24,7 +24,7 @@
 
 @code {
     [Parameter] public string? Text { get; set; }
-    [Parameter] public string? IconCssClass { get; set; } = "icon-menu";
+    [Parameter] public string? IconCssClass { get; set; }
     [Parameter] public string? LeadingIconCssClass { get; set; }
     [Parameter] public string? TrailingIconCssClass { get; set; }
     [Parameter] public bool IconOnly { get; set; }

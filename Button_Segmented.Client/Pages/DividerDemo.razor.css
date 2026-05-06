@@ -1,0 +1,123 @@
+.divider-demo {
+    color: var(--color-on-surface);
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-12x);
+    padding: var(--spacing-12x);
+}
+
+.demo-section {
+    background: var(--color-surface);
+    border: 1px solid var(--color-outline-1);
+    border-radius: var(--radius-6x);
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-8x);
+    max-width: 960px;
+    padding: var(--spacing-8x);
+}
+
+.section-heading {
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-2x);
+}
+
+.divider-demo h2 {
+    font-size: var(--text-title-md-size);
+    line-height: var(--text-title-md-lh);
+    margin: 0;
+}
+
+.divider-demo h3 {
+    font-size: var(--text-label-lg-size);
+    line-height: var(--text-label-lg-lh);
+    margin: 0;
+}
+
+.divider-demo p,
+.divider-demo span {
+    font-size: var(--text-body-md-size);
+    line-height: var(--text-body-md-lh);
+}
+
+.divider-demo p {
+    color: var(--color-on-surface-1);
+    margin: 0;
+}
+
+.demo-columns {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--spacing-12x);
+}
+
+.demo-column {
+    border: 1px dashed var(--color-outline-2);
+    border-radius: var(--radius-6x);
+    display: flex;
+    flex: 1 1 396px;
+    flex-direction: column;
+    gap: var(--spacing-6x);
+    max-width: 396px;
+    min-height: 172px;
+    padding: var(--spacing-6x);
+}
+
+.demo-column--vertical {
+    max-width: 220px;
+}
+
+.divider-sample {
+    width: 100%;
+}
+
+.divider-sample--stacked {
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-8x);
+}
+
+.sample-block {
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-3x);
+}
+
+.divider-sample--inline {
+    align-items: stretch;
+    display: flex;
+    gap: var(--spacing-6x);
+    height: 120px;
+}
+
+.divider-sample--inline > span {
+    align-self: center;
+}
+
+.demo-card {
+    border: 1px solid var(--color-outline-1);
+    border-radius: var(--radius-6x);
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+}
+
+.demo-value {
+    color: var(--color-on-surface-1);
+}
+
+@media (max-width: 640px) {
+    .divider-demo {
+        padding: var(--spacing-6x);
+    }
+
+    .demo-column,
+    .demo-column--vertical {
+        max-width: none;
+    }
+
+    .divider-sample--inline {
+        gap: var(--spacing-4x);
+    }
+}
