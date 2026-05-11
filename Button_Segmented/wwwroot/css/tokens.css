@@ -517,6 +517,87 @@
   --tooltip-line-height:            var(--text-label-lg-lh);       /* 21px */
   --tooltip-arrow-size:             12px;
   --tooltip-shadow:                 var(--elevation-bottom-2);
+
+  /* ===== Pagination component tokens ===== */
+  --pager-btn-size-md:              32px;
+  --pager-btn-size-sm:              28px;
+  --pager-btn-size-xs:              24px;
+  --pager-btn-radius:               var(--radius-4x);             /* 8px */
+  --pager-btn-font-size:            var(--text-title-sm-size);    /* 14px */
+  --pager-btn-font-weight:          400;
+  --pager-btn-color:                var(--color-on-surface);      /* default text color */
+  --pager-btn-color-hover:          var(--color-primary-hover);
+  --pager-btn-bg:                   transparent;
+  --pager-btn-bg-hover:             var(--color-surface-1);
+  --pager-btn-bg-active:            var(--color-primary);         /* selected page */
+  --pager-btn-color-active:         var(--color-on-primary);      /* selected page text */
+  --pager-btn-color-disabled:       var(--color-on-surface-2);
+  --pager-btn-border:               transparent;
+  --pager-btn-border-hover:         var(--color-outline);
+  --pager-gap:                      var(--spacing-2x);            /* 4px gap between page buttons */
+  --pager-section-gap:              var(--spacing-8x);            /* 16px gap between left/right sections */
+  --pager-info-color:               var(--color-on-surface-1);
+  --pager-info-font-size:           var(--text-title-sm-size);    /* 14px */
+  --pager-page-size-btn-border:     var(--color-outline);
+  --pager-page-size-btn-bg:         var(--color-surface);
+  --pager-icon-size-md:             16px;
+  --pager-icon-size-sm:             14px;
+  --pager-icon-size-xs:             12px;
+
+  /* ===== Grid / DataGrid component tokens ===== */
+  --grid-font-family:               var(--font-family-base);
+  --grid-font-size:                 var(--text-body-md-size);        /* 14px */
+  --grid-line-height:               var(--text-body-md-lh);          /* 21px */
+  --grid-letter-spacing:            var(--font-letter-spacing);
+
+  /* Header */
+  --grid-header-bg:                 var(--color-surface-1);          /* #F3F3F4 */
+  --grid-header-color:              var(--color-on-surface-1);       /* #6E6F71 */
+  --grid-header-font-size:          var(--text-label-md-size);       /* 12px */
+  --grid-header-font-weight:        600;
+  --grid-header-lh:                 var(--text-label-md-lh);         /* 18px */
+  --grid-header-padding-y:          var(--spacing-6x);               /* 12px */
+  --grid-header-padding-x:          var(--spacing-8x);               /* 16px */
+  --grid-header-text-transform:     uppercase;
+  --grid-header-border-color:       var(--color-outline);
+
+  /* Body rows */
+  --grid-row-bg:                    var(--color-surface);            /* #FCFCFD */
+  --grid-row-bg-alt:                var(--color-surface);            /* same — no stripe by default */
+  --grid-row-bg-hover:              var(--color-surface-1);          /* #F3F3F4 */
+  --grid-row-bg-selected:           var(--color-navy-10);            /* #E8EBF2 */
+  --grid-row-color:                 var(--color-on-surface);         /* #0F1014 */
+  --grid-row-color-selected:        var(--color-primary);
+  --grid-row-padding-y:             var(--spacing-6x);               /* 12px */
+  --grid-row-padding-x:             var(--spacing-8x);               /* 16px */
+  --grid-row-border-color:          var(--color-outline-2);          /* #F3F3F4 */
+  --grid-row-min-height:            48px;
+
+  /* Cell */
+  --grid-cell-padding-y:            var(--spacing-4x);               /* 8px */
+  --grid-cell-padding-x:            var(--spacing-6x);               /* 12px */
+
+  /* Checkbox column */
+  --grid-checkbox-size:             var(--checkbox-icon-size-sm);    /* 20px */
+  --grid-checkbox-color:            var(--color-primary);
+  --grid-checkbox-color-unchecked:  var(--color-on-surface-2);
+  --grid-checkbox-color-disabled:   var(--color-on-surface-3);
+
+  /* Edit row / New item row */
+  --grid-edit-row-bg:               var(--color-surface);
+  --grid-edit-row-border-color:     var(--color-useful);             /* blue focus indicator */
+  --grid-new-item-row-bg:           var(--color-blue-10);            /* #EAEAFF light blue tint */
+
+  /* Border & Radius */
+  --grid-border-color:              var(--color-outline);
+  --grid-border-radius:             var(--radius-4x);                /* 8px */
+  --grid-border-width:              1px;
+
+  /* Status badge tokens (used in grid read-only demo) */
+  --grid-status-radius:             var(--radius-6x);                /* 12px pill */
+  --grid-status-font-size:          var(--text-label-md-size);       /* 12px */
+  --grid-status-padding-y:          var(--spacing-1x);               /* 2px */
+  --grid-status-padding-x:          var(--spacing-4x);               /* 8px */
 }
 
 .theme-light,

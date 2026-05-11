@@ -21,10 +21,12 @@
                 <Items>
                     <DxMenuItem NavigateUrl="/notification-demo" Text="Notification &amp; Alert" CssClass="@MenuItemCssClass("/notification-demo")" IconCssClass="icon icon-docs"></DxMenuItem>
                     <DxMenuItem NavigateUrl="/tooltip-demo" Text="Tooltip" CssClass="@MenuItemCssClass("/tooltip-demo")" IconCssClass="icon icon-docs"></DxMenuItem>
+                    <DxMenuItem NavigateUrl="/grid-demo" Text="Table" CssClass="@MenuItemCssClass("/grid-demo")" IconCssClass="icon icon-docs"></DxMenuItem>
                     <DxMenuItem NavigateUrl="/counter" Text="Counter" CssClass="@MenuItemCssClass("/counter")" IconCssClass="icon icon-counter"></DxMenuItem>
                     <DxMenuItem NavigateUrl="/weather" Text="Weather" CssClass="@MenuItemCssClass("/weather")" IconCssClass="icon icon-weather"></DxMenuItem>
                 </Items>
             </DxMenuItem>
+            <DxMenuItem NavigateUrl="/pagination-demo" Text="Pagination (Tuần 5)" CssClass="@MenuItemCssClass("/pagination-demo")" IconCssClass="icon icon-docs"></DxMenuItem>
         </Items>
     </DxMenu>
 </div>
@@ -53,7 +55,7 @@
     ];
 
     private static readonly string[] Week2Routes = [
-        "/notification-demo", "/tooltip-demo", "/counter", "/weather"
+        "/notification-demo", "/tooltip-demo", "/grid-demo", "/counter", "/weather"
     ];
 
     private string? Week1GroupCssClass() {

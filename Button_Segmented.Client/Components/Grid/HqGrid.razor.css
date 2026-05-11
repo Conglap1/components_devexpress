@@ -1,0 +1,134 @@
+/* ===== HqGrid — Scoped CSS (wraps DxGrid with HQSOFT tokens) ===== */
+
+.hq-grid {
+    display: flex;
+    flex-direction: column;
+    font-family: var(--grid-font-family, "Roboto", sans-serif);
+    letter-spacing: var(--grid-letter-spacing, -0.02em);
+}
+
+/* Remove bottom border-radius from DxGrid when pager is shown (pager sits below) */
+.hq-grid ::deep .hq-grid__dx {
+    border-bottom-left-radius: 0 !important;
+    border-bottom-right-radius: 0 !important;
+    border-bottom: none !important;
+}
+
+/* Pager attached to bottom of grid */
+.hq-grid ::deep .hq-pager {
+    border: 1px solid var(--grid-border-color, #D6D6D8);
+    border-top: 1px solid var(--grid-row-border-color, #F3F3F4);
+    border-bottom-left-radius: var(--grid-border-radius, 8px);
+    border-bottom-right-radius: var(--grid-border-radius, 8px);
+    padding: var(--spacing-3x, 6px) var(--spacing-4x, 8px);
+    background: var(--color-surface, #FFFFFF);
+}
+
+/* ===== DxGrid root — base overrides ===== */
+::deep .hq-grid__dx {
+    font-family: var(--grid-font-family, "Roboto", sans-serif) !important;
+    letter-spacing: var(--grid-letter-spacing, -0.02em);
+    border-radius: var(--grid-border-radius, 8px) !important;
+    overflow: hidden;
+    box-shadow: none !important;
+    border: 1px solid var(--grid-border-color, #D6D6D8) !important;
+}
+
+/* ===== Header — HQSOFT style (uppercase, small font, grey bg) ===== */
+::deep .hq-grid__dx th {
+    font-family: var(--grid-font-family, "Roboto", sans-serif) !important;
+    font-size: var(--grid-header-font-size, 12px) !important;
+    font-weight: var(--grid-header-font-weight, 600) !important;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+    color: var(--grid-header-color, #6E6F71) !important;
+    background-color: var(--grid-header-bg, #F3F3F4) !important;
+    padding: var(--grid-header-padding-y, 12px) var(--grid-header-padding-x, 16px) !important;
+    border-bottom: 1px solid var(--grid-header-border-color, #D6D6D8) !important;
+}
+
+/* ===== Body cells — font override only, let color inherit ===== */
+::deep .hq-grid__dx td {
+    font-family: var(--grid-font-family, "Roboto", sans-serif) !important;
+    font-size: var(--grid-font-size, 14px) !important;
+    line-height: var(--grid-line-height, 21px) !important;
+    letter-spacing: var(--grid-letter-spacing, -0.02em);
+    padding: var(--grid-cell-padding-y, 8px) var(--grid-cell-padding-x, 12px) !important;
+    vertical-align: middle !important;
+    border-bottom: 1px solid var(--grid-row-border-color, #F3F3F4) !important;
+    border-top: none !important;
+}
+
+/* ===== Row hover ===== */
+::deep .hq-grid__dx tbody tr:hover {
+    background-color: var(--grid-row-bg-hover, #F3F3F4) !important;
+}
+
+/* ===== Focused / selected row ===== */
+::deep .hq-grid__dx .dxbl-grid-focused-row,
+::deep .hq-grid__dx .dxbl-grid-focused-row td {
+    background-color: var(--grid-row-bg-selected, #E8EBF2) !important;
+}
+
+/* ===== Checkbox override ===== */
+::deep .hq-grid__dx .dxbl-checkbox-checked .dxbl-checkbox-check-element {
+    background-color: var(--grid-checkbox-color, #21367B) !important;
+    border-color: var(--grid-checkbox-color, #21367B) !important;
+}
+
+::deep .hq-grid__dx .dxbl-checkbox-indeterminate .dxbl-checkbox-check-element {
+    background-color: var(--grid-checkbox-color, #21367B) !important;
+    border-color: var(--grid-checkbox-color, #21367B) !important;
+}
+
+/* ===== ReadOnly mode — pointer cursor ===== */
+.hq-grid--readonly ::deep .hq-grid__dx tbody tr {
+    cursor: pointer;
+}
+
+/* ===== Edit row highlight ===== */
+::deep .hq-grid__dx .dxbl-grid-edit-row td {
+    border-bottom: 2px solid var(--grid-edit-row-border-color, #2D2DFE) !important;
+    background-color: var(--grid-edit-row-bg, #FCFCFD) !important;
+}
+
+/* ===== Command column buttons ===== */
+::deep .hq-grid__dx .dxbl-btn {
+    font-family: var(--grid-font-family, "Roboto", sans-serif) !important;
+    letter-spacing: var(--grid-letter-spacing, -0.02em);
+    transition: background-color 0.15s ease, color 0.15s ease;
+}
+
+/* ===== Empty data area ===== */
+::deep .hq-grid__dx .dxbl-grid-empty-data {
+    font-family: var(--grid-font-family, "Roboto", sans-serif) !important;
+    color: #6E6F71 !important;
+    padding: 32px !important;
+    text-align: center;
+}
+
+/* ===== Size: sm ===== */
+.hq-grid--sm ::deep .hq-grid__dx th {
+    padding: 8px 12px !important;
+    font-size: 10px !important;
+}
+
+.hq-grid--sm ::deep .hq-grid__dx td {
+    padding: 6px 12px !important;
+    font-size: 12px !important;
+}
+
+/* ===== Scrollbar styling ===== */
+::deep .hq-grid__dx ::-webkit-scrollbar {
+    width: 6px;
+    height: 6px;
+}
+
+::deep .hq-grid__dx ::-webkit-scrollbar-track {
+    background: #F3F3F4;
+}
+
+::deep .hq-grid__dx ::-webkit-scrollbar-thumb {
+    background: #9D9DA0;
+    border-radius: 4px;
+}

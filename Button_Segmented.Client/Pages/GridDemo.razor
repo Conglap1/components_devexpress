@@ -1,0 +1,453 @@
+@page "/grid-demo"
+@namespace Button_Segmented.Client.Pages
+@rendermode InteractiveWebAssembly
+
+<PageTitle>Grid Demo</PageTitle>
+
+<div class="demo-page">
+    <h1 class="demo-page__title">Grid Component</h1>
+    <p class="demo-page__subtitle">
+        Component DxGrid được đè token HQSOFT. Hai loại: Grid chỉ xem (ReadOnly) và Grid chỉnh sửa (Editable với New Item Row).
+    </p>
+
+    @* ======================================================= *@
+    @* SECTION 1: Grid chỉ xem — click row để xem chi tiết     *@
+    @* ======================================================= *@
+    <section class="demo-section">
+        <h2 class="demo-section__heading">1. Grid chỉ xem (ReadOnly)</h2>
+        <p class="demo-section__desc">Click vào 1 dòng để xem chi tiết bên dưới. Checkbox chọn nhiều đối tượng.</p>
+
+        <HqGrid T="DisplayProgram"
+                Data="@_readOnlyData"
+                KeyFieldName="@nameof(DisplayProgram.Id)"
+                Mode="HqGridMode.ReadOnly"
+                SelectionMode="GridSelectionMode.Multiple"
+                SelectedDataItems="@_selectedItems"
+                SelectedDataItemsChanged="@HandleReadOnlySelectionChanged"
+                AllowSelectRowByClick="false"
+                FocusedRowChanged="@HandleFocusedRowChanged"
+                ShowPager="true"
+                PageSize="10">
+            <GridColumns>
+                <DxGridSelectionColumn Width="50px" />
+                <DxGridDataColumn FieldName="@nameof(DisplayProgram.RowNumber)" Caption="#" Width="60px" />
+                <DxGridDataColumn FieldName="@nameof(DisplayProgram.Code)" Caption="Mã CTTB" Width="140px" />
+                <DxGridDataColumn FieldName="@nameof(DisplayProgram.Status)" Caption="Trạng thái" Width="160px">
+                    <CellDisplayTemplate>
+                        @{
+                            var item = (DisplayProgram)context.DataItem;
+                            var (bgColor, textColor) = GetStatusColors(item.Status);
+                            <span style="display:inline-flex;align-items:center;padding:2px 8px;border-radius:12px;font-size:12px;font-weight:500;white-space:nowrap;background-color:@bgColor;color:@textColor;">@item.Status</span>
+                        }
+                    </CellDisplayTemplate>
+                </DxGridDataColumn>
+                <DxGridDataColumn FieldName="@nameof(DisplayProgram.Name)" Caption="Tên CTTB" />
+                <DxGridDataColumn FieldName="@nameof(DisplayProgram.Type)" Caption="Loại CTTB" Width="140px" />
+                <DxGridDataColumn FieldName="@nameof(DisplayProgram.StartDate)" Caption="Ngày bắt đầu trưng bày" Width="200px" DisplayFormat="dd/MM/yyyy" />
+                <DxGridDataColumn FieldName="@nameof(DisplayProgram.EndDate)" Caption="Ngày kết thúc trưng bày" Width="200px" DisplayFormat="dd/MM/yyyy" />
+            </GridColumns>
+        </HqGrid>
+
+        @* Chi tiết khi chọn dòng *@
+        @if (_focusedItem != null)
+        {
+            <div class="detail-panel">
+                <div class="detail-panel__header">
+                    <h3 class="detail-panel__title">Chi tiết: @_focusedItem.Code — @_focusedItem.Name</h3>
+                    <HqButton Text="Đóng" Variant="HqButtonVariant.Outline" Size="HqButtonSize.Sm" Click="@(() => _focusedItem = null)" />
+                </div>
+
+                <div class="detail-panel__info">
+                    <div class="detail-info-row">
+                        <span class="detail-info-row__label">Mã CTTB:</span>
+                        <span class="detail-info-row__value">@_focusedItem.Code</span>
+                    </div>
+                    <div class="detail-info-row">
+                        <span class="detail-info-row__label">Trạng thái:</span>
+                        @{
+                            var (dBg, dTxt) = GetStatusColors(_focusedItem.Status);
+                            <span style="display:inline-flex;align-items:center;padding:2px 8px;border-radius:12px;font-size:12px;font-weight:500;background-color:@dBg;color:@dTxt;">@_focusedItem.Status</span>
+                        }
+                    </div>
+                    <div class="detail-info-row">
+                        <span class="detail-info-row__label">Loại:</span>
+                        <span class="detail-info-row__value">@_focusedItem.Type</span>
+                    </div>
+                    <div class="detail-info-row">
+                        <span class="detail-info-row__label">Ngày bắt đầu:</span>
+                        <span class="detail-info-row__value">@_focusedItem.StartDate.ToString("dd/MM/yyyy")</span>
+                    </div>
+                    <div class="detail-info-row">
+                        <span class="detail-info-row__label">Ngày kết thúc:</span>
+                        <span class="detail-info-row__value">@_focusedItem.EndDate.ToString("dd/MM/yyyy")</span>
+                    </div>
+                </div>
+
+                @* Grid chỉnh sửa — danh sách sản phẩm liên quan *@
+                <h4 class="detail-panel__sub-title">Sản phẩm trưng bày (chỉnh sửa)</h4>
+                <HqGrid @ref="_editGrid"
+                        T="DisplayProduct"
+                        Data="@_editableData"
+                        KeyFieldName="@nameof(DisplayProduct.Id)"
+                        Mode="HqGridMode.Editable"
+                        SelectionMode="GridSelectionMode.Single"
+                        EditMode="GridEditMode.EditCell"
+                        EditOnKeyPress="true"
+                        ValidationEnabled="false"
+                        ColumnResizeMode="GridColumnResizeMode.NextColumn"
+                        EditNewRowPosition="GridEditNewRowPosition.LastRow"
+                        ShowAllRows="true"
+                        TextWrapEnabled="false"
+                        HighlightRowOnHover="true"
+                        EditModelSaving="@HandleEditModelSaving"
+                        DataItemDeleting="@HandleDataItemDeleting"
+                        CustomizeEditModel="@HandleCustomizeEditModel"
+                        ShowPager="false">
+                    <GridColumns>
+                        <DxGridDataColumn FieldName="@nameof(DisplayProduct.ProductCode)" Caption="Mã sản phẩm" />
+                        <DxGridDataColumn FieldName="@nameof(DisplayProduct.ProductName)" Caption="Tên sản phẩm" />
+                        <DxGridDataColumn FieldName="@nameof(DisplayProduct.Quantity)" Caption="Số lượng" Width="120px" />
+                        <DxGridDataColumn FieldName="@nameof(DisplayProduct.Unit)" Caption="Đơn vị" Width="140px">
+                            <CellEditTemplate>
+                                @{
+                                    var product = (DisplayProduct)context.EditModel;
+                                }
+                                <DxComboBox Data="@_unitOptions"
+                                            NullText="Chọn đơn vị..."
+                                            @bind-Value="@product.Unit" />
+                            </CellEditTemplate>
+                        </DxGridDataColumn>
+                        <DxGridDataColumn FieldName="@nameof(DisplayProduct.Note)" Caption="Ghi chú" />
+                        <DxGridCommandColumn Width="50px" NewButtonVisible="false">
+                            <CellDisplayTemplate>
+                                <div class="grid-cell-align-center">
+                                    <DxButton IconCssClass="grid-icon grid-icon-delete"
+                                              RenderStyle="ButtonRenderStyle.Link"
+                                              CssClass="grid-delete-btn"
+                                              aria-label="Delete"
+                                              Click="@(() => _editGrid!.ShowRowDeleteConfirmation(context.VisibleIndex))" />
+                                </div>
+                            </CellDisplayTemplate>
+                            <CellEditTemplate>
+                                <div class="grid-cell-align-center">
+                                    <DxButton Enabled="false"
+                                              CssClass="grid-disabled-button"
+                                              IconCssClass="grid-icon grid-icon-delete"
+                                              aria-label="Delete"
+                                              RenderStyle="ButtonRenderStyle.Link" />
+                                </div>
+                            </CellEditTemplate>
+                        </DxGridCommandColumn>
+                    </GridColumns>
+                </HqGrid>
+            </div>
+        }
+    </section>
+
+    @* ======================================================= *@
+    @* SECTION 2: Grid chỉnh sửa độc lập — New Item Row        *@
+    @* ======================================================= *@
+    <section class="demo-section">
+        <h2 class="demo-section__heading">2. Grid chỉnh sửa (Editable — New Item Row)</h2>
+        <p class="demo-section__desc">Grid cho phép thêm, sửa, xoá dòng trực tiếp. Click vào ô để sửa ngay. New Item Row ở dòng cuối.</p>
+
+        <HqGrid @ref="_standaloneEditGrid"
+                T="DisplayProduct"
+                Data="@_standaloneEditData"
+                KeyFieldName="@nameof(DisplayProduct.Id)"
+                Mode="HqGridMode.Editable"
+                SelectionMode="GridSelectionMode.Single"
+                EditMode="GridEditMode.EditCell"
+                EditOnKeyPress="true"
+                ValidationEnabled="false"
+                ColumnResizeMode="GridColumnResizeMode.NextColumn"
+                EditNewRowPosition="GridEditNewRowPosition.LastRow"
+                ShowAllRows="true"
+                TextWrapEnabled="false"
+                HighlightRowOnHover="true"
+                EditModelSaving="@HandleStandaloneEditModelSaving"
+                DataItemDeleting="@HandleStandaloneDataItemDeleting"
+                CustomizeEditModel="@HandleStandaloneCustomizeEditModel"
+                ShowPager="false">
+            <GridColumns>
+                <DxGridDataColumn FieldName="@nameof(DisplayProduct.ProductCode)" Caption="Mã sản phẩm" />
+                <DxGridDataColumn FieldName="@nameof(DisplayProduct.ProductName)" Caption="Tên sản phẩm" />
+                <DxGridDataColumn FieldName="@nameof(DisplayProduct.Quantity)" Caption="Số lượng" Width="120px" />
+                <DxGridDataColumn FieldName="@nameof(DisplayProduct.Unit)" Caption="Đơn vị" Width="140px">
+                    <CellEditTemplate>
+                        @{
+                            var product = (DisplayProduct)context.EditModel;
+                        }
+                        <DxComboBox Data="@_unitOptions"
+                                    NullText="Chọn đơn vị..."
+                                    @bind-Value="@product.Unit" />
+                    </CellEditTemplate>
+                </DxGridDataColumn>
+                <DxGridDataColumn FieldName="@nameof(DisplayProduct.Note)" Caption="Ghi chú" />
+                <DxGridCommandColumn Width="50px" NewButtonVisible="false">
+                    <CellDisplayTemplate>
+                        <div class="grid-cell-align-center">
+                            <DxButton IconCssClass="grid-icon grid-icon-delete"
+                                      RenderStyle="ButtonRenderStyle.Link"
+                                      CssClass="grid-delete-btn"
+                                      aria-label="Delete"
+                                      Click="@(() => _standaloneEditGrid!.ShowRowDeleteConfirmation(context.VisibleIndex))" />
+                        </div>
+                    </CellDisplayTemplate>
+                    <CellEditTemplate>
+                        <div class="grid-cell-align-center">
+                            <DxButton Enabled="false"
+                                      CssClass="grid-disabled-button"
+                                      IconCssClass="grid-icon grid-icon-delete"
+                                      aria-label="Delete"
+                                      RenderStyle="ButtonRenderStyle.Link" />
+                        </div>
+                    </CellEditTemplate>
+                </DxGridCommandColumn>
+            </GridColumns>
+        </HqGrid>
+    </section>
+</div>
+
+@code {
+    // ===== Models =====
+    public class DisplayProgram
+    {
+        public int Id { get; set; }
+        public int RowNumber { get; set; }
+        public string Code { get; set; } = "";
+        public string Status { get; set; } = "";
+        public string Name { get; set; } = "";
+        public string Type { get; set; } = "";
+        public DateTime StartDate { get; set; }
+        public DateTime EndDate { get; set; }
+    }
+
+    public class DisplayProduct
+    {
+        public int Id { get; set; }
+        public string ProductCode { get; set; } = "";
+        public string ProductName { get; set; } = "";
+        public int Quantity { get; set; }
+        public string Unit { get; set; } = "";
+        public string Note { get; set; } = "";
+    }
+
+    // ===== Read-only grid state =====
+    private List<DisplayProgram> _readOnlyData = new();
+    private IReadOnlyList<object> _selectedItems = Array.Empty<object>();
+    private DisplayProgram? _focusedItem;
+
+    // ===== Editable grid (inside detail panel) =====
+    private HqGrid<DisplayProduct>? _editGrid;
+    private List<DisplayProduct> _editableData = new();
+
+    // ===== Standalone editable grid =====
+    private HqGrid<DisplayProduct>? _standaloneEditGrid;
+    private List<DisplayProduct> _standaloneEditData = new();
+    private readonly string[] _unitOptions = new[] { "Thùng", "Lốc", "Chai", "Hộp", "Gói", "Can", "Cái", "Kg", "Bịch" };
+
+    protected override void OnInitialized()
+    {
+        _readOnlyData = GenerateSamplePrograms();
+        _standaloneEditData = GenerateSampleProducts("SP");
+        _editableData = GenerateSampleProducts("TB");
+    }
+
+    // ===== Read-only grid handlers =====
+    private void HandleReadOnlySelectionChanged(IReadOnlyList<object> items) => _selectedItems = items;
+
+    private void HandleFocusedRowChanged(GridFocusedRowChangedEventArgs args)
+    {
+        _focusedItem = args.DataItem as DisplayProgram;
+        if (_focusedItem != null)
+        {
+            _editableData = GenerateSampleProducts("TB");
+        }
+    }
+
+    // ===== Editable grid (in detail) handlers =====
+
+    private void HandleEditModelSaving(GridEditModelSavingEventArgs args)
+    {
+        var editModel = (DisplayProduct)args.EditModel;
+        if (args.IsNew)
+        {
+            editModel.Id = _editableData.Count > 0 ? _editableData.Max(x => x.Id) + 1 : 1;
+            _editableData.Insert(0, editModel);
+        }
+        else
+        {
+            var target = _editableData.FirstOrDefault(x => x.Id == ((DisplayProduct)args.DataItem).Id);
+            if (target != null)
+            {
+                target.ProductCode = editModel.ProductCode;
+                target.ProductName = editModel.ProductName;
+                target.Quantity = editModel.Quantity;
+                target.Unit = editModel.Unit;
+                target.Note = editModel.Note;
+            }
+        }
+    }
+
+    private void HandleDataItemDeleting(GridDataItemDeletingEventArgs args)
+    {
+        var item = (DisplayProduct)args.DataItem;
+        _editableData.RemoveAll(x => x.Id == item.Id);
+    }
+
+    private void HandleCustomizeEditModel(GridCustomizeEditModelEventArgs args)
+    {
+        if (args.IsNew)
+        {
+            args.EditModel = new DisplayProduct
+            {
+                Id = 0,
+                ProductCode = "",
+                ProductName = "",
+                Quantity = 0,
+                Unit = "Cái",
+                Note = ""
+            };
+        }
+    }
+
+    private async Task HandleAddProduct()
+    {
+        if (_editGrid != null) await _editGrid.StartEditNewRow();
+    }
+
+    // ===== Standalone editable grid handlers =====
+
+    private void HandleStandaloneEditModelSaving(GridEditModelSavingEventArgs args)
+    {
+        var editModel = (DisplayProduct)args.EditModel;
+        if (args.IsNew)
+        {
+            editModel.Id = _standaloneEditData.Count > 0 ? _standaloneEditData.Max(x => x.Id) + 1 : 1;
+            _standaloneEditData.Insert(0, editModel);
+        }
+        else
+        {
+            var target = _standaloneEditData.FirstOrDefault(x => x.Id == ((DisplayProduct)args.DataItem).Id);
+            if (target != null)
+            {
+                target.ProductCode = editModel.ProductCode;
+                target.ProductName = editModel.ProductName;
+                target.Quantity = editModel.Quantity;
+                target.Unit = editModel.Unit;
+                target.Note = editModel.Note;
+            }
+        }
+    }
+
+    private void HandleStandaloneDataItemDeleting(GridDataItemDeletingEventArgs args)
+    {
+        var item = (DisplayProduct)args.DataItem;
+        _standaloneEditData.RemoveAll(x => x.Id == item.Id);
+    }
+
+    private void HandleStandaloneCustomizeEditModel(GridCustomizeEditModelEventArgs args)
+    {
+        if (args.IsNew)
+        {
+            args.EditModel = new DisplayProduct
+            {
+                Id = 0,
+                ProductCode = "",
+                ProductName = "",
+                Quantity = 0,
+                Unit = "Cái",
+                Note = ""
+            };
+        }
+    }
+
+    // ===== Status colors (inline because scoped CSS can't reach DxGrid CellDisplayTemplate) =====
+    private (string bg, string color) GetStatusColors(string status) => status switch
+    {
+        "Chờ xử lý" => ("#FEF6E5", "#C48202"),
+        "Xử lý hoàn tất" => ("#E5F6F3", "#03836E"),
+        "Ngưng hoạt động" => ("#FBE9EA", "#AE1C28"),
+        "Đang xử lý" => ("#EAEAFF", "#2424CB"),
+        _ => ("#F3F3F4", "#6E6F71")
+    };
+
+    // ===== Sample data generators =====
+    private List<DisplayProgram> GenerateSamplePrograms()
+    {
+        var names = new[]
+        {
+            "CTTB tặng tiền thưởng", "Chương trình trưng bày mùa hè", "Khuyến mãi sản phẩm mới",
+            "Trưng bày đầu quầy siêu thị", "Chương trình combo ưu đãi", "Trưng bày POS kệ đầu",
+            "Chương trình sampling tháng 6", "Trưng bày tủ mát cửa hàng", "CT trưng bày Tết 2025",
+            "Khuyến mãi mua 2 tặng 1", "Trưng bày booth sự kiện", "CT quà tặng kèm sản phẩm",
+            "Trưng bày kệ end-cap", "CT loyalty card tích điểm", "Trưng bày POSM cửa hàng GT",
+            "Chương trình bán hàng online", "Trưng bày sản phẩm organic", "CT flash sale cuối tuần",
+            "Trưng bày sản phẩm mới Q3", "CT chiết khấu thương mại", "Trưng bày kệ siêu thị MT",
+            "CT hỗ trợ chi phí bán hàng", "Trưng bày tủ đông nhà phân phối", "CT quảng bá thương hiệu",
+            "Trưng bày vật phẩm marketing", "CT đổi hàng cận date", "Trưng bày POSM đại lý",
+            "CT thưởng doanh số quý 3", "Trưng bày tủ trưng bày mới", "CT mua kèm giảm giá",
+            "Trưng bày kệ giữa siêu thị", "CT hỗ trợ vận chuyển", "Trưng bày banner outdoor",
+            "CT khuyến mãi kênh Horeca", "Trưng bày standee cửa hàng", "CT tặng quà sinh nhật",
+            "Trưng bày lightbox đại lý", "CT hỗ trợ bao bì mới", "Trưng bày gondola siêu thị",
+            "CT tri ân khách hàng VIP", "Trưng bày kệ checkout", "CT hợp tác cross-branding",
+            "Trưng bày quầy thanh toán", "CT giảm giá thanh lý", "Trưng bày cụm đảo siêu thị",
+            "CT ra mắt dòng sản phẩm", "Trưng bày kệ phụ", "CT bán hàng kênh B2B",
+            "Trưng bày quầy mỹ phẩm", "CT hỗ trợ nhà phân phối"
+        };
+        var statuses = new[] { "Chờ xử lý", "Xử lý hoàn tất", "Ngưng hoạt động", "Đang xử lý" };
+        var types = new[] { "Sổ mặt", "Sổ sản phẩm" };
+        var programs = new List<DisplayProgram>();
+        var rng = new Random(42);
+
+        for (int i = 1; i <= 50; i++)
+        {
+            var startMonth = rng.Next(1, 12);
+            var startDay = rng.Next(1, 28);
+            var startDate = new DateTime(2024, startMonth, startDay);
+            programs.Add(new DisplayProgram
+            {
+                Id = i,
+                RowNumber = i,
+                Code = $"CTTB{i:D2}",
+                Status = statuses[(i - 1) % statuses.Length],
+                Name = names[i - 1],
+                Type = types[(i - 1) % types.Length],
+                StartDate = startDate,
+                EndDate = startDate.AddDays(rng.Next(7, 60))
+            });
+        }
+
+        return programs;
+    }
+
+    private List<DisplayProduct> GenerateSampleProducts(string prefix)
+    {
+        var productNames = new[]
+        {
+            "Nước giải khát Pepsi 330ml", "Trà xanh Lipton chai 455ml", "Sữa tươi Vinamilk 1L",
+            "Bia Tiger lon 330ml", "Mì Hảo Hảo tôm chua cay", "Dầu ăn Neptune 1L",
+            "Nước mắm Chinsu 500ml", "Bột giặt Omo 4.5kg", "Kem đánh răng P/S 180g",
+            "Dầu gội Clear 650ml", "Nước rửa chén Sunlight 750ml", "Khăn giấy Pulppy 180 tờ"
+        };
+        var units = new[] { "Thùng", "Lốc", "Chai", "Hộp", "Gói", "Can" };
+        var products = new List<DisplayProduct>();
+        var rng = new Random(99);
+
+        for (int i = 1; i <= 12; i++)
+        {
+            products.Add(new DisplayProduct
+            {
+                Id = i,
+                ProductCode = $"{prefix}-{1000 + i}",
+                ProductName = productNames[i - 1],
+                Quantity = rng.Next(5, 200),
+                Unit = units[(i - 1) % units.Length],
+                Note = i % 4 == 0 ? "Ưu tiên trưng bày" : (i % 3 == 0 ? "Hàng mới" : "")
+            });
+        }
+
+        return products;
+    }
+}

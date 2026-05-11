@@ -1,0 +1,126 @@
+@namespace Button_Segmented.Client.Components.Grid
+@typeparam T
+
+<div class="@RootCssClass" style="@Style">
+    <DxGrid @ref="_gridRef"
+            Data="@Data"
+            CssClass="hq-grid__dx"
+            ShowFilterRow="@ShowFilterRow"
+            ShowGroupPanel="@ShowGroupPanel"
+            SelectionMode="@SelectionMode"
+            SelectedDataItems="@SelectedDataItems"
+            SelectedDataItemsChanged="@HandleSelectionChanged"
+            AllowSelectRowByClick="@AllowSelectRowByClick"
+            KeyFieldName="@KeyFieldName"
+            PageSize="@PageSize"
+            PagerVisible="@ShowPager"
+            PagerNavigationMode="PagerNavigationMode.NumericButtons"
+            PagerVisibleNumericButtonCount="@VisibleNumericButtonCount"
+            EditMode="@EffectiveEditMode"
+            EditNewRowPosition="@EditNewRowPosition"
+            EditOnKeyPress="@EditOnKeyPress"
+            ValidationEnabled="@ValidationEnabled"
+            ColumnResizeMode="@ColumnResizeMode"
+            ShowAllRows="@ShowAllRows"
+            TextWrapEnabled="@TextWrapEnabled"
+            HighlightRowOnHover="@HighlightRowOnHover"
+            DataItemDeleting="@DataItemDeleting"
+            EditModelSaving="@EditModelSaving"
+            CustomizeEditModel="@CustomizeEditModel"
+            FocusedRowEnabled="@(Mode == HqGridMode.ReadOnly)"
+            FocusedRowChanged="@HandleFocusedRowChanged">
+        <Columns>
+            @GridColumns
+        </Columns>
+    </DxGrid>
+</div>
+
+@code {
+    private DxGrid? _gridRef;
+
+    [Parameter] public object? Data { get; set; }
+    [Parameter] public RenderFragment? GridColumns { get; set; }
+    [Parameter] public string? KeyFieldName { get; set; }
+
+    [Parameter] public HqGridMode Mode { get; set; } = HqGridMode.ReadOnly;
+    [Parameter] public HqGridSize Size { get; set; } = HqGridSize.Md;
+
+    [Parameter] public GridSelectionMode SelectionMode { get; set; } = GridSelectionMode.Multiple;
+    [Parameter] public IReadOnlyList<object> SelectedDataItems { get; set; } = Array.Empty<object>();
+    [Parameter] public EventCallback<IReadOnlyList<object>> SelectedDataItemsChanged { get; set; }
+    [Parameter] public bool AllowSelectRowByClick { get; set; } = false;
+
+    [Parameter] public bool ShowFilterRow { get; set; } = false;
+    [Parameter] public bool ShowGroupPanel { get; set; } = false;
+
+    // Edit mode parameters (for Editable mode)
+    [Parameter] public GridEditMode EditMode { get; set; } = GridEditMode.EditRow;
+    [Parameter] public GridEditNewRowPosition EditNewRowPosition { get; set; } = GridEditNewRowPosition.Top;
+    [Parameter] public bool EditOnKeyPress { get; set; } = false;
+    [Parameter] public bool ValidationEnabled { get; set; } = true;
+    [Parameter] public GridColumnResizeMode ColumnResizeMode { get; set; } = GridColumnResizeMode.Disabled;
+    [Parameter] public bool ShowAllRows { get; set; } = false;
+    [Parameter] public bool TextWrapEnabled { get; set; } = true;
+    [Parameter] public bool HighlightRowOnHover { get; set; } = false;
+    [Parameter] public EventCallback<GridEditModelSavingEventArgs> EditModelSaving { get; set; }
+    [Parameter] public EventCallback<GridDataItemDeletingEventArgs> DataItemDeleting { get; set; }
+    [Parameter] public EventCallback<GridCustomizeEditModelEventArgs> CustomizeEditModel { get; set; }
+
+    // Focused row (for ReadOnly mode - click to show detail)
+    [Parameter] public EventCallback<GridFocusedRowChangedEventArgs> FocusedRowChanged { get; set; }
+
+    // Pager parameters
+    [Parameter] public bool ShowPager { get; set; } = true;
+    [Parameter] public int PageSize { get; set; } = 5;
+    [Parameter] public int VisibleNumericButtonCount { get; set; } = 5;
+
+    [Parameter] public string? Class { get; set; }
+    [Parameter] public string? Style { get; set; }
+
+    private GridEditMode EffectiveEditMode => Mode == HqGridMode.ReadOnly
+        ? GridEditMode.EditRow
+        : EditMode;
+
+    private string RootCssClass => string.Join(" ",
+        "hq-grid",
+        $"hq-grid--{Mode.ToString().ToLowerInvariant()}",
+        $"hq-grid--{Size.ToString().ToLowerInvariant()}",
+        Class).Trim();
+
+    private async Task HandleSelectionChanged(IReadOnlyList<object> items)
+    {
+        SelectedDataItems = items;
+        await SelectedDataItemsChanged.InvokeAsync(items);
+    }
+
+    private async Task HandleFocusedRowChanged(GridFocusedRowChangedEventArgs args)
+    {
+        await FocusedRowChanged.InvokeAsync(args);
+    }
+
+    // Public methods to expose DxGrid functionality
+    public async Task StartEditNewRow()
+    {
+        if (_gridRef != null) await _gridRef.StartEditNewRowAsync();
+    }
+
+    public async Task StartEditDataItem(object dataItem)
+    {
+        if (_gridRef != null) await _gridRef.StartEditDataItemAsync(dataItem);
+    }
+
+    public async Task CancelEdit()
+    {
+        if (_gridRef != null) await _gridRef.CancelEditAsync();
+    }
+
+    public async Task SaveChanges()
+    {
+        if (_gridRef != null) await _gridRef.SaveChangesAsync();
+    }
+
+    public void ShowRowDeleteConfirmation(int visibleIndex)
+    {
+        _gridRef?.ShowRowDeleteConfirmation(visibleIndex);
+    }
+}

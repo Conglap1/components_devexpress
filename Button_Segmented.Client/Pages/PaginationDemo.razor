@@ -1,0 +1,120 @@
+@page "/pagination-demo"
+@namespace Button_Segmented.Client.Pages
+
+<PageTitle>Pagination Demo</PageTitle>
+
+<div class="demo-container">
+    <h1 class="demo-title">Pagination component</h1>
+    <p class="demo-description">Component phân trang hỗ trợ 2 kiểu hiển thị và 3 kích thước.</p>
+
+    @* ===== Style 1 — Size MD ===== *@
+    <section class="demo-section">
+        <h2 class="demo-section-title">Style 1 — Size MD</h2>
+        <div class="demo-row">
+            <HqPager PageCount="10"
+                     @bind-ActivePageIndex="@_style1MdPage"
+                     PageSize="@_style1MdPageSize"
+                     PageSizeChanged="@OnStyle1MdPageSizeChanged"
+                     TotalItemCount="95"
+                     ShowPageSize="true"
+                     ShowInfo="true"
+                     PagerStyle="HqPagerStyle.Style1"
+                     Size="HqPagerSize.Md" />
+        </div>
+    </section>
+
+    @* ===== Style 1 — Size SM ===== *@
+    <section class="demo-section">
+        <h2 class="demo-section-title">Style 1 — Size SM</h2>
+        <div class="demo-row">
+            <HqPager PageCount="10"
+                     @bind-ActivePageIndex="@_style1SmPage"
+                     PageSize="10"
+                     TotalItemCount="95"
+                     ShowPageSize="true"
+                     ShowInfo="false"
+                     PagerStyle="HqPagerStyle.Style1"
+                     Size="HqPagerSize.Sm" />
+        </div>
+    </section>
+
+    @* ===== Style 1 — Size XS ===== *@
+    <section class="demo-section">
+        <h2 class="demo-section-title">Style 1 — Size XS (no First/Last)</h2>
+        <div class="demo-row">
+            <HqPager PageCount="10"
+                     @bind-ActivePageIndex="@_style1XsPage"
+                     ShowPageSize="false"
+                     ShowInfo="false"
+                     PagerStyle="HqPagerStyle.Style1"
+                     Size="HqPagerSize.Xs" />
+        </div>
+    </section>
+
+    @* ===== Style 2 — Size MD ===== *@
+    <section class="demo-section">
+        <h2 class="demo-section-title">Style 2 — Size MD (Input box mode)</h2>
+        <div class="demo-row">
+            <HqPager PageCount="5"
+                     @bind-ActivePageIndex="@_style2MdPage"
+                     PageSize="@_style2MdPageSize"
+                     PageSizeChanged="@OnStyle2MdPageSizeChanged"
+                     PageSizeOptions="@(new[] { 5, 10, 20, 50 })"
+                     TotalItemCount="50"
+                     ShowPageSize="true"
+                     ShowInfo="true"
+                     PagerStyle="HqPagerStyle.Style2"
+                     Size="HqPagerSize.Md" />
+        </div>
+    </section>
+
+    @* ===== Disabled state (first page) ===== *@
+    <section class="demo-section">
+        <h2 class="demo-section-title">First page (prev disabled)</h2>
+        <div class="demo-row">
+            <HqPager PageCount="10"
+                     ActivePageIndex="0"
+                     PageSize="10"
+                     TotalItemCount="95"
+                     ShowPageSize="true"
+                     ShowInfo="true"
+                     PagerStyle="HqPagerStyle.Style1"
+                     Size="HqPagerSize.Md" />
+        </div>
+    </section>
+
+    @* ===== Last page (next disabled) ===== *@
+    <section class="demo-section">
+        <h2 class="demo-section-title">Last page (next disabled)</h2>
+        <div class="demo-row">
+            <HqPager PageCount="10"
+                     ActivePageIndex="9"
+                     PageSize="10"
+                     TotalItemCount="95"
+                     ShowPageSize="true"
+                     ShowInfo="true"
+                     PagerStyle="HqPagerStyle.Style1"
+                     Size="HqPagerSize.Md" />
+        </div>
+    </section>
+</div>
+
+@code {
+    private int _style1MdPage = 0;
+    private int _style1SmPage = 0;
+    private int _style1XsPage = 0;
+    private int _style2MdPage = 0;
+
+    private int _style1MdPageSize = 10;
+    private int _style2MdPageSize = 5;
+
+    private void OnStyle1MdPageSizeChanged(int newSize)
+    {
+        _style1MdPageSize = newSize;
+    }
+
+    private void OnStyle2MdPageSizeChanged(int newSize)
+    {
+        _style2MdPageSize = newSize;
+    }
+}

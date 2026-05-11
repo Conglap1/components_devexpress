@@ -35,3 +35,20 @@
 .icon-weather {
     --icon-mask-image: url("/images/pages/weather.svg");
 }
+
+/* Pagination / navigation icons */
+.icon-chevron-left {
+    --icon-mask-image: url("/images/chevron-left.svg");
+}
+.icon-chevron-right {
+    --icon-mask-image: url("/images/chevron-right.svg");
+}
+.icon-chevrons-left {
+    --icon-mask-image: url("/images/chevrons-left.svg");
+}
+.icon-chevrons-right {
+    --icon-mask-image: url("/images/chevrons-right.svg");
+}
+.icon-chevron-down {
+    --icon-mask-image: url("/images/chevron-down.svg");
+}

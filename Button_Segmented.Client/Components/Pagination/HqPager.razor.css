@@ -1,0 +1,200 @@
+/* ===== HqPager — Scoped CSS (wraps DxPager) ===== */
+
+.hq-pager {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--pager-section-gap);
+    font-family: var(--font-family-base);
+    letter-spacing: var(--font-letter-spacing);
+}
+
+/* ===== Left section: page size + info ===== */
+.hq-pager__left {
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-4x);
+    position: relative;
+}
+
+.hq-pager__info-text {
+    font-size: var(--pager-info-font-size);
+    line-height: var(--text-title-sm-lh);
+    color: var(--pager-info-color);
+    white-space: nowrap;
+}
+
+.hq-pager__page-size-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--spacing-2x);
+    height: var(--pager-btn-size-md);
+    padding: var(--spacing-3x) var(--spacing-4x);
+    border: 1px solid var(--pager-page-size-btn-border);
+    border-radius: var(--pager-btn-radius);
+    background: var(--pager-page-size-btn-bg);
+    font-size: var(--pager-btn-font-size);
+    font-family: var(--font-family-base);
+    color: var(--color-on-surface);
+    cursor: pointer;
+    transition: border-color 0.15s ease, background-color 0.15s ease;
+}
+
+.hq-pager__page-size-btn:hover {
+    border-color: var(--color-on-surface-2);
+    background: var(--pager-btn-bg-hover);
+}
+
+.hq-pager__page-size-icon {
+    --icon-size: 12px;
+    color: var(--pager-info-color);
+}
+
+.hq-pager__page-size-dropdown {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    margin-top: var(--spacing-2x);
+    min-width: 60px;
+    background: var(--color-surface);
+    border: 1px solid var(--color-outline);
+    border-radius: var(--pager-btn-radius);
+    box-shadow: var(--elevation-bottom-2);
+    z-index: 10;
+    overflow: hidden;
+}
+
+.hq-pager__page-size-option {
+    display: block;
+    width: 100%;
+    padding: var(--spacing-3x) var(--spacing-4x);
+    border: none;
+    background: transparent;
+    font-size: var(--pager-btn-font-size);
+    font-family: var(--font-family-base);
+    color: var(--color-on-surface);
+    cursor: pointer;
+    text-align: left;
+    transition: background-color 0.15s ease;
+}
+
+.hq-pager__page-size-option:hover {
+    background: var(--pager-btn-bg-hover);
+}
+
+.hq-pager__page-size-option.is-selected {
+    background: var(--color-surface-1);
+    font-weight: 500;
+}
+
+/* ===== Right section: DxPager override ===== */
+.hq-pager__right {
+    display: flex;
+    align-items: center;
+}
+
+/* ===== DxPager token override via ::deep ===== */
+::deep .hq-pager__dx.dxbl-pager {
+    --dxbl-pager-btn-color: var(--pager-btn-color);
+    --dxbl-pager-btn-bg: var(--pager-btn-bg);
+    --dxbl-pager-btn-hover-bg: var(--pager-btn-bg-hover);
+    --dxbl-pager-btn-hover-color: var(--pager-btn-color-hover);
+    --dxbl-pager-btn-active-bg: var(--pager-btn-bg-active);
+    --dxbl-pager-btn-active-color: var(--pager-btn-color-active);
+    --dxbl-pager-btn-disabled-color: var(--pager-btn-color-disabled);
+    --dxbl-pager-border-radius-m: var(--pager-btn-radius);
+    --dxbl-pager-border-radius-s: var(--pager-btn-radius);
+    --dxbl-pager-border-radius-l: var(--pager-btn-radius);
+    --dxbl-pager-font-family: var(--font-family-base);
+    --dxbl-pager-font-size-m: var(--pager-btn-font-size);
+    --dxbl-pager-font-size-s: var(--pager-btn-font-size);
+    --dxbl-pager-font-size-l: var(--pager-btn-font-size);
+    font-family: var(--font-family-base) !important;
+    letter-spacing: var(--font-letter-spacing);
+    gap: var(--pager-gap);
+}
+
+/* Override DxPager button sizing & appearance */
+::deep .hq-pager__dx .dxbl-btn {
+    min-width: var(--pager-btn-size-md) !important;
+    height: var(--pager-btn-size-md) !important;
+    border-radius: var(--pager-btn-radius) !important;
+    font-family: var(--font-family-base) !important;
+    font-size: var(--pager-btn-font-size) !important;
+    font-weight: var(--pager-btn-font-weight) !important;
+    letter-spacing: var(--font-letter-spacing);
+    transition: background-color 0.15s ease, color 0.15s ease, border-color 0.15s ease;
+}
+
+/* Hover state for DxPager buttons */
+::deep .hq-pager__dx .dxbl-btn:hover:not(.dxbl-disabled):not(:disabled) {
+    background-color: var(--pager-btn-bg-hover) !important;
+    color: var(--pager-btn-color-hover) !important;
+}
+
+/* Active/selected page button */
+::deep .hq-pager__dx .dxbl-btn.dxbl-pager-active-page-btn {
+    background-color: var(--pager-btn-bg-active) !important;
+    color: var(--pager-btn-color-active) !important;
+    font-weight: 500 !important;
+    border-color: transparent !important;
+}
+
+/* Disabled nav buttons */
+::deep .hq-pager__dx .dxbl-btn.dxbl-disabled,
+::deep .hq-pager__dx .dxbl-btn:disabled {
+    color: var(--pager-btn-color-disabled) !important;
+    cursor: not-allowed;
+    pointer-events: none;
+    opacity: 1 !important;
+}
+
+/* Remove default DxPager border on buttons */
+::deep .hq-pager__dx .dxbl-btn {
+    border: none !important;
+    background-color: var(--pager-btn-bg) !important;
+    color: var(--pager-btn-color) !important;
+}
+
+/* Re-apply active state (higher specificity after border reset) */
+::deep .hq-pager__dx .dxbl-btn.dxbl-pager-active-page-btn {
+    background-color: var(--pager-btn-bg-active) !important;
+    color: var(--pager-btn-color-active) !important;
+}
+
+/* Style 2: bordered nav buttons */
+.hq-pager--style-2 ::deep .hq-pager__dx .dxbl-btn:not(.dxbl-pager-active-page-btn) {
+    border: 1px solid var(--color-outline) !important;
+    background: var(--color-surface) !important;
+}
+
+.hq-pager--style-2 ::deep .hq-pager__dx .dxbl-btn:not(.dxbl-pager-active-page-btn):hover:not(.dxbl-disabled):not(:disabled) {
+    border-color: var(--pager-btn-border-hover) !important;
+    background: var(--pager-btn-bg-hover) !important;
+}
+
+/* ===== Size: sm ===== */
+.hq-pager--sm ::deep .hq-pager__dx .dxbl-btn {
+    min-width: var(--pager-btn-size-sm) !important;
+    height: var(--pager-btn-size-sm) !important;
+}
+
+.hq-pager--sm .hq-pager__page-size-btn {
+    height: var(--pager-btn-size-sm);
+}
+
+/* ===== Size: xs ===== */
+.hq-pager--xs ::deep .hq-pager__dx .dxbl-btn {
+    min-width: var(--pager-btn-size-xs) !important;
+    height: var(--pager-btn-size-xs) !important;
+    font-size: var(--text-body-sm-size) !important;
+}
+
+.hq-pager--xs .hq-pager__page-size-btn {
+    height: var(--pager-btn-size-xs);
+    font-size: var(--text-body-sm-size);
+}
+
+.hq-pager--xs .hq-pager__info-text {
+    font-size: var(--text-body-sm-size);
+}
