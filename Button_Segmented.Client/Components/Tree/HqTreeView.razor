@@ -1,71 +1,144 @@
 @namespace Button_Segmented.Client.Components.Tree
+@using MudBlazor
 
 <div class="@RootCssClass" style="@Style">
-    <DxTreeView @ref="_treeViewRef"
-                Data="@Data"
-                CheckMode="@(ShowCheckboxes ? TreeViewCheckMode.Multiple : TreeViewCheckMode.Disabled)"
-                CheckNodeByClick="@CheckNodeByClick"
-                AllowSelectNodes="@AllowSelectNodes"
-                AnimationType="LayoutAnimationType.Slide"
-                ShowExpandButtons="true"
-                ExpandButtonIconCssClass="fa-solid fa-caret-right"
-                CollapseButtonIconCssClass="fa-solid fa-caret-down"
-                CssClass="hq-tree__dx"
-                SelectionChanged="@OnSelectionChanged"
-                NodeClick="@OnNodeClick"
-                AfterExpand="@OnAfterExpand"
-                AfterCollapse="@OnAfterCollapse">
-        <DataMappings>
-            <DxTreeViewDataMapping Key="@nameof(HqTreeNode.Key)"
-                                   Text="@nameof(HqTreeNode.Text)"
-                                   Children="@nameof(HqTreeNode.Children)"
-                                   Enabled="@nameof(HqTreeNode.IsEnabled)" />
-        </DataMappings>
-        <NodeTextTemplate>
-            @{
-                var node = (HqTreeNode)context.DataItem;
-                var isExpanded = _expandedKeys.Contains(node.Key);
-            }
-            <div class="hq-tree-item__content">
-                @if (IconMode == HqTreeIconMode.Folder)
-                {
-                    <span class="hq-tree-item__icon" aria-hidden="true">
-                        @if (node.IsParent && isExpanded)
+    <MudTreeView T="HqTreeNode"
+                 Items="_items"
+                 Hover="true"
+                 ExpandOnClick="false"
+                 SelectionMode="@CurrentSelectionMode"
+                 SelectedValue="_selectedValue"
+                 SelectedValueChanged="OnSelectedValueChangedInternal"
+                 SelectedValues="_selectedValues"
+                 SelectedValuesChanged="OnSelectedValuesChangedInternal"
+                 CheckBoxColor="MudBlazor.Color.Primary"
+                 Color="MudBlazor.Color.Primary"
+                 Class="hq-tree__mud">
+        <ItemTemplate Context="item">
+            <MudTreeViewItem T="HqTreeNode"
+                             Items="@item.Children"
+                             Value="@item.Value"
+                             Text="@item.Text"
+                             @bind-Expanded="@item.Expanded"
+                             Visible="@item.Visible"
+                             CanExpand="@item.Expandable"
+                             Disabled="@(item.Value?.IsDisabled ?? false)">
+                <BodyContent Context="ctx">
+                    <div class="hq-tree-item__content">
+                        @if (IconMode == HqTreeIconMode.Folder)
                         {
-                            <i class="fa-solid fa-folder-open"></i>
+                            <span class="hq-tree-item__icon" aria-hidden="true">
+                                @if (ctx.Value is not null && ctx.Value.IsParent)
+                                {
+                                    <i class="fa-solid @(ctx.Expanded ? "fa-folder-open" : "fa-folder")"></i>
+                                }
+                                else
+                                {
+                                    <i class="fa-solid fa-file"></i>
+                                }
+                            </span>
                         }
-                        else
+                        else if (IconMode == HqTreeIconMode.Custom &&
+                                 !string.IsNullOrEmpty(ctx.Value?.IconCssClass))
                         {
-                            <i class="fa-solid fa-folder"></i>
+                            <span class="hq-tree-item__icon hq-tree-item__icon--custom" aria-hidden="true">
+                                <i class="@ctx.Value!.IconCssClass"></i>
+                            </span>
                         }
-                    </span>
-                }
-                else if (IconMode == HqTreeIconMode.Custom && !string.IsNullOrEmpty(node.IconCssClass))
-                {
-                    <span class="hq-tree-item__icon hq-tree-item__icon--custom" aria-hidden="true">
-                        <i class="@node.IconCssClass"></i>
-                    </span>
-                }
-                <span class="hq-tree-item__text">@node.Text</span>
-            </div>
-        </NodeTextTemplate>
-    </DxTreeView>
+                        <span class="hq-tree-item__text">@ctx.Text</span>
+                    </div>
+                </BodyContent>
+            </MudTreeViewItem>
+        </ItemTemplate>
+    </MudTreeView>
 </div>
 
 @code {
-    private DxTreeView? _treeViewRef;
-    private HashSet<string> _expandedKeys = new();
+    private IReadOnlyCollection<HqTreeNode>? _lastDataRef;
+    private HashSet<TreeItemData<HqTreeNode>> _items = new();
+    private HqTreeNode? _selectedValue;
+    private IReadOnlyCollection<HqTreeNode> _selectedValues = new HashSet<HqTreeNode>();
 
+    /// <summary>Source data for the tree (hierarchical).</summary>
     [Parameter] public IEnumerable<HqTreeNode>? Data { get; set; }
+
+    /// <summary>Show checkboxes on each row (multi-selection mode).</summary>
     [Parameter] public bool ShowCheckboxes { get; set; } = true;
+
+    /// <summary>If <c>true</c>, clicking the row toggles its checkbox (only when <see cref="ShowCheckboxes"/>).</summary>
     [Parameter] public bool CheckNodeByClick { get; set; }
+
+    /// <summary>Allow single-selection of nodes (highlights the selected row). Ignored when <see cref="ShowCheckboxes"/> is <c>true</c>.</summary>
     [Parameter] public bool AllowSelectNodes { get; set; }
+
+    /// <summary>Controls which icon is rendered before each node text.</summary>
     [Parameter] public HqTreeIconMode IconMode { get; set; } = HqTreeIconMode.None;
+
+    /// <summary>Additional CSS class for the host wrapper.</summary>
     [Parameter] public string? Class { get; set; }
+
+    /// <summary>Additional inline style for the host wrapper.</summary>
     [Parameter] public string? Style { get; set; }
 
-    [Parameter] public EventCallback<TreeViewNodeEventArgs> SelectionChanged { get; set; }
-    [Parameter] public EventCallback<TreeViewNodeClickEventArgs> NodeClick { get; set; }
+    /// <summary>Raised when the single-selected node changes.</summary>
+    [Parameter] public EventCallback<HqTreeNode?> SelectedValueChanged { get; set; }
+
+    /// <summary>Raised when the multi-selected nodes change (checkbox mode).</summary>
+    [Parameter] public EventCallback<IReadOnlyCollection<HqTreeNode>> SelectedValuesChanged { get; set; }
+
+    protected override void OnParametersSet()
+    {
+        var current = Data as IReadOnlyCollection<HqTreeNode> ?? Data?.ToList();
+        if (!ReferenceEquals(current, _lastDataRef))
+        {
+            _lastDataRef = current;
+            _items = MapNodes(current);
+        }
+    }
+
+    private SelectionMode CurrentSelectionMode =>
+        ShowCheckboxes ? SelectionMode.MultiSelection
+        : AllowSelectNodes ? SelectionMode.SingleSelection
+        : SelectionMode.ToggleSelection;
+
+    private static HashSet<TreeItemData<HqTreeNode>> MapNodes(IEnumerable<HqTreeNode>? nodes)
+    {
+        if (nodes is null)
+        {
+            return new HashSet<TreeItemData<HqTreeNode>>();
+        }
+
+        var result = new HashSet<TreeItemData<HqTreeNode>>();
+        foreach (var node in nodes)
+        {
+            result.Add(new TreeItemData<HqTreeNode>
+            {
+                Value = node,
+                Text = node.Text,
+                Expandable = node.IsParent,
+                Children = node.IsParent ? MapNodes(node.Children) : null
+            });
+        }
+        return result;
+    }
+
+    private async Task OnSelectedValueChangedInternal(HqTreeNode? value)
+    {
+        _selectedValue = value;
+        if (SelectedValueChanged.HasDelegate)
+        {
+            await SelectedValueChanged.InvokeAsync(value);
+        }
+    }
+
+    private async Task OnSelectedValuesChangedInternal(IReadOnlyCollection<HqTreeNode>? values)
+    {
+        _selectedValues = values ?? new HashSet<HqTreeNode>();
+        if (SelectedValuesChanged.HasDelegate)
+        {
+            await SelectedValuesChanged.InvokeAsync(_selectedValues);
+        }
+    }
 
     private string RootCssClass => string.Join(" ",
         new[]
@@ -73,30 +146,8 @@
             "hq-tree",
             IconMode != HqTreeIconMode.None ? "hq-tree--has-icon" : null,
             ShowCheckboxes ? "hq-tree--has-checkbox" : null,
+            CheckNodeByClick ? "hq-tree--check-by-click" : null,
+            AllowSelectNodes && !ShowCheckboxes ? "hq-tree--selectable" : null,
             Class
         }.Where(c => !string.IsNullOrWhiteSpace(c)));
-
-    private async Task OnSelectionChanged(TreeViewNodeEventArgs args)
-    {
-        if (SelectionChanged.HasDelegate)
-            await SelectionChanged.InvokeAsync(args);
-    }
-
-    private async Task OnNodeClick(TreeViewNodeClickEventArgs args)
-    {
-        if (NodeClick.HasDelegate)
-            await NodeClick.InvokeAsync(args);
-    }
-
-    private void OnAfterExpand(TreeViewNodeEventArgs args)
-    {
-        var node = (HqTreeNode)args.NodeInfo.DataItem;
-        _expandedKeys.Add(node.Key);
-    }
-
-    private void OnAfterCollapse(TreeViewNodeEventArgs args)
-    {
-        var node = (HqTreeNode)args.NodeInfo.DataItem;
-        _expandedKeys.Remove(node.Key);
-    }
 }
