@@ -82,3 +82,198 @@
 .trigger-btn--primary:hover {
     background-color: var(--color-primary-hover);
 }
+
+.long-content-demo {
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-6x);
+}
+
+.long-content-demo__lead {
+    margin: 0;
+    color: var(--color-on-surface);
+}
+
+.long-content-demo__section {
+    padding-bottom: var(--spacing-6x);
+    border-bottom: 1px solid var(--color-outline-1);
+}
+
+.long-content-demo__section:last-child {
+    padding-bottom: 0;
+    border-bottom: none;
+}
+
+.long-content-demo__section h3 {
+    margin: 0 0 var(--spacing-2x);
+    font-size: var(--text-title-md-size);
+    font-weight: 700;
+    color: var(--color-on-surface);
+}
+
+.long-content-demo__section p,
+.long-content-demo__section ul {
+    margin: 0;
+    color: var(--color-on-surface-1);
+}
+
+.long-content-demo__section ul {
+    padding-left: 1.25rem;
+}
+
+.long-content-demo__section li + li {
+    margin-top: var(--spacing-2x);
+}
+
+.dialog-grid-demo {
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-6x);
+}
+
+.dialog-grid-demo__lead {
+    margin: 0;
+    color: var(--color-on-surface);
+}
+
+.dialog-grid-demo__meta {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--spacing-4x);
+    color: var(--color-on-surface-1);
+    font-size: var(--text-body-sm-size);
+}
+
+.dialog-grid-demo__meta span {
+    padding: var(--spacing-2x) var(--spacing-4x);
+    border-radius: var(--radius-4x);
+    background-color: var(--color-surface-1);
+}
+
+.dialog-grid-shell {
+    overflow-x: auto;
+}
+
+/* Wide grid — columns sum ~1120px, triggers horizontal scroll inside dialog */
+::deep .dialog-grid-shell .dialog-dxgrid {
+    min-width: 1120px;
+}
+
+.dialog-grid-fit-demo {
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-6x);
+}
+
+.dialog-grid-fit-demo__lead {
+    margin: 0;
+    color: var(--color-on-surface);
+}
+
+.dialog-grid-fit-shell {
+    border: 1px solid var(--color-outline-1);
+    border-radius: var(--radius-4x);
+    overflow: hidden;
+}
+
+/* Shared DxGrid styling for both dialog grid variants */
+::deep .dialog-dxgrid {
+    width: 100%;
+}
+
+/* =====================================================================
+   Section 5 — Footer variant helpers
+   ===================================================================== */
+.variant-footer-left-label {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--spacing-2x);
+    font-size: var(--text-body-md-size);
+    color: var(--color-on-surface);
+    cursor: pointer;
+    user-select: none;
+}
+
+.variant-footer-left-checkbox {
+    width: 16px;
+    height: 16px;
+    accent-color: var(--color-primary);
+    cursor: pointer;
+}
+
+.variant-delete-confirm-input {
+    display: block;
+    width: 100%;
+    padding: var(--spacing-3x) var(--spacing-4x);
+    margin-top: var(--spacing-3x);
+    font-family: var(--font-family-base);
+    font-size: var(--text-body-md-size);
+    color: var(--color-on-surface);
+    background-color: var(--color-surface);
+    border: 1px solid var(--color-outline);
+    border-radius: var(--radius-4x);
+    outline: none;
+    box-sizing: border-box;
+    transition: border-color .15s ease;
+}
+
+.variant-delete-confirm-input:focus {
+    border-color: var(--color-red-60);
+}
+
+/* =====================================================================
+   Section 6 — Body content variant helpers
+   ===================================================================== */
+.variant-body-list {
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-4x);
+}
+
+.variant-body-list p {
+    margin: 0;
+}
+
+.variant-body-list__items {
+    margin: 0;
+    padding-left: 0;
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-3x);
+}
+
+.variant-body-list__items li {
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-3x);
+    font-size: var(--text-body-md-size);
+    color: var(--color-on-surface);
+}
+
+.variant-body-list__items li i {
+    color: var(--color-positive);
+    font-size: 14px;
+    flex-shrink: 0;
+}
+
+.variant-body-list__note {
+    margin: 0;
+    padding: var(--spacing-3x) var(--spacing-4x);
+    border-left: 3px solid var(--color-useful);
+    background-color: var(--color-surface-1);
+    border-radius: 0 var(--radius-2x) var(--radius-2x) 0;
+    font-size: var(--text-body-sm-size);
+    color: var(--color-on-surface-1);
+}
+
+.variant-centered-body {
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-4x);
+    text-align: center;
+}
+
+.variant-centered-body p {
+    margin: 0;
+}

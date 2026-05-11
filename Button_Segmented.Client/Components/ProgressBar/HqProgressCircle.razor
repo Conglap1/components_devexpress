@@ -1,23 +1,32 @@
 @namespace Button_Segmented.Client.Components.ProgressBar
 
 <span class="@HostClass" style="@HostStyle">
-    <DxProgressBar MinValue="0"
-                   MaxValue="100"
-                   Value="@Progress"
-                   Size="@DxSize"
-                   Type="ProgressBarType.Circular"
-                   ShowLabel="@(Type == HqProgressCircleType.Label && !IsSmallSize)"
-                   ShowIcon="false"
-                   CssClass="@DxClass" />
+    <span class="hq-progress-circle__visual">
+        <DxProgressBar MinValue="0"
+                       MaxValue="100"
+                       Value="@ClampedProgress"
+                       Size="@DxSize"
+                       Type="ProgressBarType.Circular"
+                       ShowLabel="false"
+                       ShowIcon="false"
+                       CssClass="@DxClass" />
+
+        @if (Type == HqProgressCircleType.Label && !IsSmallSize)
+        {
+            <span class="hq-progress-circle__center-label">@DisplayText</span>
+        }
+
+        @if (Type == HqProgressCircleType.Icon)
+        {
+            <span class="hq-progress-circle__icon-overlay" aria-hidden="true">
+                <i class="@EffectiveIconCssClass"></i>
+            </span>
+        }
+    </span>
+
     @if (Type == HqProgressCircleType.Label && IsSmallSize)
     {
         <span class="hq-progress-circle__outside-label">@DisplayText</span>
-    }
-    @if (Type == HqProgressCircleType.Icon)
-    {
-        <span class="hq-progress-circle__icon-overlay" aria-hidden="true">
-            <i class="@EffectiveIconCssClass"></i>
-        </span>
     }
 </span>
 
@@ -51,6 +60,14 @@
 
     private int Diameter => _sizes[Size];
 
+    private int StrokeWidth => Size switch
+    {
+        HqProgressCircleSize.Sm => 2,
+        HqProgressCircleSize.Md => 4,
+        HqProgressCircleSize.Lg => 5,
+        _ => 7
+    };
+
     private string HostClass => string.Join(" ",
         new[]
         {
@@ -60,7 +77,7 @@
             Class
         }.Where(c => !string.IsNullOrWhiteSpace(c)));
 
-    private string HostStyle => $"--hq-pc-size: {Diameter}px";
+    private string HostStyle => $"--hq-pc-size: {Diameter}px; --hq-pc-thickness: {StrokeWidth}px";
 
     private string DxSize => $"{Diameter}px";
 

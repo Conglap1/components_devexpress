@@ -6,6 +6,14 @@
 <MudDialogProvider />
 <MudSnackbarProvider />
 
+@* DxToastProvider — container cho HqNotification toast.
+   HqNotificationService.Show() sẽ inject IToastNotificationService từ DX vào đây. *@
+<DxToastProvider HorizontalAlignment="DevExpress.Blazor.HorizontalAlignment.Right"
+                 VerticalAlignment="VerticalEdge.Top"
+                 Width="@("400px")"
+                 AnimationType="ToastAnimationType.Fade"
+                 DisplayTime="@TimeSpan.FromSeconds(4)" />
+
 <div class="page">
     <Drawer CssClass="navigation-drawer" PanelWidth="240px">
         <HeaderTemplate>

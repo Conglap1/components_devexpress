@@ -5,17 +5,26 @@
     <DxMenu Orientation="@DevExpress.Blazor.Orientation.Vertical" CssClass="menu">
         <Items>
             <DxMenuItem NavigateUrl="/" Text="Home" CssClass="@MenuItemCssClass("/")" IconCssClass="icon icon-home"></DxMenuItem>
-            <DxMenuItem NavigateUrl="/buttons-demo" Text="Buttons Demo" CssClass="@MenuItemCssClass("/buttons-demo")" IconCssClass="icon icon-docs"></DxMenuItem>
-            <DxMenuItem NavigateUrl="/text-field-demo" Text="Text Field, Text Area & Combobox" CssClass="@MenuItemCssClass("/text-field-demo")" IconCssClass="icon icon-docs"></DxMenuItem>
-            <DxMenuItem NavigateUrl="/segmented-demo" Text="Segmented Demo" CssClass="@MenuItemCssClass("/segmented-demo")" IconCssClass="icon icon-docs"></DxMenuItem>
-            <DxMenuItem NavigateUrl="/badge-demo" Text="Badge Demo" CssClass="@MenuItemCssClass("/badge-demo")" IconCssClass="icon icon-docs"></DxMenuItem>
-            <DxMenuItem NavigateUrl="/progress-bar-demo" Text="Progress Bar Demo" CssClass="@MenuItemCssClass("/progress-bar-demo")" IconCssClass="icon icon-docs"></DxMenuItem>
-            <DxMenuItem NavigateUrl="/checkbox-demo" Text="Checkbox Demo" CssClass="@MenuItemCssClass("/checkbox-demo")" IconCssClass="icon icon-docs"></DxMenuItem>
-            <DxMenuItem NavigateUrl="/divider-demo" Text="Divider Demo" CssClass="@MenuItemCssClass("/divider-demo")" IconCssClass="icon icon-docs"></DxMenuItem>
-            <DxMenuItem NavigateUrl="/tree-demo" Text="Tree Demo" CssClass="@MenuItemCssClass("/tree-demo")" IconCssClass="icon icon-docs"></DxMenuItem>
-            <DxMenuItem NavigateUrl="/dialog-demo" Text="Dialog Demo" CssClass="@MenuItemCssClass("/dialog-demo")" IconCssClass="icon icon-docs"></DxMenuItem>
-            <DxMenuItem NavigateUrl="/counter" Text="Counter" CssClass="@MenuItemCssClass("/counter")" IconCssClass="icon icon-counter"></DxMenuItem>
-            <DxMenuItem NavigateUrl="/weather" Text="Weather" CssClass="@MenuItemCssClass("/weather")" IconCssClass="icon icon-weather"></DxMenuItem>
+            <DxMenuItem Text="Tuần 1" IconCssClass="icon icon-docs" CssClass="@Week1GroupCssClass()">
+                <Items>
+                    <DxMenuItem NavigateUrl="/buttons-demo" Text="Buttons" CssClass="@MenuItemCssClass("/buttons-demo")" IconCssClass="icon icon-docs"></DxMenuItem>
+                    <DxMenuItem NavigateUrl="/text-field-demo" Text="Text Field, Text Area &amp; Combobox" CssClass="@MenuItemCssClass("/text-field-demo")" IconCssClass="icon icon-docs"></DxMenuItem>
+                    <DxMenuItem NavigateUrl="/segmented-demo" Text="Segmented" CssClass="@MenuItemCssClass("/segmented-demo")" IconCssClass="icon icon-docs"></DxMenuItem>
+                    <DxMenuItem NavigateUrl="/badge-demo" Text="Badge" CssClass="@MenuItemCssClass("/badge-demo")" IconCssClass="icon icon-docs"></DxMenuItem>
+                    <DxMenuItem NavigateUrl="/progress-bar-demo" Text="Progress Bar" CssClass="@MenuItemCssClass("/progress-bar-demo")" IconCssClass="icon icon-docs"></DxMenuItem>
+                    <DxMenuItem NavigateUrl="/checkbox-demo" Text="Checkbox" CssClass="@MenuItemCssClass("/checkbox-demo")" IconCssClass="icon icon-docs"></DxMenuItem>
+                    <DxMenuItem NavigateUrl="/divider-demo" Text="Divider" CssClass="@MenuItemCssClass("/divider-demo")" IconCssClass="icon icon-docs"></DxMenuItem>
+                    <DxMenuItem NavigateUrl="/dialog-demo" Text="Dialog" CssClass="@MenuItemCssClass("/dialog-demo")" IconCssClass="icon icon-docs"></DxMenuItem>
+                </Items>
+            </DxMenuItem>
+            <DxMenuItem Text="Tuần 2" IconCssClass="icon icon-docs" CssClass="@Week2GroupCssClass()">
+                <Items>
+                    <DxMenuItem NavigateUrl="/notification-demo" Text="Notification &amp; Alert" CssClass="@MenuItemCssClass("/notification-demo")" IconCssClass="icon icon-docs"></DxMenuItem>
+                    <DxMenuItem NavigateUrl="/tooltip-demo" Text="Tooltip" CssClass="@MenuItemCssClass("/tooltip-demo")" IconCssClass="icon icon-docs"></DxMenuItem>
+                    <DxMenuItem NavigateUrl="/counter" Text="Counter" CssClass="@MenuItemCssClass("/counter")" IconCssClass="icon icon-counter"></DxMenuItem>
+                    <DxMenuItem NavigateUrl="/weather" Text="Weather" CssClass="@MenuItemCssClass("/weather")" IconCssClass="icon icon-weather"></DxMenuItem>
+                </Items>
+            </DxMenuItem>
         </Items>
     </DxMenu>
 </div>
@@ -35,6 +44,28 @@
 
     private string? MenuItemCssClass(string itemPath) {
         return string.Equals(currentLocalPath, itemPath, StringComparison.OrdinalIgnoreCase) ? "menu-item-active" : null;
+    }
+
+    private static readonly string[] Week1Routes = [
+        "/buttons-demo", "/text-field-demo", "/segmented-demo",
+        "/badge-demo", "/progress-bar-demo", "/checkbox-demo",
+        "/divider-demo", "/dialog-demo"
+    ];
+
+    private static readonly string[] Week2Routes = [
+        "/notification-demo", "/tooltip-demo", "/counter", "/weather"
+    ];
+
+    private string? Week1GroupCssClass() {
+        return Week1Routes.Any(r => string.Equals(currentLocalPath, r, StringComparison.OrdinalIgnoreCase))
+            ? "menu-item-active"
+            : null;
+    }
+
+    private string? Week2GroupCssClass() {
+        return Week2Routes.Any(r => string.Equals(currentLocalPath, r, StringComparison.OrdinalIgnoreCase))
+            ? "menu-item-active"
+            : null;
     }
 
     public void Dispose() {

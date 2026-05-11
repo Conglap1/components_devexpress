@@ -85,7 +85,8 @@
 ::deep .hq-combo-box__editor.dxbl-text-edit.dx-state-focused,
 ::deep .hq-combo-box__editor.dxbl-text-edit:focus-within,
 ::deep .hq-combo-box__editor.dxbl-text-edit.dxbl-invalid {
-    background: transparent !important;
+    background: var(--hq-cb-bg) !important;
+    background-color: var(--hq-cb-bg) !important;
     border: 0 !important;
     border-color: transparent !important;
     box-shadow: none !important;
@@ -119,7 +120,8 @@
 /* Input element */
 ::deep .hq-combo-box__editor.dxbl-text-edit > .dxbl-text-edit-input,
 ::deep .hq-combo-box__editor.dxbl-text-edit input.dxbl-text-edit-input {
-    background: transparent !important;
+    background: var(--hq-cb-bg) !important;
+    background-color: var(--hq-cb-bg) !important;
     border: 0 !important;
     box-shadow: none !important;
     color: inherit;
@@ -134,7 +136,8 @@
 ::deep .hq-combo-box__editor.dxbl-text-edit > .dxbl-text-edit-input:focus,
 ::deep .hq-combo-box__editor.dxbl-text-edit > .dxbl-text-edit-input:focus-visible,
 ::deep .hq-combo-box__editor.dxbl-text-edit > .dxbl-text-edit-input:hover {
-    background: transparent !important;
+    background: var(--hq-cb-bg) !important;
+    background-color: var(--hq-cb-bg) !important;
     border: 0 !important;
     box-shadow: none !important;
     outline: none !important;
@@ -147,17 +150,21 @@
 
 /* Dropdown & clear buttons — kill ALL DX default borders */
 ::deep .hq-combo-box__editor.dxbl-text-edit .dxbl-btn-container {
-    background: transparent !important;
+    align-self: stretch;
+    background: var(--hq-cb-bg) !important;
     border: 0 !important;
     border-left: 0 !important;
     border-inline-start: 0 !important;
+    border-radius: 0 var(--radius-6x) var(--radius-6x) 0 !important;
+    display: inline-flex;
     margin: 0 !important;
     padding: 0 !important;
 }
 
 ::deep .hq-combo-box__editor.dxbl-text-edit .dxbl-edit-btn {
     align-items: center;
-    background: transparent !important;
+    align-self: stretch;
+    background: var(--hq-cb-bg) !important;
     border: 0 !important;
     border-left: 0 !important;
     border-inline-start: 0 !important;
@@ -180,8 +187,21 @@
 }
 
 ::deep .hq-combo-box__editor.dxbl-text-edit .dxbl-edit-btn:hover:not(.dxbl-disabled):not(:disabled) {
-    background: transparent !important;
+    background: var(--hq-cb-bg) !important;
     color: var(--color-on-surface) !important;
+}
+
+/* Force dropdown button to inherit shell background regardless of dxbl-btn-outline-secondary */
+::deep .hq-combo-box__editor.dxbl-text-edit .dxbl-edit-btn-dropdown,
+::deep .hq-combo-box__editor.dxbl-text-edit .dxbl-edit-btn-dropdown:hover,
+::deep .hq-combo-box__editor.dxbl-text-edit .dxbl-edit-btn-dropdown:focus,
+::deep .hq-combo-box__editor.dxbl-text-edit .dxbl-edit-btn-dropdown:active,
+::deep .hq-combo-box__editor.dxbl-text-edit .dxbl-edit-btn-dropdown:focus-visible {
+    background: var(--hq-cb-bg) !important;
+    background-color: var(--hq-cb-bg) !important;
+    border: 0 !important;
+    box-shadow: none !important;
+    outline: none !important;
 }
 
 ::deep .hq-combo-box__editor.dxbl-text-edit .dxbl-edit-btn .dxbl-image,

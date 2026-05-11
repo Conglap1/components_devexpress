@@ -1,6 +1,72 @@
 @import url('./tokens.css');
 @import url('./icons.css');
 
+/* DxPopup body renders outside component CSS isolation — keep the global reset
+   minimal here. The inner .hq-dialog__panel handles scrolling and sticky
+   header/footer inside scoped CSS. */
+.dxbl-popup-body.hq-dialog__body-host,
+.dxbl-modal-body.hq-dialog__body-host {
+    padding: 0 !important;
+    display: flex !important;
+    flex-direction: column !important;
+    min-height: 0 !important;
+    overflow: hidden !important;
+}
+
+/* HqDialog renders through a DevExpress portal, so the layout rules that
+   control max-height and internal scrolling must live in global CSS. */
+dxbl-modal-dialog.hq-dialog,
+.hq-dialog.dxbl-popup {
+    max-height: min(600px, calc(100vh - 32px)) !important;
+    overflow: hidden !important;
+}
+
+.hq-dialog .hq-dialog__panel {
+    display: flex !important;
+    flex-direction: column !important;
+    width: 100% !important;
+    max-height: min(600px, calc(100vh - 32px)) !important;
+    overflow: hidden !important;
+    background-color: var(--color-surface) !important;
+}
+
+.hq-dialog .hq-dialog__header,
+.hq-dialog .hq-dialog__footer {
+    flex-shrink: 0;
+    background-color: var(--color-surface) !important;
+}
+
+.hq-dialog .hq-dialog__content {
+    flex: 1 1 auto !important;
+    min-height: 0 !important;
+    overflow-y: auto !important;
+    overflow-x: hidden !important;
+}
+
+/* =====================================================================
+   HqDialog — Intent icon colour (portal-safe global rules)
+   ===================================================================== */
+/* Default prefix icon colour (no intent) */
+.hq-dialog .hq-dialog__prefix-icon {
+    color: var(--color-positive);
+}
+/* Intent overrides */
+.hq-dialog--intent-info    .hq-dialog__prefix-icon { color: var(--color-useful); }
+.hq-dialog--intent-success .hq-dialog__prefix-icon { color: var(--color-positive); }
+.hq-dialog--intent-warning .hq-dialog__prefix-icon { color: var(--color-yellow-60); }
+.hq-dialog--intent-danger  .hq-dialog__prefix-icon { color: var(--color-red-60); }
+
+/* Remove DevExpress checkbox focus ring globally */
+.dxbl-checkbox *:focus,
+.dxbl-checkbox *:focus-visible,
+.dxbl-checkbox-check-container:focus,
+.dxbl-checkbox-check-container:focus-visible,
+.dxbl-checkbox:focus,
+.dxbl-checkbox:focus-visible {
+    outline: none !important;
+    box-shadow: none !important;
+}
+
 html, body {
     display: flex;
     flex-direction: column;
@@ -134,6 +200,251 @@ html, body {
 .hq-select-dropdown__item {
     border-bottom: 1px solid var(--color-surface-1);
     color: var(--color-on-surface);
+}
+
+/* =====================================================================
+   HqNotification (Toast) — DxToastProvider renders outside component
+   scope, so these must be global (same pattern as HqDialog).
+   ===================================================================== */
+
+/* ── Root toast element ── */
+.hq-notif,
+.hq-notif.dxbl-toast {
+    display: flex !important;
+    flex-direction: row !important;
+    align-items: flex-start !important;
+    gap: var(--notification-gap) !important;
+    padding: var(--notification-padding) !important;
+    width: var(--notification-width) !important;
+    border-radius: var(--notification-radius) !important;
+    border: 1px solid var(--hq-notif-border, var(--notification-default-border)) !important;
+    background-color: var(--hq-notif-bg, var(--notification-default-bg)) !important;
+    box-shadow: var(--notification-shadow) !important;
+    box-sizing: border-box !important;
+    background-image: none !important;
+    color: var(--notification-heading-color) !important;
+}
+
+/* ── Type modifier — set local CSS vars ── */
+.hq-notif--default {
+    --hq-notif-bg:     var(--notification-default-bg);
+    --hq-notif-border: var(--notification-default-border);
+    --hq-notif-icon:   var(--notification-default-icon);
+}
+.hq-notif--positive {
+    --hq-notif-bg:     var(--notification-positive-bg);
+    --hq-notif-border: var(--notification-positive-border);
+    --hq-notif-icon:   var(--notification-positive-icon);
+}
+.hq-notif--stressful {
+    --hq-notif-bg:     var(--notification-stressful-bg);
+    --hq-notif-border: var(--notification-stressful-border);
+    --hq-notif-icon:   var(--notification-stressful-icon);
+}
+.hq-notif--careful {
+    --hq-notif-bg:     var(--notification-careful-bg);
+    --hq-notif-border: var(--notification-careful-border);
+    --hq-notif-icon:   var(--notification-careful-icon);
+}
+.hq-notif--useful {
+    --hq-notif-bg:     var(--notification-useful-bg);
+    --hq-notif-border: var(--notification-useful-border);
+    --hq-notif-icon:   var(--notification-useful-icon);
+}
+
+/* ── DX Toast internal layout ── */
+.hq-notif.dxbl-toast .dxbl-toast-body {
+    display: flex !important;
+    flex-direction: row !important;
+    align-items: flex-start !important;
+    gap: var(--notification-gap) !important;
+    padding: 0 !important;
+    flex: 1 !important;
+    min-width: 0 !important;
+    background: none !important;
+}
+
+/* Hide DX accent line */
+.hq-notif.dxbl-toast .dxbl-toast-accent-line {
+    display: none !important;
+}
+
+/* DX icon column */
+.hq-notif.dxbl-toast .dxbl-toast-icon-column {
+    flex-shrink: 0 !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    width: var(--notification-icon-size) !important;
+    height: var(--notification-icon-size) !important;
+}
+
+/* DX icon */
+.hq-notif.dxbl-toast .dxbl-toast-icon,
+.hq-notif.dxbl-toast .dxbl-image.dxbl-toast-icon {
+    color: var(--hq-notif-icon, var(--notification-default-icon)) !important;
+    font-size: var(--notification-icon-size) !important;
+    width: var(--notification-icon-size) !important;
+    height: var(--notification-icon-size) !important;
+    flex-shrink: 0 !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    background: none !important;
+    border-radius: 0 !important;
+    margin: 0 !important;
+}
+
+/* DX content area */
+.hq-notif.dxbl-toast .dxbl-toast-content {
+    display: flex !important;
+    flex-direction: column !important;
+    gap: var(--spacing-2x) !important;
+    flex: 1 !important;
+    min-width: 0 !important;
+    padding: 0 !important;
+}
+
+.hq-notif.dxbl-toast .dxbl-toast-text-content {
+    display: flex !important;
+    flex-direction: column !important;
+    gap: var(--spacing-2x) !important;
+}
+
+/* DX title (header) */
+.hq-notif.dxbl-toast .dxbl-toast-header {
+    font-family: var(--font-family-base) !important;
+    font-size: var(--text-body-lg-size, 16px) !important;
+    font-weight: 500 !important;
+    line-height: 150% !important;
+    letter-spacing: var(--font-letter-spacing) !important;
+    color: var(--notification-heading-color) !important;
+    padding: 0 !important;
+    margin: 0 !important;
+}
+
+/* DX text */
+.hq-notif.dxbl-toast .dxbl-toast-text {
+    font-family: var(--font-family-base) !important;
+    font-size: var(--text-title-sm-size, 14px) !important;
+    font-weight: 400 !important;
+    line-height: 150% !important;
+    letter-spacing: var(--font-letter-spacing) !important;
+    color: var(--notification-text-color) !important;
+    padding: 0 !important;
+    margin: 0 !important;
+    -webkit-line-clamp: unset !important;
+    display: block !important;
+}
+
+/* DX close container */
+.hq-notif.dxbl-toast .dxbl-toast-close {
+    flex-shrink: 0 !important;
+    display: flex !important;
+    align-items: flex-start !important;
+    width: var(--notification-icon-size) !important;
+    height: var(--notification-icon-size) !important;
+}
+
+/* DX close button */
+.hq-notif.dxbl-toast button.dxbl-toast-close-btn {
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    flex-shrink: 0 !important;
+    width: var(--notification-icon-size) !important;
+    height: var(--notification-icon-size) !important;
+    padding: 0 !important;
+    border: none !important;
+    background: transparent !important;
+    color: var(--notification-close-color) !important;
+    cursor: pointer !important;
+    border-radius: 0 !important;
+    transition: color .15s ease !important;
+}
+
+/* DX close SVG icon — constrain size */
+.hq-notif.dxbl-toast svg.dxbl-toast-close-btn,
+.hq-notif.dxbl-toast .dxbl-toast-close-btn svg {
+    width: 16px !important;
+    height: 16px !important;
+    flex-shrink: 0 !important;
+}
+
+.hq-notif.dxbl-toast button.dxbl-toast-close-btn:hover {
+    color: var(--color-on-background) !important;
+    background: transparent !important;
+}
+
+/* ── Raw HqNotification component elements (static preview) ── */
+.hq-notif__icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    width: var(--notification-icon-size);
+    height: var(--notification-icon-size);
+    color: var(--hq-notif-icon, var(--notification-default-icon));
+    font-size: var(--notification-icon-size);
+    line-height: 1;
+}
+
+.hq-notif__content {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: var(--notification-gap);
+    flex: 1;
+    min-width: 0;
+}
+
+.hq-notif__text {
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-2x);
+    width: 100%;
+}
+
+.hq-notif__heading {
+    margin: 0;
+    font-family: var(--font-family-base);
+    font-size: var(--text-body-lg-size, 16px);
+    font-weight: 500;
+    line-height: 150%;
+    letter-spacing: var(--font-letter-spacing);
+    color: var(--notification-heading-color);
+}
+
+.hq-notif__description {
+    margin: 0;
+    font-family: var(--font-family-base);
+    font-size: var(--text-title-sm-size, 14px);
+    font-weight: 400;
+    line-height: 150%;
+    letter-spacing: var(--font-letter-spacing);
+    color: var(--notification-text-color);
+}
+
+.hq-notif__action { width: 100%; }
+
+.hq-notif__close {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    width: var(--notification-icon-size);
+    height: var(--notification-icon-size);
+    padding: 0;
+    border: none;
+    background: transparent;
+    color: var(--notification-close-color);
+    font-size: var(--icon-font-sm-size);
+    cursor: pointer;
+    line-height: 1;
+    transition: color .15s ease;
+}
+
+.hq-notif__close:hover { color: var(--color-on-background); }
     font-family: var(--font-family-base);
     font-size: var(--text-body-lg-size);
     font-weight: 400;
@@ -166,5 +477,44 @@ html, body {
     display: none !important;
     border: 0 !important;
     content: none !important;
+}
+
+/* =====================================================================
+   HqTooltip — MudTooltip popup overrides (portal-safe global rules)
+   MudTooltip renders via MudPopoverProvider outside the component tree,
+   so scoped CSS cannot reach it — same pattern as DxPopup / HqDialog.
+   ===================================================================== */
+.mud-tooltip.hq-tooltip-popup {
+    background-color: var(--tooltip-bg) !important;
+    color: var(--tooltip-fg) !important;
+    border-radius: var(--tooltip-radius) !important;
+    padding: var(--tooltip-padding-y) var(--tooltip-padding-x) !important;
+    font-family: var(--font-family-base) !important;
+    font-size: var(--tooltip-font-size) !important;
+    line-height: var(--tooltip-line-height) !important;
+    letter-spacing: var(--font-letter-spacing) !important;
+    font-weight: 400 !important;
+    box-shadow: var(--tooltip-shadow) !important;
+    min-height: unset !important;
+}
+
+/* Arrow — top placement */
+.mud-tooltip-top.hq-tooltip-popup .mud-tooltip-arrow::after {
+    border-color: var(--tooltip-bg) transparent transparent transparent !important;
+}
+
+/* Arrow — bottom placement */
+.mud-tooltip-bottom.hq-tooltip-popup .mud-tooltip-arrow::after {
+    border-color: transparent transparent var(--tooltip-bg) transparent !important;
+}
+
+/* Arrow — left placement */
+.mud-tooltip-left.hq-tooltip-popup .mud-tooltip-arrow::after {
+    border-color: transparent transparent transparent var(--tooltip-bg) !important;
+}
+
+/* Arrow — right placement */
+.mud-tooltip-right.hq-tooltip-popup .mud-tooltip-arrow::after {
+    border-color: transparent var(--tooltip-bg) transparent transparent !important;
 }
 

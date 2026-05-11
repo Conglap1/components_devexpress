@@ -1,30 +1,21 @@
 @namespace Button_Segmented.Client.Components.Checkbox
 
-<label class="@RootClass" style="@Style">
-    <input type="checkbox"
-           class="hq-checkbox__input"
-           checked="@CurrentValue"
-           @onchange="HandleChange"
-           disabled="@Disabled"
-           aria-checked="@(Indeterminate ? "mixed" : CurrentValue ? "true" : "false")"
-           aria-label="@(!string.IsNullOrEmpty(Label) ? Label : null)" />
+<label class="@ShellClass" for="@InputId" style="@Style">
+    <DxCheckBox CssClass="@RootClass"
+                Checked="@CurrentCheckedState"
+                CheckedChanged="@CheckedChangedCallback"
+                Enabled="@(!Disabled)"
+                AllowIndeterminateState="@Indeterminate"
+                AllowIndeterminateStateByClick="false"
+                DisableDefaultRender="true"
+                InputId="@InputId"
+                Attributes="@EffectiveAttributes">
+        <span class="hq-checkbox__icon" aria-hidden="true">
+            <i class="@IconCssClass"></i>
+        </span>
+    </DxCheckBox>
 
-    <span class="hq-checkbox__icon" aria-hidden="true">
-        @if (Indeterminate)
-        {
-            <i class="fa-solid fa-square-minus"></i>
-        }
-        else if (CurrentValue)
-        {
-            <i class="fa-solid fa-square-check"></i>
-        }
-        else
-        {
-            <i class="fa-regular fa-square"></i>
-        }
-    </span>
-
-    @if (!string.IsNullOrEmpty(Label))
+    @if (!string.IsNullOrWhiteSpace(Label))
     {
         <span class="hq-checkbox__label">@Label</span>
     }
@@ -35,6 +26,7 @@
 </label>
 
 @code {
+    [Parameter(CaptureUnmatchedValues = true)] public Dictionary<string, object>? AdditionalAttributes { get; set; }
     [Parameter] public bool Value { get; set; }
     [Parameter] public EventCallback<bool> ValueChanged { get; set; }
     [Parameter] public bool Indeterminate { get; set; }
@@ -47,8 +39,24 @@
 
     private bool _internalValue;
     private bool _isControlled;
+    private string InputId { get; } = $"hq-checkbox-{Guid.NewGuid():N}";
 
     private bool CurrentValue => _isControlled ? Value : _internalValue;
+    private bool? CurrentCheckedState => Indeterminate ? null : CurrentValue;
+    private EventCallback<bool?> CheckedChangedCallback => EventCallback.Factory.Create<bool?>(this, HandleCheckedChanged);
+    private Dictionary<string, object> EffectiveAttributes => AdditionalAttributes ?? new Dictionary<string, object>();
+    private string ShellClass => string.Join(" ", new[] { "hq-checkbox-shell", Disabled ? "is-disabled" : null, Class }.Where(c => !string.IsNullOrWhiteSpace(c)));
+    private string IconCssClass => string.Join(" ", new[]
+    {
+        "hq-checkbox__glyph",
+        Size switch
+        {
+            HqCheckboxSize.Xs => "hq-checkbox__glyph--xs",
+            HqCheckboxSize.Sm => "hq-checkbox__glyph--sm",
+            _ => "hq-checkbox__glyph--md"
+        },
+        Indeterminate ? "fa-solid fa-square-minus" : CurrentValue ? "fa-solid fa-square-check" : "fa-regular fa-square"
+    });
 
     protected override void OnParametersSet()
     {
@@ -72,13 +80,17 @@
             Disabled ? "is-disabled" : null,
             CurrentValue && !Indeterminate ? "is-checked" : null,
             Indeterminate ? "is-indeterminate" : null,
-            Class
+            null
         }.Where(c => !string.IsNullOrWhiteSpace(c)));
 
-    private async Task HandleChange(ChangeEventArgs e)
+    private async Task HandleCheckedChanged(bool? checkedState)
     {
-        if (Disabled) return;
-        var newValue = e.Value is bool b ? b : bool.TryParse(e.Value?.ToString(), out var parsed) && parsed;
+        if (Disabled)
+        {
+            return;
+        }
+
+        var newValue = checkedState ?? false;
 
         if (_isControlled)
         {
@@ -87,7 +99,8 @@
         else
         {
             _internalValue = newValue;
-            Indeterminate = false;
         }
+
+        Indeterminate = false;
     }
 }

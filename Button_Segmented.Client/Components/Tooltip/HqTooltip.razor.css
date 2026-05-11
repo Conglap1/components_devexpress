@@ -1,0 +1,5 @@
+/* ===== HqTooltip — host wrapper ===== */
+.hq-tooltip-host {
+    display: inline-flex;
+    align-items: center;
+}

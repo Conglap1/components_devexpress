@@ -3,10 +3,18 @@
 /* Host: inline-flex, size driven by --hq-pc-size CSS var */
 .hq-progress-circle-host {
     --hq-pc-color: var(--color-careful);
+    --hq-pc-thickness: 6px;
     align-items: center;
     display: inline-flex;
     gap: var(--spacing-4x);
+}
+
+.hq-progress-circle__visual {
+    display: inline-flex;
+    flex: 0 0 auto;
+    height: var(--hq-pc-size);
     position: relative;
+    width: var(--hq-pc-size);
 }
 
 /* Hide outside-label gap when icon type */
@@ -17,6 +25,9 @@
 /* ── DxProgressBar circular shell ── */
 ::deep .hq-progress-circle.dxbl-progress-bar,
 ::deep .hq-progress-circle.dxbl-progress-circular-bar {
+    --dxbl-progress-bar-thickness: var(--hq-pc-thickness);
+    --dxbl-progress-bar-indicator-color: var(--hq-pc-color);
+    --dxbl-progress-bar-track-color: color-mix(in srgb, var(--hq-pc-color) 20%, transparent);
     flex: 0 0 auto;
     height: var(--hq-pc-size) !important;
     width: var(--hq-pc-size) !important;
@@ -26,49 +37,60 @@
 ::deep .hq-progress-circle.dxbl-progress-bar .dxbl-progress-circular-bar-track,
 ::deep .hq-progress-circle.dxbl-progress-circular-bar .dxbl-progress-circular-bar-track {
     stroke: color-mix(in srgb, var(--hq-pc-color) 20%, transparent) !important;
+    stroke-width: var(--hq-pc-thickness) !important;
 }
 
 /* Circular indicator arc */
 ::deep .hq-progress-circle.dxbl-progress-bar .dxbl-progress-circular-bar-indicator,
 ::deep .hq-progress-circle.dxbl-progress-circular-bar .dxbl-progress-circular-bar-indicator {
     stroke: var(--hq-pc-color) !important;
+    stroke-linecap: round !important;
+    stroke-width: var(--hq-pc-thickness) !important;
 }
 
-/* Inner label text */
-::deep .hq-progress-circle.dxbl-progress-bar .dxbl-progress-bar-label-container,
-::deep .hq-progress-circle.dxbl-progress-circular-bar .dxbl-progress-bar-label-container {
-    justify-content: center;
-    width: auto !important;
+/* Remove built-in label layout because center text is custom-rendered. */
+::deep .hq-progress-circle.dxbl-progress-bar .dxbl-progress-bar-label,
+::deep .hq-progress-circle.dxbl-progress-circular-bar .dxbl-progress-bar-label {
+    display: none !important;
 }
 
-::deep .hq-progress-circle.dxbl-progress-bar .dxbl-progress-bar-label p,
-::deep .hq-progress-circle.dxbl-progress-circular-bar .dxbl-progress-bar-label p {
-    color: var(--hq-pc-color) !important;
-    font-family: var(--font-family-base) !important;
-    font-weight: 700 !important;
-    letter-spacing: var(--font-letter-spacing) !important;
-    margin: 0 !important;
-    max-width: none !important;
-    overflow: visible !important;
-    text-overflow: clip !important;
-    white-space: nowrap !important;
-}
-
-/* Size-based label font sizes — mapped from Figma: sm=body/sm(12px), md=body/sm(12px), lg=body/lg(16px), xl=heading/sm(20px) */
-.hq-progress-circle-host--sm  ::deep .hq-progress-circle .dxbl-progress-bar-label p { font-size: var(--text-body-sm-size) !important; }
-.hq-progress-circle-host--md  ::deep .hq-progress-circle .dxbl-progress-bar-label p { font-size: var(--text-body-sm-size) !important; }
-.hq-progress-circle-host--lg  ::deep .hq-progress-circle .dxbl-progress-bar-label p { font-size: var(--text-body-lg-size) !important; }
-.hq-progress-circle-host--xl  ::deep .hq-progress-circle .dxbl-progress-bar-label p { font-size: var(--text-heading-sm-size) !important; }
-
-/* ── Outside label (size=sm) ── */
+.hq-progress-circle__center-label,
 .hq-progress-circle__outside-label {
     color: var(--hq-pc-color);
     font-family: var(--font-family-base);
-    font-size: var(--text-body-lg-size);
     font-weight: 700;
-    letter-spacing: var(--font-letter-spacing);
+    letter-spacing: -0.02em;
+}
+
+.hq-progress-circle__center-label {
+    align-items: center;
+    display: inline-flex;
+    inset: 0;
+    justify-content: center;
+    line-height: 1.5;
+    pointer-events: none;
+    position: absolute;
+    text-align: center;
+}
+
+.hq-progress-circle-host--md .hq-progress-circle__center-label {
+    font-size: var(--text-body-sm-size);
+}
+
+.hq-progress-circle-host--lg .hq-progress-circle__center-label {
+    font-size: var(--text-body-lg-size);
+}
+
+.hq-progress-circle-host--xl .hq-progress-circle__center-label {
+    font-size: var(--text-heading-sm-size);
+}
+
+/* ── Outside label (size=sm) — must render LEFT of circle ── */
+.hq-progress-circle__outside-label {
+    font-size: var(--text-body-lg-size);
     line-height: var(--text-body-lg-lh);
     min-width: max-content;
+    order: -1;
 }
 
 /* ── Icon overlay (type=icon) ── */

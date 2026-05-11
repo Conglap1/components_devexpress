@@ -1,0 +1,117 @@
+@page "/tooltip-demo"
+
+<PageTitle>Tooltip Demo</PageTitle>
+
+<div class="tooltip-page">
+    <h1>Tooltip component</h1>
+    <p class="tooltip-subtitle">Giá trị mô tả bổ sung hiển thị khi hover vào element. 4 hướng: top, bottom, left, right.</p>
+
+    @* ── Direction matrix ── *@
+    <section class="tooltip-section">
+        <h2>Direction</h2>
+        <div class="tooltip-grid">
+            <div class="tooltip-demo-item">
+                <span class="tooltip-label">Top</span>
+                <HqTooltip Text="Tooltip text — Top" Direction="HqTooltipDirection.Top">
+                    <HqButton Variant="HqButtonVariant.Secondary" Size="HqButtonSize.Sm" Text="Hover me" />
+                </HqTooltip>
+            </div>
+
+            <div class="tooltip-demo-item">
+                <span class="tooltip-label">Bottom</span>
+                <HqTooltip Text="Tooltip text — Bottom" Direction="HqTooltipDirection.Bottom">
+                    <HqButton Variant="HqButtonVariant.Secondary" Size="HqButtonSize.Sm" Text="Hover me" />
+                </HqTooltip>
+            </div>
+
+            <div class="tooltip-demo-item">
+                <span class="tooltip-label">Left</span>
+                <HqTooltip Text="Tooltip text — Left" Direction="HqTooltipDirection.Left">
+                    <HqButton Variant="HqButtonVariant.Secondary" Size="HqButtonSize.Sm" Text="Hover me" />
+                </HqTooltip>
+            </div>
+
+            <div class="tooltip-demo-item">
+                <span class="tooltip-label">Right</span>
+                <HqTooltip Text="Tooltip text — Right" Direction="HqTooltipDirection.Right">
+                    <HqButton Variant="HqButtonVariant.Secondary" Size="HqButtonSize.Sm" Text="Hover me" />
+                </HqTooltip>
+            </div>
+        </div>
+    </section>
+
+    @* ── Arrow toggle ── *@
+    <section class="tooltip-section">
+        <h2>Arrow visibility</h2>
+        <div class="tooltip-grid">
+            <div class="tooltip-demo-item">
+                <span class="tooltip-label">With arrow</span>
+                <HqTooltip Text="Arrow enabled" Direction="HqTooltipDirection.Top" Arrow="true">
+                    <HqButton Variant="HqButtonVariant.Secondary" Size="HqButtonSize.Sm" Text="Hover me" />
+                </HqTooltip>
+            </div>
+
+            <div class="tooltip-demo-item">
+                <span class="tooltip-label">Without arrow</span>
+                <HqTooltip Text="Arrow disabled" Direction="HqTooltipDirection.Top" Arrow="false">
+                    <HqButton Variant="HqButtonVariant.Secondary" Size="HqButtonSize.Sm" Text="Hover me" />
+                </HqTooltip>
+            </div>
+        </div>
+    </section>
+
+    @* ── On various elements ── *@
+    <section class="tooltip-section">
+        <h2>On various elements</h2>
+        <div class="tooltip-grid">
+            <div class="tooltip-demo-item">
+                <span class="tooltip-label">On button (primary)</span>
+                <HqTooltip Text="Primary action tooltip" Direction="HqTooltipDirection.Top">
+                    <HqButton Variant="HqButtonVariant.Primary" Size="HqButtonSize.Md" Text="Primary" />
+                </HqTooltip>
+            </div>
+
+            <div class="tooltip-demo-item">
+                <span class="tooltip-label">On icon</span>
+                <HqTooltip Text="Information icon" Direction="HqTooltipDirection.Bottom">
+                    <span class="tooltip-icon-sample">
+                        <i class="icon icon-info" aria-hidden="true"></i>
+                    </span>
+                </HqTooltip>
+            </div>
+
+            <div class="tooltip-demo-item">
+                <span class="tooltip-label">On text</span>
+                <HqTooltip Text="Extra details for this text" Direction="HqTooltipDirection.Right">
+                    <span class="tooltip-text-sample">Hover this text</span>
+                </HqTooltip>
+            </div>
+        </div>
+    </section>
+
+    @* ── Long content ── *@
+    <section class="tooltip-section">
+        <h2>Long content</h2>
+        <div class="tooltip-grid">
+            <div class="tooltip-demo-item">
+                <span class="tooltip-label">Long text</span>
+                <HqTooltip Text="This is a much longer tooltip text that demonstrates how the tooltip handles wrapping when the content exceeds the default width." Direction="HqTooltipDirection.Top">
+                    <HqButton Variant="HqButtonVariant.Secondary" Size="HqButtonSize.Sm" Text="Long tooltip" />
+                </HqTooltip>
+            </div>
+        </div>
+    </section>
+
+    @* ── Delay ── *@
+    <section class="tooltip-section">
+        <h2>Delay (500ms)</h2>
+        <div class="tooltip-grid">
+            <div class="tooltip-demo-item">
+                <span class="tooltip-label">Delayed tooltip</span>
+                <HqTooltip Text="Appeared after 500ms delay" Direction="HqTooltipDirection.Top" Delay="500">
+                    <HqButton Variant="HqButtonVariant.Secondary" Size="HqButtonSize.Sm" Text="Hover & wait" />
+                </HqTooltip>
+            </div>
+        </div>
+    </section>
+</div>

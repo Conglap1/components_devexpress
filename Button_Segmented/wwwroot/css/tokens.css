@@ -475,6 +475,48 @@
   --elevation-bottom-3: 0 10px 14px -4px rgba(15, 15, 41, 0.12);
   --elevation-top-1: 0 -2px 2px 0 rgba(15, 15, 41, 0.06);
   --elevation-top-2: 0 -4px 10px -2px rgba(15, 15, 41, 0.10);
+
+  /* ===== Notification / Toast / Alert component tokens ===== */
+  /* Backgrounds — dùng palette 10% tint sẵn có trong color scale */
+  --notification-default-bg:        var(--color-surface);          /* #FCFCFD */
+  --notification-positive-bg:       var(--color-green-10);         /* #E5F6F3 */
+  --notification-stressful-bg:      var(--color-red-10);           /* #FBE9EA */
+  --notification-careful-bg:        var(--color-yellow-10);        /* #FEF6E5 */
+  --notification-useful-bg:         var(--color-blue-10);          /* #EAEAFF */
+  /* Borders */
+  --notification-default-border:    var(--color-outline);          /* #D6D6D8 */
+  --notification-positive-border:   var(--color-positive);         /* #04A489 */
+  --notification-stressful-border:  var(--color-stressful);        /* #D92332 */
+  --notification-careful-border:    var(--color-careful);          /* #F5A202 */
+  --notification-useful-border:     var(--color-useful);           /* #2D2DFE */
+  /* Icon colors */
+  --notification-default-icon:      var(--color-black-60);         /* #6E6F71 */
+  --notification-positive-icon:     var(--color-positive);
+  --notification-stressful-icon:    var(--color-stressful);
+  --notification-careful-icon:      var(--color-careful);
+  --notification-useful-icon:       var(--color-useful);
+  /* Text */
+  --notification-heading-color:     var(--color-on-background);    /* #0F1014 */
+  --notification-text-color:        var(--color-on-background);
+  --notification-close-color:       var(--color-black-60);         /* #6E6F71 */
+  /* Layout */
+  --notification-width:             400px;
+  --notification-radius:            var(--radius-6x);              /* 12px */
+  --notification-padding:           var(--spacing-8x);             /* 16px */
+  --notification-gap:               var(--spacing-8x);             /* 16px */
+  --notification-shadow:            var(--elevation-bottom-1);
+  --notification-icon-size:         var(--icon-font-md-size);      /* 24px */
+
+  /* ===== Tooltip component tokens ===== */
+  --tooltip-bg:                     var(--color-reverse-surface);  /* #0F1014 */
+  --tooltip-fg:                     var(--color-surface);          /* #FCFCFD */
+  --tooltip-radius:                 var(--radius-1x);              /* 2px */
+  --tooltip-padding-y:              var(--spacing-2x);             /* 4px */
+  --tooltip-padding-x:              var(--spacing-4x);             /* 8px */
+  --tooltip-font-size:              var(--text-label-lg-size);     /* 14px */
+  --tooltip-line-height:            var(--text-label-lg-lh);       /* 21px */
+  --tooltip-arrow-size:             12px;
+  --tooltip-shadow:                 var(--elevation-bottom-2);
 }
 
 .theme-light,

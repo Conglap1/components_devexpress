@@ -361,7 +361,7 @@ Trước khi coi component là "xong", agent phải tự trả lời ✅ toàn b
 | Combo box / Select | DevExpress | `DxComboBox` | Chưa làm |
 | Date picker | DevExpress | `DxDateEdit` | Chưa làm |
 | Tabs | MudBlazor (fallback) | `MudTabs` | DX có `DxTabs` nhưng style khó override — test trước |
-| Tooltip | DevExpress | `DxTooltip` | Chưa làm |
+| Tooltip | **MudBlazor** | `MudTooltip` | ✅ Đã có `HqTooltip` (wrap MudTooltip, CSS override HQSOFT tokens) |
 | Modal / Dialog | DevExpress | `DxPopup` | Chưa làm |
 | Stepper | MudBlazor (fallback) | `MudStepper` | DX không có |
 | Carousel | MudBlazor (fallback) | `MudCarousel` | DX không có |

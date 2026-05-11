@@ -1,0 +1,89 @@
+.notif-page {
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-24x);
+    padding: var(--spacing-20x);
+    max-width: 900px;
+}
+
+.notif-page__header h1 {
+    font-size: 36px;
+    font-weight: 700;
+    margin: 0 0 var(--spacing-4x);
+    color: var(--color-on-background);
+}
+
+.notif-page__header p {
+    font-size: var(--text-body-lg-size, 16px);
+    color: var(--color-black-70);
+    margin: 0;
+}
+
+.notif-section {
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-10x);
+}
+
+.notif-section h2 {
+    font-size: 24px;
+    font-weight: 700;
+    margin: 0;
+    color: var(--color-on-background);
+    border-bottom: 2px solid var(--color-surface-1);
+    padding-bottom: var(--spacing-4x);
+}
+
+.notif-section h3 {
+    font-size: var(--text-body-lg-size, 16px);
+    font-weight: 500;
+    margin: 0;
+    color: var(--color-black-70);
+}
+
+.notif-section__desc {
+    font-size: var(--text-title-sm-size, 14px);
+    color: var(--color-black-60);
+    margin: 0;
+}
+
+.notif-subsection-title {
+    margin-top: var(--spacing-4x);
+}
+
+.notif-trigger-row {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--spacing-4x);
+}
+
+.notif-trigger-btn {
+    padding: var(--spacing-4x) var(--spacing-8x);
+    border: none;
+    border-radius: var(--radius-4x);
+    font-size: var(--text-title-sm-size, 14px);
+    font-weight: 500;
+    cursor: pointer;
+    transition: opacity .15s ease;
+}
+
+.notif-trigger-btn:hover { opacity: 0.85; }
+
+.notif-trigger-btn--default   { background: var(--color-outline);    color: var(--color-on-background); }
+.notif-trigger-btn--positive  { background: var(--color-positive);   color: var(--color-on-primary); }
+.notif-trigger-btn--stressful { background: var(--color-stressful);  color: var(--color-on-primary); }
+.notif-trigger-btn--careful   { background: var(--color-careful);    color: var(--color-on-primary); }
+.notif-trigger-btn--useful    { background: var(--color-useful);     color: var(--color-on-primary); }
+
+.notif-preview-stack {
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-6x);
+    max-width: 440px;
+}
+
+.notif-alert-stack {
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-6x);
+}

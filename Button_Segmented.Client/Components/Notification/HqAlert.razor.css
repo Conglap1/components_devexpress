@@ -1,0 +1,122 @@
+/* ===== HqAlert (Inline) — token-only, no hard-coded values ===== */
+.hq-alert {
+    display: flex;
+    flex-direction: row;
+    align-items: flex-start;
+    gap: var(--notification-gap);
+    padding: var(--notification-padding);
+    width: 100%;
+    border-radius: var(--notification-radius);
+    border: 1px solid var(--hq-alert-border, var(--notification-default-border));
+    background-color: var(--hq-alert-bg, var(--notification-default-bg));
+    box-shadow: var(--notification-shadow);
+    box-sizing: border-box;
+}
+
+/* ── Type tokens — set local vars ── */
+.hq-alert--default {
+    --hq-alert-border: var(--notification-default-border);
+    --hq-alert-bg:     var(--notification-default-bg);
+    --hq-alert-icon:   var(--notification-default-icon);
+}
+
+.hq-alert--positive {
+    --hq-alert-border: var(--notification-positive-border);
+    --hq-alert-bg:     var(--notification-positive-bg);
+    --hq-alert-icon:   var(--notification-positive-icon);
+}
+
+.hq-alert--stressful {
+    --hq-alert-border: var(--notification-stressful-border);
+    --hq-alert-bg:     var(--notification-stressful-bg);
+    --hq-alert-icon:   var(--notification-stressful-icon);
+}
+
+.hq-alert--careful {
+    --hq-alert-border: var(--notification-careful-border);
+    --hq-alert-bg:     var(--notification-careful-bg);
+    --hq-alert-icon:   var(--notification-careful-icon);
+}
+
+.hq-alert--useful {
+    --hq-alert-border: var(--notification-useful-border);
+    --hq-alert-bg:     var(--notification-useful-bg);
+    --hq-alert-icon:   var(--notification-useful-icon);
+}
+
+/* ── Icon ── */
+.hq-alert__icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    width: var(--notification-icon-size);
+    height: var(--notification-icon-size);
+    color: var(--hq-alert-icon, var(--notification-default-icon));
+    font-size: var(--notification-icon-size);
+    line-height: 1;
+}
+
+/* ── Content row (text + action) ── */
+.hq-alert__content {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    gap: var(--notification-gap);
+    flex: 1;
+    min-width: 0;
+}
+
+.hq-alert__text {
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-2x);
+    flex: 1;
+    min-width: 0;
+}
+
+.hq-alert__heading {
+    margin: 0;
+    font-family: var(--font-family-base);
+    font-size: var(--text-body-lg-size, 16px);
+    font-weight: 500;
+    line-height: var(--text-body-lg-lh, 150%);
+    letter-spacing: var(--font-letter-spacing);
+    color: var(--notification-heading-color);
+}
+
+.hq-alert__description {
+    margin: 0;
+    font-family: var(--font-family-base);
+    font-size: var(--text-title-sm-size, 14px);
+    font-weight: 400;
+    line-height: var(--text-title-sm-lh, 150%);
+    letter-spacing: var(--font-letter-spacing);
+    color: var(--notification-text-color);
+}
+
+/* ── Action button — right-aligned per Figma spec ── */
+.hq-alert__action {
+    flex-shrink: 0;
+}
+
+/* ── Close button ── */
+.hq-alert__close {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    width: var(--notification-icon-size);
+    height: var(--notification-icon-size);
+    padding: 0;
+    border: none;
+    background: transparent;
+    color: var(--notification-close-color);
+    font-size: var(--icon-font-sm-size);
+    cursor: pointer;
+    line-height: 1;
+    transition: color .15s ease;
+}
+
+.hq-alert__close:hover { color: var(--color-on-background); }

@@ -14,33 +14,100 @@
        ===================================================================== *@
     <section class="demo-section">
         <h2>Sizes</h2>
-        <p>4 kích thước: sm (432px), md (504px), lg (720px), xl (1152px).</p>
+        <p>4 kích thước cố định: sm (432px), md (504px), lg (720px), xl (1152px).</p>
         <div class="demo-row">
-            <button class="trigger-btn" @onclick="() => OpenDialog(HqDialogSize.Sm)">Open sm (432px)</button>
-            <button class="trigger-btn" @onclick="() => OpenDialog(HqDialogSize.Md)">Open md (504px)</button>
-            <button class="trigger-btn" @onclick="() => OpenDialog(HqDialogSize.Lg)">Open lg (720px)</button>
-            <button class="trigger-btn" @onclick="() => OpenDialog(HqDialogSize.Xl)">Open xl (1152px)</button>
+            <button class="trigger-btn" @onclick="() => OpenDialog(HqDialogSize.Sm)">sm — 432px</button>
+            <button class="trigger-btn" @onclick="() => OpenDialog(HqDialogSize.Md)">md — 504px</button>
+            <button class="trigger-btn" @onclick="() => OpenDialog(HqDialogSize.Lg)">lg — 720px</button>
+            <button class="trigger-btn" @onclick="() => OpenDialog(HqDialogSize.Xl)">xl — 1152px</button>
         </div>
     </section>
 
     @* =====================================================================
-       Section 2 — Variants
+       Section 2 — Header
        ===================================================================== *@
     <section class="demo-section">
-        <h2>Variants</h2>
+        <h2>Header</h2>
+        <p>Các biến thể header: có icon prefix, không có icon.</p>
         <div class="demo-row">
-            <button class="trigger-btn" @onclick="OpenWithIcon">With prefix icon</button>
-            <button class="trigger-btn" @onclick="OpenNoFooter">No footer</button>
-            <button class="trigger-btn" @onclick="OpenCustomFooter">Custom footer slot</button>
-            <button class="trigger-btn" @onclick="OpenLongContent">Long scrollable content</button>
+            <button class="trigger-btn" @onclick="OpenWithIcon">Có prefix icon</button>
+            <button class="trigger-btn" @onclick="OpenNoIcon">Không có icon</button>
         </div>
     </section>
 
     @* =====================================================================
-       Section 3 — Close on outside click
+       Section 3 — Footer
+       ===================================================================== *@
+    <section class="demo-section">
+        <h2>Footer</h2>
+        <p>Các biến thể footer: ẩn footer, 1 nút, 2 nút mặc định, 3 nút, footer-left slot.</p>
+        <div class="demo-row">
+            <button class="trigger-btn" @onclick="OpenNoFooter">Không có footer</button>
+            <button class="trigger-btn" @onclick="OpenSingleBtn">1 nút (OK)</button>
+            <button class="trigger-btn" @onclick="OpenThreeBtns">3 nút</button>
+            <button class="trigger-btn" @onclick="OpenFooterLeft">Footer-left slot</button>
+        </div>
+    </section>
+
+    @* =====================================================================
+       Section 4 — Content / Body
+       ===================================================================== *@
+    <section class="demo-section">
+        <h2>Content / Body</h2>
+        <p>Các biến thể nội dung body: text ngắn, danh sách, cuộn dài, xác nhận.</p>
+        <div class="demo-row">
+            <button class="trigger-btn" @onclick="OpenShortText">Text ngắn</button>
+            <button class="trigger-btn" @onclick="OpenBodyList">Danh sách thay đổi</button>
+            <button class="trigger-btn" @onclick="OpenLongContent">Nội dung cuộn dài</button>
+            <button class="trigger-btn" @onclick="OpenCenteredBody">Xác nhận căn giữa</button>
+        </div>
+    </section>
+
+    @* =====================================================================
+       Section 5 — Destructive
+       ===================================================================== *@
+    <section class="demo-section">
+        <h2>Destructive confirm</h2>
+        <p>Dialog xác nhận hành động nguy hiểm — icon đỏ, nút Xoá màu đỏ.</p>
+        <div class="demo-row">
+            <button class="trigger-btn" @onclick="OpenDestructiveConfirm">Xoá vĩnh viễn</button>
+        </div>
+    </section>
+
+    @* =====================================================================
+       Section 6 — Grid (có phân trang)
+       ===================================================================== *@
+    <section class="demo-section">
+        <h2>Grid (có phân trang)</h2>
+        <p>Grid với nhiều cột, thanh cuộn ngang bên trong dialog, <strong>có phân trang</strong> (mặc định DxGrid).</p>
+        <div class="demo-row">
+            <button class="trigger-btn" @onclick="() => OpenGridDialog(HqDialogSize.Sm)">Grid có phân trang — sm</button>
+            <button class="trigger-btn" @onclick="() => OpenGridDialog(HqDialogSize.Md)">Grid có phân trang — md</button>
+            <button class="trigger-btn" @onclick="() => OpenGridDialog(HqDialogSize.Lg)">Grid có phân trang — lg</button>
+            <button class="trigger-btn" @onclick="() => OpenGridDialog(HqDialogSize.Xl)">Grid có phân trang — xl</button>
+        </div>
+    </section>
+
+    @* =====================================================================
+       Section 7 — Grid (không phân trang)
+       ===================================================================== *@
+    <section class="demo-section">
+        <h2>Grid (không phân trang)</h2>
+        <p>Grid với nhiều cột, <strong>không phân trang</strong> (ShowPager=false).</p>
+        <div class="demo-row">
+            <button class="trigger-btn" @onclick="() => OpenFitGridDialog(HqDialogSize.Sm)">Grid không phân trang — sm</button>
+            <button class="trigger-btn" @onclick="() => OpenFitGridDialog(HqDialogSize.Md)">Grid không phân trang — md</button>
+            <button class="trigger-btn" @onclick="() => OpenFitGridDialog(HqDialogSize.Lg)">Grid không phân trang — lg</button>
+            <button class="trigger-btn" @onclick="() => OpenFitGridDialog(HqDialogSize.Xl)">Grid không phân trang — xl</button>
+        </div>
+    </section>
+
+    @* =====================================================================
+       Section 8 — Close behaviour
        ===================================================================== *@
     <section class="demo-section">
         <h2>Close behaviour</h2>
+        <p>Tắt đóng khi click bên ngoài — chỉ đóng qua nút X.</p>
         <div class="demo-row">
             <button class="trigger-btn" @onclick="OpenNoOutsideClose">Disable outside-click close</button>
         </div>
@@ -81,30 +148,118 @@
     <p>Dialog không hiển thị footer. Đóng bằng nút X hoặc click bên ngoài.</p>
 </HqDialog>
 
-@* — Custom footer *@
-<HqDialog @bind-Visible="customFooterVisible"
-          Title="Custom footer"
-          Size="HqDialogSize.Md">
-    <ChildContent>
-        <p>Footer được thay thế bằng slot tuỳ chỉnh.</p>
-    </ChildContent>
-    <FooterContent>
-        <button class="trigger-btn" @onclick="() => customFooterVisible = false">Close (custom)</button>
-        <button class="trigger-btn trigger-btn--primary" @onclick="() => customFooterVisible = false">Submit (custom)</button>
-    </FooterContent>
-</HqDialog>
-
 @* — Long content *@
 <HqDialog @bind-Visible="longContentVisible"
           Title="Long scrollable content"
           PrefixIconClass="fa-solid fa-circle-check"
           Size="HqDialogSize.Md"
           ConfirmText="OK">
-    @for (int i = 1; i <= 20; i++)
-    {
-        int line = i;
-        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Dòng nội dung số @line.</p>
-    }
+    <div class="long-content-demo">
+        <p class="long-content-demo__lead">
+            Demo này dùng để kiểm tra hành vi khi phần nội dung ở giữa dài vượt quá chiều cao tối đa 600px.
+            Header và footer phải đứng yên, chỉ vùng này được phép cuộn.
+        </p>
+
+        <div class="long-content-demo__section">
+            <h3>Điều kiện kiểm thử</h3>
+            <ul>
+                <li>Chiều cao tối đa của dialog không vượt quá 600px.</li>
+                <li>Nút close trên header luôn nhìn thấy trong suốt quá trình cuộn.</li>
+                <li>Nút action ở footer luôn nằm cố định ở cuối dialog.</li>
+                <li>Nội dung text dài vẫn đọc được bằng thanh cuộn dọc ở phần body.</li>
+            </ul>
+        </div>
+
+        @for (int i = 1; i <= 16; i++)
+        {
+            int sectionIndex = i;
+            <div class="long-content-demo__section">
+                <h3>Mục nội dung @sectionIndex</h3>
+                <p>
+                    Đây là đoạn mô tả dài cho mục @sectionIndex. Nội dung này mô phỏng trường hợp modal chứa nhiều thông tin,
+                    ví dụ hướng dẫn nghiệp vụ, điều khoản xác nhận, lịch sử thay đổi hoặc danh sách ghi chú cần người dùng xem lại.
+                </p>
+                <p>
+                    Khi tổng chiều cao nội dung vượt ngưỡng cho phép, phần text phải cuộn bên trong body mà không đẩy header hoặc footer
+                    ra khỏi khung nhìn. Đây là hành vi cần thiết để action chính luôn sẵn sàng cho người dùng.
+                </p>
+            </div>
+        }
+    </div>
+</HqDialog>
+
+@* — Wide grid dialog *@
+<HqDialog @bind-Visible="gridDialogVisible"
+          Title="@gridDialogTitle"
+          PrefixIconClass="fa-solid fa-table"
+          Size="@gridDialogSize"
+          ConfirmText="Apply"
+          CancelText="Close">
+    <div class="dialog-grid-demo">
+        <p class="dialog-grid-demo__lead">
+            Biến thể này dùng chính 4 bề ngang thiết kế sẵn của dialog để nhét grid vào bên trong.
+            Chiều cao vẫn giữ trần 600px, còn grid sẽ tự thích nghi theo từng size preset.
+        </p>
+
+        <div class="dialog-grid-demo__meta">
+            <span>Height cap: <strong>600px</strong></span>
+            <span>Preset width: <strong>@(gridDialogSize switch { HqDialogSize.Sm => "432px", HqDialogSize.Md => "504px", HqDialogSize.Lg => "720px", _ => "1152px" })</strong></span>
+            <span>Paging: <strong>On</strong></span>
+        </div>
+
+        <div class="dialog-grid-shell">
+            <DxGrid Data="@_gridDialogItems"
+                    @bind-SelectedDataItems="@_gridSelectedItems"
+                    SelectionMode="GridSelectionMode.Multiple"
+                    KeyFieldName="Code"
+                    CssClass="dialog-dxgrid">
+                <Columns>
+                    <DxGridSelectionColumn Width="48px" />
+                    <DxGridDataColumn FieldName="Code" Caption="MÃ SỐ" />
+                    <DxGridDataColumn FieldName="DistributorName" Caption="TÊN NHÀ PHÂN PHỐI" />
+                    <DxGridDataColumn FieldName="Country" Caption="QUỐC GIA" />
+                    <DxGridDataColumn FieldName="Status" Caption="TRẠNG THÁI" />
+                </Columns>
+            </DxGrid>
+        </div>
+    </div>
+</HqDialog>
+
+@* — Fit grid dialog *@
+<HqDialog @bind-Visible="fitGridDialogVisible"
+          Title="@fitGridDialogTitle"
+          PrefixIconClass="fa-solid fa-table-columns"
+          Size="@fitGridDialogSize"
+          ConfirmText="Apply"
+          CancelText="Close">
+    <div class="dialog-grid-fit-demo">
+        <p class="dialog-grid-fit-demo__lead">
+            Biến thể này ép grid fit theo đúng bề ngang preset của dialog, không scroll ngang, không phân trang.
+            Chỉ phần dữ liệu cuộn dọc, còn header cột được giữ dính ở đầu giống sticky nav.
+        </p>
+
+        <div class="dialog-grid-demo__meta">
+            <span>Height cap: <strong>600px</strong></span>
+            <span>Preset width: <strong>@(fitGridDialogSize switch { HqDialogSize.Sm => "432px", HqDialogSize.Md => "504px", HqDialogSize.Lg => "720px", _ => "1152px" })</strong></span>
+            <span>Paging: <strong>Off</strong></span>
+        </div>
+
+        <div class="dialog-grid-fit-shell">
+            <DxGrid Data="@_fitGridDialogItems"
+                    @bind-SelectedDataItems="@_fitGridSelectedItems"
+                    SelectionMode="GridSelectionMode.Multiple"
+                    KeyFieldName="Code"
+                    CssClass="dialog-dxgrid"
+                    ShowPager="false">
+                <Columns>
+                    <DxGridSelectionColumn Width="48px" />
+                    <DxGridDataColumn FieldName="Code" Caption="MÃ SỐ" />
+                    <DxGridDataColumn FieldName="DistributorName" Caption="TÊN NHÀ PHÂN PHỐI" />
+                    <DxGridDataColumn FieldName="Status" Caption="TRẠNG THÁI" />
+                </Columns>
+            </DxGrid>
+        </div>
+    </div>
 </HqDialog>
 
 @* — No outside close *@
@@ -116,16 +271,237 @@
     <p>Dialog này không đóng khi click bên ngoài — chỉ đóng qua nút X hoặc OK.</p>
 </HqDialog>
 
+@* =====================================================================
+   Section 2 — Header variants
+   ===================================================================== *@
+
+@* — No header icon *@
+<HqDialog @bind-Visible="noIconVisible"
+          Title="Header không có icon"
+          Size="HqDialogSize.Md"
+          ConfirmText="OK"
+          CancelText="Huỷ">
+    <p>Dialog này không có icon prefix trong header — chỉ có tiêu đề văn bản và nút đóng.</p>
+    <p>Phù hợp cho các dialog thông thường không cần mang ý nghĩa semantic đặc biệt.</p>
+</HqDialog>
+
+@* =====================================================================
+   Section 3 — Footer variants
+   ===================================================================== *@
+
+@* — Single button (confirm only) *@
+<HqDialog @bind-Visible="singleBtnVisible"
+          Title="Thông báo"
+          PrefixIconClass="fa-solid fa-circle-info"
+          Intent="HqDialogIntent.Info"
+          Size="HqDialogSize.Md"
+          HasFooter="true">
+    <ChildContent>
+        <p>Dialog này chỉ có một nút duy nhất ở footer — phù hợp cho thông báo một chiều, không cần hành động huỷ.</p>
+    </ChildContent>
+    <FooterContent>
+        <HqButton Text="OK, tôi hiểu rồi"
+                  Variant="HqButtonVariant.Primary"
+                  Size="HqButtonSize.Sm"
+                  Click="() => singleBtnVisible = false" />
+    </FooterContent>
+</HqDialog>
+
+@* — Three buttons *@
+<HqDialog @bind-Visible="threeBtnsVisible"
+          Title="Lưu thay đổi"
+          PrefixIconClass="fa-solid fa-floppy-disk"
+          Intent="HqDialogIntent.None"
+          Size="HqDialogSize.Md"
+          HasFooter="true">
+    <ChildContent>
+        <p>Bạn có muốn lưu thay đổi trước khi thoát? Footer hiển thị 3 nút: <strong>Huỷ</strong>, <strong>Bỏ thay đổi</strong> (secondary), và <strong>Lưu</strong> (primary).</p>
+    </ChildContent>
+    <FooterContent>
+        <HqButton Text="Huỷ"
+                  Variant="HqButtonVariant.Ghost"
+                  Size="HqButtonSize.Sm"
+                  Click="() => threeBtnsVisible = false" />
+        <HqButton Text="Bỏ thay đổi"
+                  Variant="HqButtonVariant.Secondary"
+                  Size="HqButtonSize.Sm"
+                  Click="() => threeBtnsVisible = false" />
+        <HqButton Text="Lưu"
+                  Variant="HqButtonVariant.Primary"
+                  Size="HqButtonSize.Sm"
+                  Click="() => threeBtnsVisible = false" />
+    </FooterContent>
+</HqDialog>
+
+@* — Footer with left slot *@
+<HqDialog @bind-Visible="footerLeftVisible"
+          Title="Cài đặt thông báo"
+          PrefixIconClass="fa-solid fa-bell"
+          Size="HqDialogSize.Md"
+          ConfirmText="Lưu"
+          CancelText="Huỷ"
+          HasFooter="true">
+    <ChildContent>
+        <p>Footer này có nội dung tuỳ chỉnh ở phần bên <strong>trái</strong> (slot <code>FooterLeftContent</code>) — ví dụ checkbox "Không hiển thị lại" — và 2 nút hành động bên phải.</p>
+    </ChildContent>
+    <FooterLeftContent>
+        <label class="variant-footer-left-label">
+            <input type="checkbox" @bind="dontShowAgain" class="variant-footer-left-checkbox" />
+            Không hiển thị lại
+        </label>
+    </FooterLeftContent>
+</HqDialog>
+
+@* — Destructive confirm (Danger intent + red Delete button) *@
+<HqDialog @bind-Visible="destructiveConfirmVisible"
+          Title="Xoá nhà phân phối"
+          PrefixIconClass="fa-solid fa-trash"
+          Intent="HqDialogIntent.Danger"
+          Size="HqDialogSize.Md"
+          HasFooter="true">
+    <ChildContent>
+        <p>Bạn sắp <strong>xoá vĩnh viễn</strong> nhà phân phối <strong>CÔNG TY TNHH MINH PHÚC</strong>.</p>
+        <p>Hành động này <strong>không thể hoàn tác</strong>. Tất cả dữ liệu liên quan — đơn hàng, hợp đồng, lịch sử giao dịch — sẽ bị xoá.</p>
+        <p>Nhập tên công ty để xác nhận xoá:</p>
+        <input class="variant-delete-confirm-input" placeholder="CÔNG TY TNHH MINH PHÚC" />
+    </ChildContent>
+    <FooterContent>
+        <HqButton Text="Huỷ"
+                  Variant="HqButtonVariant.Secondary"
+                  Size="HqButtonSize.Sm"
+                  Click="() => destructiveConfirmVisible = false" />
+        <HqButton Text="Xoá vĩnh viễn"
+                  Variant="HqButtonVariant.Primary"
+                  Size="HqButtonSize.Sm"
+                  BackgroundColor="var(--color-red-60)"
+                  BackgroundColorHover="var(--color-red-70)"
+                  BackgroundColorPressed="var(--color-red-80)"
+                  BorderColor="var(--color-red-60)"
+                  Click="() => destructiveConfirmVisible = false" />
+    </FooterContent>
+</HqDialog>
+
+@* =====================================================================
+   Section 4 — Content / Body variants
+   ===================================================================== *@
+
+@* — Short text *@
+<HqDialog @bind-Visible="shortTextVisible"
+          Title="Xác nhận hành động"
+          Size="HqDialogSize.Sm"
+          ConfirmText="Xác nhận"
+          CancelText="Huỷ">
+    <p>Bạn có chắc chắn muốn thực hiện hành động này không?</p>
+</HqDialog>
+
+@* — Body with list *@
+<HqDialog @bind-Visible="bodyListVisible"
+          Title="Các thay đổi sẽ được áp dụng"
+          PrefixIconClass="fa-solid fa-circle-info"
+          Intent="HqDialogIntent.Info"
+          Size="HqDialogSize.Md"
+          ConfirmText="Áp dụng"
+          CancelText="Xem lại">
+    <div class="variant-body-list">
+        <p>Các thay đổi sau đây sẽ được áp dụng cho <strong>5 bản ghi</strong> đã chọn:</p>
+        <ul class="variant-body-list__items">
+            <li><i class="fa-solid fa-check" aria-hidden="true"></i> Cập nhật trạng thái → <strong>Active</strong></li>
+            <li><i class="fa-solid fa-check" aria-hidden="true"></i> Gán kênh phân phối → <strong>GT</strong></li>
+            <li><i class="fa-solid fa-check" aria-hidden="true"></i> Cập nhật vùng → <strong>Miền Bắc</strong></li>
+            <li><i class="fa-solid fa-check" aria-hidden="true"></i> Gán trưởng vùng mới</li>
+        </ul>
+        <p class="variant-body-list__note">Thao tác này có thể mất vài giây. Vui lòng không tắt trình duyệt.</p>
+    </div>
+</HqDialog>
+
+@* — Centered confirmation body *@
+<HqDialog @bind-Visible="centeredBodyVisible"
+          Title="Bạn có chắc không?"
+          PrefixIconClass="fa-solid fa-circle-question"
+          Intent="HqDialogIntent.Warning"
+          Size="HqDialogSize.Sm"
+          ConfirmText="Có, tiếp tục"
+          CancelText="Không">
+    <div class="variant-centered-body">
+        <p>Hành động này sẽ gửi email thông báo đến <strong>12 người dùng</strong> trong hệ thống.</p>
+        <p>Bạn có muốn tiếp tục?</p>
+    </div>
+</HqDialog>
+
 @code {
     private bool sizeDialogVisible;
     private HqDialogSize sizeDialogSize = HqDialogSize.Md;
     private string sizeDialogTitle = "Modal dialog — md";
+    private HqDialogSize gridDialogSize = HqDialogSize.Lg;
+    private string gridDialogTitle = "Grid dialog — lg";
+    private HqDialogSize fitGridDialogSize = HqDialogSize.Lg;
+    private string fitGridDialogTitle = "Fit grid dialog — lg";
 
     private bool iconDialogVisible;
     private bool noFooterVisible;
-    private bool customFooterVisible;
     private bool longContentVisible;
+    private bool gridDialogVisible;
+    private bool fitGridDialogVisible;
     private bool noOutsideCloseVisible;
+
+    // Section 2 — Header
+    private bool noIconVisible;
+
+    // Section 3 — Footer
+    private bool singleBtnVisible;
+    private bool threeBtnsVisible;
+    private bool footerLeftVisible;
+    private bool destructiveConfirmVisible;
+    private bool dontShowAgain;
+
+    // Section 6 — Text / content body
+    private bool shortTextVisible;
+    private bool bodyListVisible;
+    private bool centeredBodyVisible;
+
+    private IReadOnlyList<object> _gridSelectedItems = new List<object>();
+    private IReadOnlyList<object> _fitGridSelectedItems = new List<object>();
+
+    private readonly List<GridDialogRow> _gridDialogItems =
+    [
+        new() { Id = 1, Code = "1029722", DistributorName = "CÔNG TY TNHH MINH PHÚC", Country = "Việt Nam", Region = "Miền Bắc", Zone = "Đông Bắc", City = "Hà Nội", Channel = "GT", Status = "Active" },
+        new() { Id = 2, Code = "1029741", DistributorName = "CÔNG TY TNHH MINH TÂM", Country = "Việt Nam", Region = "Miền Nam", Zone = "Đông Nam Bộ", City = "TP.HCM", Channel = "MT", Status = "Active" },
+        new() { Id = 3, Code = "C_000001", DistributorName = "CÔNG TY TNHH MẶT TRỜI", Country = "Việt Nam", Region = "Miền Trung", Zone = "Nam Trung Bộ", City = "Đà Nẵng", Channel = "GT", Status = "Draft" },
+        new() { Id = 4, Code = "C_000002", DistributorName = "CÔNG TY TNHH BÌNH AN", Country = "Việt Nam", Region = "Miền Tây", Zone = "ĐBSCL", City = "Cần Thơ", Channel = "Traditional", Status = "Active" },
+        new() { Id = 5, Code = "C_000003", DistributorName = "CÔNG TY TNHH HƯNG THỊNH", Country = "Việt Nam", Region = "Miền Bắc", Zone = "Tây Bắc", City = "Lào Cai", Channel = "Wholesale", Status = "Inactive" },
+        new() { Id = 6, Code = "C_000004", DistributorName = "CÔNG TY TNHH PHƯƠNG NAM", Country = "Việt Nam", Region = "Miền Nam", Zone = "Tây Nam Bộ", City = "Long An", Channel = "Retail", Status = "Active" },
+        new() { Id = 7, Code = "C_000005", DistributorName = "CÔNG TY TNHH THÀNH CÔNG", Country = "Việt Nam", Region = "Miền Trung", Zone = "Bắc Trung Bộ", City = "Nghệ An", Channel = "GT", Status = "Pending" },
+        new() { Id = 8, Code = "C_000006", DistributorName = "CÔNG TY TNHH PHÚ GIA", Country = "Việt Nam", Region = "Miền Nam", Zone = "Đông Nam Bộ", City = "Bình Dương", Channel = "MT", Status = "Active" },
+        new() { Id = 9, Code = "C_000007", DistributorName = "CÔNG TY TNHH HOÀNG LONG", Country = "Việt Nam", Region = "Miền Bắc", Zone = "Đồng bằng Sông Hồng", City = "Hải Phòng", Channel = "Retail", Status = "Draft" },
+        new() { Id = 10, Code = "C_000008", DistributorName = "CÔNG TY TNHH ĐÔNG DƯƠNG", Country = "Việt Nam", Region = "Miền Trung", Zone = "Tây Nguyên", City = "Gia Lai", Channel = "Wholesale", Status = "Active" },
+        // Thêm nhiều dòng để luôn thấy phân trang
+        new() { Id = 11, Code = "C_000009", DistributorName = "CÔNG TY TNHH VIỄN ĐÔNG", Country = "Việt Nam", Region = "Miền Bắc", Zone = "Đông Bắc", City = "Bắc Ninh", Channel = "GT", Status = "Active" },
+        new() { Id = 12, Code = "C_000010", DistributorName = "CÔNG TY TNHH HẢI ĐĂNG", Country = "Việt Nam", Region = "Miền Nam", Zone = "Đông Nam Bộ", City = "Vũng Tàu", Channel = "MT", Status = "Active" },
+        new() { Id = 13, Code = "C_000011", DistributorName = "CÔNG TY TNHH SƠN HÀ", Country = "Việt Nam", Region = "Miền Trung", Zone = "Nam Trung Bộ", City = "Huế", Channel = "GT", Status = "Draft" },
+        new() { Id = 14, Code = "C_000012", DistributorName = "CÔNG TY TNHH BÌNH MINH", Country = "Việt Nam", Region = "Miền Tây", Zone = "ĐBSCL", City = "Cà Mau", Channel = "Traditional", Status = "Active" },
+        new() { Id = 15, Code = "C_000013", DistributorName = "CÔNG TY TNHH HƯNG PHÁT", Country = "Việt Nam", Region = "Miền Bắc", Zone = "Tây Bắc", City = "Sơn La", Channel = "Wholesale", Status = "Inactive" },
+        new() { Id = 16, Code = "C_000014", DistributorName = "CÔNG TY TNHH PHƯƠNG ĐÔNG", Country = "Việt Nam", Region = "Miền Nam", Zone = "Tây Nam Bộ", City = "Tiền Giang", Channel = "Retail", Status = "Active" },
+        new() { Id = 17, Code = "C_000015", DistributorName = "CÔNG TY TNHH THÀNH ĐẠT", Country = "Việt Nam", Region = "Miền Trung", Zone = "Bắc Trung Bộ", City = "Thanh Hoá", Channel = "GT", Status = "Pending" },
+        new() { Id = 18, Code = "C_000016", DistributorName = "CÔNG TY TNHH PHÚ THỊNH", Country = "Việt Nam", Region = "Miền Nam", Zone = "Đông Nam Bộ", City = "Đồng Nai", Channel = "MT", Status = "Active" },
+        new() { Id = 19, Code = "C_000017", DistributorName = "CÔNG TY TNHH HOÀNG ANH", Country = "Việt Nam", Region = "Miền Bắc", Zone = "Đồng bằng Sông Hồng", City = "Nam Định", Channel = "Retail", Status = "Draft" },
+        new() { Id = 20, Code = "C_000018", DistributorName = "CÔNG TY TNHH ĐÔNG NAM", Country = "Việt Nam", Region = "Miền Trung", Zone = "Tây Nguyên", City = "Kon Tum", Channel = "Wholesale", Status = "Active" }
+    ];
+
+    private readonly List<FitGridDialogRow> _fitGridDialogItems =
+    [
+        new() { Code = "1029722", DistributorName = "CÔNG TY TNHH MINH PHÚC THƯƠNG MẠI VÀ DỊCH VỤ", Country = "Việt Nam", Status = "Active" },
+        new() { Code = "1029741", DistributorName = "CÔNG TY TNHH MINH TÂM PHÂN PHỐI HÀNG TIÊU DÙNG", Country = "Việt Nam", Status = "Active" },
+        new() { Code = "C_000001", DistributorName = "CÔNG TY TNHH MẶT TRỜI PHƯƠNG NAM", Country = "Việt Nam", Status = "Draft" },
+        new() { Code = "C_000002", DistributorName = "CÔNG TY TNHH BÌNH AN THỊNH VƯỢNG", Country = "Việt Nam", Status = "Active" },
+        new() { Code = "C_000003", DistributorName = "CÔNG TY TNHH HƯNG THỊNH PHÂN PHỐI MIỀN BẮC", Country = "Việt Nam", Status = "Inactive" },
+        new() { Code = "C_000004", DistributorName = "CÔNG TY TNHH PHƯƠNG NAM RETAIL NETWORK", Country = "Việt Nam", Status = "Active" },
+        new() { Code = "C_000005", DistributorName = "CÔNG TY TNHH THÀNH CÔNG FMCG DISTRIBUTION", Country = "Việt Nam", Status = "Pending" },
+        new() { Code = "C_000006", DistributorName = "CÔNG TY TNHH PHÚ GIA PHÂN PHỐI KÊNH MT", Country = "Việt Nam", Status = "Active" },
+        new() { Code = "C_000007", DistributorName = "CÔNG TY TNHH HOÀNG LONG THƯƠNG MẠI TỔNG HỢP", Country = "Việt Nam", Status = "Draft" },
+        new() { Code = "C_000008", DistributorName = "CÔNG TY TNHH ĐÔNG DƯƠNG SUPPLY CHAIN", Country = "Việt Nam", Status = "Active" },
+        new() { Code = "C_000009", DistributorName = "CÔNG TY TNHH VIỄN ĐÔNG CONSUMER GOODS", Country = "Việt Nam", Status = "Active" },
+        new() { Code = "C_000010", DistributorName = "CÔNG TY TNHH HẢI ĐĂNG MARKET EXPANSION", Country = "Việt Nam", Status = "Inactive" }
+    ];
 
     private void OpenDialog(HqDialogSize size)
     {
@@ -136,12 +512,60 @@
 
     private void OpenWithIcon() => iconDialogVisible = true;
     private void OpenNoFooter() => noFooterVisible = true;
-    private void OpenCustomFooter() => customFooterVisible = true;
     private void OpenLongContent() => longContentVisible = true;
+    private void OpenGridDialog(HqDialogSize size)
+    {
+        gridDialogSize = size;
+        gridDialogTitle = $"Grid dialog — {size.ToString().ToLowerInvariant()}";
+        gridDialogVisible = true;
+    }
+
+    private void OpenFitGridDialog(HqDialogSize size)
+    {
+        fitGridDialogSize = size;
+        fitGridDialogTitle = $"Fit grid dialog — {size.ToString().ToLowerInvariant()}";
+        fitGridDialogVisible = true;
+    }
+
     private void OpenNoOutsideClose() => noOutsideCloseVisible = true;
+
+    // Section 2 — Header
+    private void OpenNoIcon()            => noIconVisible = true;
+
+    // Section 3 — Footer
+    private void OpenSingleBtn()         => singleBtnVisible = true;
+    private void OpenThreeBtns()         => threeBtnsVisible = true;
+    private void OpenFooterLeft()        => footerLeftVisible = true;
+    private void OpenDestructiveConfirm() => destructiveConfirmVisible = true;
+
+    // Section 6
+    private void OpenShortText()         => shortTextVisible = true;
+    private void OpenBodyList()          => bodyListVisible = true;
+    private void OpenCenteredBody()      => centeredBodyVisible = true;
 
     private void HandleConfirm()
     {
         sizeDialogVisible = false;
+    }
+
+    private sealed class GridDialogRow
+    {
+        public int Id { get; set; }
+        public string Code { get; set; } = string.Empty;
+        public string DistributorName { get; set; } = string.Empty;
+        public string Country { get; set; } = string.Empty;
+        public string Region { get; set; } = string.Empty;
+        public string Zone { get; set; } = string.Empty;
+        public string City { get; set; } = string.Empty;
+        public string Channel { get; set; } = string.Empty;
+        public string Status { get; set; } = string.Empty;
+    }
+
+    private sealed class FitGridDialogRow
+    {
+        public string Code { get; set; } = string.Empty;
+        public string DistributorName { get; set; } = string.Empty;
+        public string Country { get; set; } = string.Empty;
+        public string Status { get; set; } = string.Empty;
     }
 }

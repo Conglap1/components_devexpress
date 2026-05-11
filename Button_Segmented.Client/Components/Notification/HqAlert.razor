@@ -1,0 +1,76 @@
+@namespace Button_Segmented.Client.Components.Notification
+
+<div class="hq-alert hq-alert--@TypeClass" role="alert">
+    @if (HasLeadingIcon)
+    {
+        <div class="hq-alert__icon" aria-hidden="true">
+            <i class="@IconClass"></i>
+        </div>
+    }
+
+    <div class="hq-alert__content">
+        <div class="hq-alert__text">
+            <p class="hq-alert__heading">@Heading</p>
+            @if (!string.IsNullOrEmpty(Description))
+            {
+                <p class="hq-alert__description">@Description</p>
+            }
+        </div>
+        @if (!string.IsNullOrEmpty(ActionText))
+        {
+            <div class="hq-alert__action">
+                <HqButton Text="@ActionText"
+                          Variant="HqButtonVariant.Primary"
+                          Size="HqButtonSize.Sm"
+                          Shape="HqButtonShape.RoundedMedium"
+                          Click="HandleAction" />
+            </div>
+        }
+    </div>
+
+    @if (HasCloseButton)
+    {
+        <button class="hq-alert__close" type="button" aria-label="Đóng thông báo" @onclick="HandleClose">
+            <i class="fa-light fa-xmark" aria-hidden="true"></i>
+        </button>
+    }
+</div>
+
+@code {
+    [Parameter] public HqNotificationType Type { get; set; } = HqNotificationType.Default;
+    [Parameter] public string Heading { get; set; } = string.Empty;
+    [Parameter] public string? Description { get; set; }
+    [Parameter] public bool HasLeadingIcon { get; set; } = true;
+    [Parameter] public bool HasCloseButton { get; set; } = true;
+    [Parameter] public string? ActionText { get; set; }
+    [Parameter] public EventCallback OnAction { get; set; }
+    [Parameter] public EventCallback OnClose { get; set; }
+
+    private string TypeClass => Type switch
+    {
+        HqNotificationType.Positive  => "positive",
+        HqNotificationType.Stressful => "stressful",
+        HqNotificationType.Careful   => "careful",
+        HqNotificationType.Useful    => "useful",
+        _                            => "default"
+    };
+
+    private string IconClass => Type switch
+    {
+        HqNotificationType.Positive  => "fa-solid fa-circle-check",
+        HqNotificationType.Stressful => "fa-solid fa-circle-exclamation",
+        HqNotificationType.Careful   => "fa-solid fa-triangle-exclamation",
+        HqNotificationType.Useful    => "fa-solid fa-circle-info",
+        _                            => "fa-regular fa-bell"
+    };
+
+    private async Task HandleAction()
+    {
+        await OnAction.InvokeAsync();
+    }
+
+    private async Task HandleClose()
+    {
+        await OnClose.InvokeAsync();
+    }
+}

@@ -1,0 +1,2 @@
+/* HqNotification visual styles are defined in MainLayout.razor.css via ::deep .hq-notif
+   so they apply to both this component and DxToast elements from DxToastProvider. */

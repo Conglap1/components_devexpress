@@ -1,5 +1,6 @@
 ﻿using Button_Segmented.Components;
 using MudBlazor.Services;
+using Button_Segmented.Client.Components.Notification;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -14,6 +15,7 @@ builder.Services.AddDevExpressBlazor(options =>
 });
 
 builder.Services.AddMudServices();
+builder.Services.AddScoped<HqNotificationService>();
 
 builder.Services.AddMvc();
 

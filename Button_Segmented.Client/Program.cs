@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Components.WebAssembly.Hosting;
 using MudBlazor.Services;
+using Button_Segmented.Client.Components.Notification;
 
 var builder = WebAssemblyHostBuilder.CreateDefault(args);
 
@@ -9,5 +10,6 @@ builder.Services.AddDevExpressBlazor(options =>
 });
 
 builder.Services.AddMudServices();
+builder.Services.AddScoped<HqNotificationService>();
 
 await builder.Build().RunAsync();

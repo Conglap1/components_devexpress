@@ -7,9 +7,10 @@
          ShowCloseButton="false"
          ShowHeader="false"
          ShowFooter="false"
-         Width="@DialogWidth"
-         MinWidth="@DialogWidth"
-         MaxWidth="@DialogWidth"
+         Width="@EffectiveWidth"
+         MinWidth="@EffectiveMinWidth"
+         MaxWidth="@EffectiveMaxWidth"
+         MaxHeight="600px"
          BodyCssClass="hq-dialog__body-host">
     <BodyContentTemplate>
         <div class="hq-dialog__panel">
@@ -102,6 +103,18 @@
     /// <summary>Kích thước dialog: Sm=432px, Md=504px, Lg=720px, Xl=1152px.</summary>
     [Parameter] public HqDialogSize Size { get; set; } = HqDialogSize.Md;
 
+    /// <summary>Intent semantic — điều chỉnh màu icon prefix (None/Info/Success/Warning/Danger).</summary>
+    [Parameter] public HqDialogIntent Intent { get; set; } = HqDialogIntent.None;
+
+    /// <summary>Override width cho dialog, ví dụ "1120px" hoặc "calc(100vw - 32px)".</summary>
+    [Parameter] public string? Width { get; set; }
+
+    /// <summary>Override min-width cho dialog. Khi không set và không dùng custom width, dialog giữ width cố định theo Size.</summary>
+    [Parameter] public string? MinWidth { get; set; }
+
+    /// <summary>Override max-width cho dialog. Khi không set và không dùng custom width, dialog giữ width cố định theo Size.</summary>
+    [Parameter] public string? MaxWidth { get; set; }
+
     /// <summary>Cho phép đóng khi click bên ngoài (mặc định: true).</summary>
     [Parameter] public bool CloseOnOutsideClick { get; set; } = true;
 
@@ -114,7 +127,7 @@
     /// <summary>Callback khi nhấn nút Confirm/Save.</summary>
     [Parameter] public EventCallback Confirm { get; set; }
 
-    private string DialogWidth => Size switch
+    private string PresetWidth => Size switch
     {
         HqDialogSize.Sm => "432px",
         HqDialogSize.Md => "504px",
@@ -123,13 +136,36 @@
         _ => "504px"
     };
 
+    private bool HasCustomWidth => !string.IsNullOrWhiteSpace(Width)
+        || !string.IsNullOrWhiteSpace(MinWidth)
+        || !string.IsNullOrWhiteSpace(MaxWidth);
+
+    private string? EffectiveWidth => !string.IsNullOrWhiteSpace(Width)
+        ? Width
+        : HasCustomWidth
+            ? null
+            : PresetWidth;
+
+    private string? EffectiveMinWidth => HasCustomWidth
+        ? MinWidth
+        : PresetWidth;
+
+    private string? EffectiveMaxWidth => HasCustomWidth
+        ? MaxWidth
+        : PresetWidth;
+
+    private string IntentClass => Intent == HqDialogIntent.None
+        ? string.Empty
+        : $"hq-dialog--intent-{Intent.ToString().ToLowerInvariant()}";
+
     private string RootCssClass => string.Join(" ",
-        "hq-dialog",
-        $"hq-dialog--{Size.ToString().ToLowerInvariant()}",
-        Class ?? string.Empty).Trim();
+        new[] { "hq-dialog", $"hq-dialog--{Size.ToString().ToLowerInvariant()}", IntentClass, Class ?? string.Empty }
+        .Where(s => !string.IsNullOrEmpty(s)));
 
     private async Task HandleVisibleChanged(bool visible)
     {
+        if (!visible && Cancel.HasDelegate)
+            await Cancel.InvokeAsync();
         if (VisibleChanged.HasDelegate)
             await VisibleChanged.InvokeAsync(visible);
     }

@@ -1,0 +1,53 @@
+@namespace Button_Segmented.Client.Components.Tooltip
+
+<span class="@RootCssClass" style="@Style">
+    <MudTooltip Text="@Text"
+                Arrow="@Arrow"
+                Placement="@MudPlacement"
+                Duration="@Duration"
+                Delay="@Delay"
+                Color="MudBlazor.Color.Default"
+                Class="hq-tooltip-popup">
+        @ChildContent
+    </MudTooltip>
+</span>
+
+@code {
+    /// <summary>Tooltip text content.</summary>
+    [Parameter] public string? Text { get; set; }
+
+    /// <summary>Direction of the tooltip relative to the anchor.</summary>
+    [Parameter] public HqTooltipDirection Direction { get; set; } = HqTooltipDirection.Top;
+
+    /// <summary>Show arrow pointer.</summary>
+    [Parameter] public bool Arrow { get; set; } = true;
+
+    /// <summary>Duration (ms) tooltip stays visible after mouse leaves. Default 0 = auto-hide.</summary>
+    [Parameter] public double Duration { get; set; }
+
+    /// <summary>Delay (ms) before tooltip shows on hover.</summary>
+    [Parameter] public double Delay { get; set; }
+
+    /// <summary>The element that triggers the tooltip.</summary>
+    [Parameter] public RenderFragment? ChildContent { get; set; }
+
+    /// <summary>Additional CSS class for the host wrapper.</summary>
+    [Parameter] public string? Class { get; set; }
+
+    /// <summary>Additional inline style for the host wrapper.</summary>
+    [Parameter] public string? Style { get; set; }
+
+    private Placement MudPlacement => Direction switch
+    {
+        HqTooltipDirection.Top => Placement.Top,
+        HqTooltipDirection.Bottom => Placement.Bottom,
+        HqTooltipDirection.Left => Placement.Left,
+        HqTooltipDirection.Right => Placement.Right,
+        _ => Placement.Top,
+    };
+
+    private string RootCssClass => string.Join(" ",
+        "hq-tooltip-host",
+        $"hq-tooltip--{Direction.ToString().ToLowerInvariant()}",
+        Class).Trim();
+}

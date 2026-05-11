@@ -1,0 +1,82 @@
+.tooltip-page {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: var(--spacing-16x) var(--spacing-12x);
+}
+
+.tooltip-page h1 {
+    font-family: var(--font-family-base);
+    font-size: var(--text-heading-lg-size);
+    line-height: var(--text-heading-lg-lh);
+    letter-spacing: var(--font-letter-spacing);
+    color: var(--color-on-background);
+    margin: 0 0 var(--spacing-4x);
+}
+
+.tooltip-subtitle {
+    font-family: var(--font-family-base);
+    font-size: var(--text-body-md-size);
+    line-height: var(--text-body-md-lh);
+    letter-spacing: var(--font-letter-spacing);
+    color: var(--color-on-surface-1);
+    margin: 0 0 var(--spacing-16x);
+}
+
+.tooltip-section {
+    margin-bottom: var(--spacing-16x);
+}
+
+.tooltip-section h2 {
+    font-family: var(--font-family-base);
+    font-size: var(--text-title-lg-size);
+    line-height: var(--text-title-lg-lh);
+    letter-spacing: var(--font-letter-spacing);
+    color: var(--color-on-background);
+    margin: 0 0 var(--spacing-8x);
+}
+
+.tooltip-grid {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--spacing-16x);
+    align-items: flex-start;
+}
+
+.tooltip-demo-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: var(--spacing-4x);
+    min-width: 160px;
+}
+
+.tooltip-label {
+    font-family: var(--font-family-base);
+    font-size: var(--text-label-md-size);
+    line-height: var(--text-label-md-lh);
+    letter-spacing: var(--font-letter-spacing);
+    color: var(--color-on-surface-1);
+}
+
+.tooltip-icon-sample {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 40px;
+    height: 40px;
+    border-radius: var(--radius-4x);
+    background-color: var(--color-surface-1);
+    color: var(--color-on-surface);
+    font-size: var(--icon-font-md-size);
+    cursor: pointer;
+}
+
+.tooltip-text-sample {
+    font-family: var(--font-family-base);
+    font-size: var(--text-body-md-size);
+    line-height: var(--text-body-md-lh);
+    letter-spacing: var(--font-letter-spacing);
+    color: var(--color-useful);
+    text-decoration: underline dotted;
+    cursor: help;
+}

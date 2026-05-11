@@ -23,6 +23,11 @@
 
 /* =====================================================================
    Dialog panel shell — resets DX default styles
+   NOTE: DxPopup renders in a portal outside the Blazor component tree.
+   These ::deep selectors do NOT reach portal elements (.dxbl-popup-dialog
+   etc.). Real height constraint comes from MaxHeight parameter on DxPopup
+   and global overrides in site.css. The rules below are kept only as
+   documentation / best-effort for environments where portal scope leaks.
    ===================================================================== */
 ::deep .hq-dialog .dxbl-popup-dialog {
     --hq-dialog-bg: var(--color-surface);
@@ -35,21 +40,15 @@
     border-radius: var(--hq-dialog-radius) !important;
     box-shadow: var(--hq-dialog-shadow) !important;
     padding: 0 !important;
-    overflow: hidden;
+    overflow: hidden !important;
 }
 
 /* Remove DX default header/body/footer padding & borders */
 ::deep .hq-dialog .dxbl-popup-header,
-::deep .hq-dialog .dxbl-popup-body,
 ::deep .hq-dialog .dxbl-popup-footer {
     padding: 0 !important;
     border: none !important;
     background: transparent !important;
-}
-
-/* DxPopup body area — make it hug content */
-::deep .hq-dialog .dxbl-popup-body {
-    overflow: visible !important;
 }
 
 /* =====================================================================
@@ -59,19 +58,26 @@
     display: flex;
     flex-direction: column;
     width: 100%;
+    max-height: 600px;
+    background-color: var(--color-surface);
     font-family: var(--font-family-base);
+    overflow-y: auto;
+    overflow-x: hidden;
 }
 
 /* =====================================================================
    Header
-   Figma: padding 16px 24px, gap 12px, row, border-bottom 1px outline-1
+   Figma: padding 20.5px 24px, gap 12px, row, border-bottom 1px outline-1
    ===================================================================== */
 ::deep .hq-dialog__header {
     display: flex;
     flex-direction: row;
     align-items: center;
     gap: var(--modal-header-gap);
-    padding: var(--modal-header-padding);
+    position: sticky;
+    top: 0;
+    z-index: 1;
+    padding: 20.5px 24px;
     border-bottom: 1px solid var(--color-outline-1);
     background-color: var(--color-surface);
 }
@@ -143,8 +149,7 @@
     display: flex;
     flex-direction: column;
     gap: var(--modal-content-gap);
-    flex: 1;
-    overflow-y: auto;
+    background-color: var(--color-surface);
     font-family: var(--font-family-base);
     font-size: var(--text-body-md-size);
     color: var(--color-on-surface);
@@ -160,6 +165,9 @@
     flex-direction: row;
     align-items: center;
     gap: var(--modal-footer-gap);
+    position: sticky;
+    bottom: 0;
+    z-index: 1;
     padding: var(--modal-footer-padding);
     border-top: 1px solid var(--color-outline-1);
     background-color: var(--color-surface);
@@ -176,3 +184,12 @@
     gap: var(--modal-footer-gap);
     margin-left: auto;
 }
+
+/* =====================================================================
+   Intent variants — prefix icon colour override
+   NOTE: These ::deep rules are best-effort; real overrides are in site.css.
+   ===================================================================== */
+::deep .hq-dialog--intent-info    .hq-dialog__prefix-icon { color: var(--color-useful); }
+::deep .hq-dialog--intent-success .hq-dialog__prefix-icon { color: var(--color-positive); }
+::deep .hq-dialog--intent-warning .hq-dialog__prefix-icon { color: var(--color-yellow-60); }
+::deep .hq-dialog--intent-danger  .hq-dialog__prefix-icon { color: var(--color-red-60); }

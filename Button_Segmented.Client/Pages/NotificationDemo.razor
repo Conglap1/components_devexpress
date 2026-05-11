@@ -1,0 +1,149 @@
+@page "/notification-demo"
+@namespace Button_Segmented.Client.Pages
+@inject HqNotificationService NotificationService
+
+<PageTitle>Notification Demo</PageTitle>
+
+<div class="notif-page">
+    <div class="notif-page__header">
+        <h1>Notification component</h1>
+        <p>Có 2 dạng chính: <strong>Notification</strong> (toast — render bởi DevExpress DxToastProvider) và <strong>Alert</strong> (inline trong form UI).</p>
+    </div>
+
+    @* ── Toast Notification ── *@
+    <section class="notif-section">
+        <h2>Toast Notification</h2>
+        <p class="notif-section__desc">
+            Click button để trigger toast. DX xử lý positioning, animation, auto-dismiss.
+            CSS HQSOFT được đè qua <code>.hq-notif</code> class.
+        </p>
+
+        <div class="notif-trigger-row">
+            <button class="notif-trigger-btn notif-trigger-btn--default"
+                    @onclick='() => NotificationService.Show("Thông báo mặc định", HqNotificationType.Default, "Đây là nội dung mô tả thêm.")'>
+                Default
+            </button>
+            <button class="notif-trigger-btn notif-trigger-btn--positive"
+                    @onclick='() => NotificationService.Show("Thao tác thành công", HqNotificationType.Positive, "Dữ liệu đã được lưu thành công.")'>
+                Positive
+            </button>
+            <button class="notif-trigger-btn notif-trigger-btn--stressful"
+                    @onclick='() => NotificationService.Show("Đã xảy ra lỗi", HqNotificationType.Stressful, "Không thể kết nối đến máy chủ. Vui lòng thử lại.")'>
+                Stressful
+            </button>
+            <button class="notif-trigger-btn notif-trigger-btn--careful"
+                    @onclick='() => NotificationService.Show("Cảnh báo", HqNotificationType.Careful, "Phiên đăng nhập sắp hết hạn.")'>
+                Careful
+            </button>
+            <button class="notif-trigger-btn notif-trigger-btn--useful"
+                    @onclick='() => NotificationService.Show("Thông tin", HqNotificationType.Useful, "Hệ thống sẽ bảo trì lúc 22:00 tối nay.")'>
+                Useful
+            </button>
+            <button class="notif-trigger-btn notif-trigger-btn--useful"
+                    @onclick='() => NotificationService.Show("Không tự dismiss", HqNotificationType.Useful, "Loại này sẽ không tự đóng.", 0)'>
+                Không tự dismiss
+            </button>
+        </div>
+
+        <h3 class="notif-subsection-title">Static preview — HqNotification (visual-only, 5 types)</h3>
+        <div class="notif-preview-stack">
+            <HqNotification Type="HqNotificationType.Default"
+                            Heading="Thông báo mặc định"
+                            Description="Đây là nội dung mô tả thêm." />
+            <HqNotification Type="HqNotificationType.Positive"
+                            Heading="Thao tác thành công"
+                            Description="Dữ liệu đã được lưu thành công." />
+            <HqNotification Type="HqNotificationType.Stressful"
+                            Heading="Đã xảy ra lỗi"
+                            Description="Không thể kết nối đến máy chủ. Vui lòng thử lại." />
+            <HqNotification Type="HqNotificationType.Careful"
+                            Heading="Cảnh báo"
+                            Description="Phiên đăng nhập sắp hết hạn."
+                            ActionText="Gia hạn" />
+            <HqNotification Type="HqNotificationType.Useful"
+                            Heading="Thông tin"
+                            Description="Hệ thống sẽ bảo trì lúc 22:00 tối nay." />
+        </div>
+
+        <h3 class="notif-subsection-title">Variants — has-description / has-action / has-close</h3>
+        <div class="notif-preview-stack">
+            <HqNotification Type="HqNotificationType.Positive"
+                            Heading="Chỉ có tiêu đề"
+                            HasCloseButton="false" />
+            <HqNotification Type="HqNotificationType.Positive"
+                            Heading="Có icon và mô tả"
+                            Description="Mô tả bổ sung chi tiết hơn." />
+            <HqNotification Type="HqNotificationType.Stressful"
+                            Heading="Không có icon"
+                            Description="Thông báo này không có icon dẫn đầu."
+                            HasLeadingIcon="false" />
+            <HqNotification Type="HqNotificationType.Careful"
+                            Heading="Có action button"
+                            Description="Click vào nút bên dưới để thực hiện hành động."
+                            ActionText="Thực hiện ngay" />
+        </div>
+    </section>
+
+    @* ── Alert (Inline) ── *@
+    <section class="notif-section">
+        <h2>Alert (Inline)</h2>
+        <p class="notif-section__desc">Dùng trực tiếp trong form UI, không phải toast.</p>
+
+        <div class="notif-alert-stack">
+            @if (_showDefaultAlert)
+            {
+                <HqAlert Type="HqNotificationType.Default"
+                         Heading="Thông báo mặc định"
+                         Description="Đây là nội dung mô tả thêm."
+                         OnClose="@(() => _showDefaultAlert = false)" />
+            }
+            @if (_showPositiveAlert)
+            {
+                <HqAlert Type="HqNotificationType.Positive"
+                         Heading="Thao tác thành công"
+                         Description="Dữ liệu đã được lưu thành công."
+                         ActionText="Xem chi tiết"
+                         OnClose="@(() => _showPositiveAlert = false)" />
+            }
+            @if (_showStressfulAlert)
+            {
+                <HqAlert Type="HqNotificationType.Stressful"
+                         Heading="Đã xảy ra lỗi"
+                         Description="Không thể kết nối đến máy chủ."
+                         ActionText="Thử lại"
+                         OnClose="@(() => _showStressfulAlert = false)" />
+            }
+            @if (_showCarefulAlert)
+            {
+                <HqAlert Type="HqNotificationType.Careful"
+                         Heading="Cảnh báo"
+                         Description="Phiên đăng nhập sắp hết hạn."
+                         ActionText="Gia hạn"
+                         OnClose="@(() => _showCarefulAlert = false)" />
+            }
+            @if (_showUsefulAlert)
+            {
+                <HqAlert Type="HqNotificationType.Useful"
+                         Heading="Thông tin"
+                         Description="Hệ thống sẽ bảo trì lúc 22:00 tối nay."
+                         OnClose="@(() => _showUsefulAlert = false)" />
+            }
+        </div>
+
+        <div class="notif-trigger-row">
+            <button class="notif-trigger-btn notif-trigger-btn--default"  @onclick="@(() => _showDefaultAlert  = true)">Reset Default</button>
+            <button class="notif-trigger-btn notif-trigger-btn--positive" @onclick="@(() => _showPositiveAlert = true)">Reset Positive</button>
+            <button class="notif-trigger-btn notif-trigger-btn--stressful" @onclick="@(() => _showStressfulAlert = true)">Reset Stressful</button>
+            <button class="notif-trigger-btn notif-trigger-btn--careful"  @onclick="@(() => _showCarefulAlert  = true)">Reset Careful</button>
+            <button class="notif-trigger-btn notif-trigger-btn--useful"   @onclick="@(() => _showUsefulAlert   = true)">Reset Useful</button>
+        </div>
+    </section>
+</div>
+
+@code {
+    private bool _showDefaultAlert   = true;
+    private bool _showPositiveAlert  = true;
+    private bool _showStressfulAlert = true;
+    private bool _showCarefulAlert   = true;
+    private bool _showUsefulAlert    = true;
+}
