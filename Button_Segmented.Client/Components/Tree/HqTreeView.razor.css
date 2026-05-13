@@ -5,15 +5,8 @@
     color: var(--tree-item-color);
 }
 
-/* ===== MudTreeView root overrides ===== */
-::deep .hq-tree__mud.mud-treeview {
-    /* Locally rebind Mud's primary palette to HQ navy so that
-       built-in selection / checkbox / ripple colors automatically follow our brand. */
-    --mud-palette-primary: var(--color-primary);
-    --mud-palette-primary-hover: var(--tree-item-selected-bg);
-    --mud-palette-primary-text: var(--color-on-primary);
-    --mud-ripple-color: var(--color-primary);
-
+/* ===== DxTreeView root overrides ===== */
+::deep .hq-tree__dx.dxbl-treeview {
     padding: 0;
     margin: 0;
     overflow: visible;
@@ -21,20 +14,28 @@
     font-family: var(--font-family-base);
     letter-spacing: var(--font-letter-spacing);
     color: var(--tree-item-color);
+    border: none;
 }
 
-::deep .hq-tree__mud .mud-treeview-item {
+/* Items container (ul) */
+::deep .hq-tree__dx .dxbl-treeview-items-container {
+    padding: 0;
+    margin: 0;
+    list-style: none;
+}
+
+/* ===== Item row (li) ===== */
+::deep .hq-tree__dx .dxbl-treeview-item {
     background-color: transparent;
     min-height: var(--tree-content-height);
 }
 
-/* ===== Item content row (expand + checkbox + icon + text) ===== */
-::deep .hq-tree__mud .mud-treeview-item-content {
-    width: 100%;
+/* ===== Item content row (expand + checkbox + link/text) ===== */
+::deep .hq-tree__dx .dxbl-treeview-item-content {
     display: flex !important;
     align-items: center !important;
     gap: 0;
-    padding: 0 var(--tree-item-padding-x-end) 0 0 !important;
+    padding: var(--tree-item-gap) var(--tree-item-padding-x-end) var(--tree-item-gap) 0 !important;
     min-height: var(--tree-content-height);
     border-radius: var(--tree-item-border-radius);
     color: var(--tree-item-color);
@@ -46,110 +47,64 @@
     transition: background-color 0.15s ease, color 0.15s ease;
 }
 
-/* Hover (only when not disabled) — override Mud's default hover */
-::deep .hq-tree__mud.mud-treeview-hover .mud-treeview-item:not(.mud-treeview-item-disabled) > .mud-treeview-item-content:hover,
-::deep .hq-tree__mud .mud-treeview-item:not(.mud-treeview-item-disabled) > .mud-treeview-item-content:hover {
+/* Hover */
+::deep .hq-tree__dx .dxbl-treeview-item:not(.dxbl-disabled) > .dxbl-treeview-item-content:hover {
     background-color: var(--tree-item-hover-bg) !important;
     color: var(--tree-item-color) !important;
 }
 
-/* Selected row — override Mud's primary/secondary palette selected colors */
-::deep .hq-tree__mud .mud-treeview-item-content.mud-treeview-item-selected,
-::deep .hq-tree__mud.mud-treeview-selected-primary .mud-treeview-item-content.mud-treeview-item-selected,
-::deep .hq-tree__mud.mud-treeview-selected-secondary .mud-treeview-item-content.mud-treeview-item-selected {
+/* Selected row */
+::deep .hq-tree__dx .dxbl-treeview-item-container.dxbl-active,
+::deep .hq-tree__dx .dxbl-treeview-item-content:has(.dxbl-treeview-item-container.dxbl-active) {
     background-color: var(--tree-item-selected-bg) !important;
     color: var(--tree-item-selected-color) !important;
-    --mud-ripple-color: var(--color-primary) !important;
 }
 
 /* Selected + hover */
-::deep .hq-tree__mud .mud-treeview-item:not(.mud-treeview-item-disabled) > .mud-treeview-item-content.mud-treeview-item-selected:hover {
+::deep .hq-tree__dx .dxbl-treeview-item:not(.dxbl-disabled) > .dxbl-treeview-item-content:has(.dxbl-active):hover {
     background-color: var(--tree-item-selected-bg) !important;
     color: var(--tree-item-selected-color) !important;
 }
 
-/* ===== Disabled state ===== */
-::deep .hq-tree__mud .mud-treeview-item.mud-treeview-item-disabled,
-::deep .hq-tree__mud .mud-treeview-item.mud-treeview-item-disabled > .mud-treeview-item-content {
-    color: var(--tree-item-color-disabled) !important;
-    opacity: 1 !important;
-    cursor: not-allowed !important;
-    pointer-events: none !important;
+/* ===== Indent — 20px per level via DX's --dxbl-treeview-item-indent variable ===== */
+::deep .hq-tree__dx .dxbl-treeview-item-indent {
+    width: calc(var(--dxbl-treeview-item-indent, 0) * var(--tree-indent-per-level)) !important;
+    flex: 0 0 auto;
 }
 
-::deep .hq-tree__mud .mud-treeview-item.mud-treeview-item-disabled .hq-tree-item__icon {
-    color: var(--tree-folder-icon-color-disabled);
-}
-
-/* ===== Expand / collapse arrow wrapper ===== */
-/* Undo Mud's default scaleX(-1) flip; resize to 24px box per Figma */
-::deep .hq-tree__mud .mud-treeview-item-arrow {
+/* ===== Expand / collapse button ===== */
+::deep .hq-tree__dx .dxbl-treeview-item-content > .dxbl-btn {
     width: 24px !important;
     min-width: 24px !important;
-    min-height: 24px !important;
     height: 24px !important;
+    min-height: 24px !important;
     flex: 0 0 24px !important;
     margin: 0 !important;
-    padding: 0 !important;
+    padding: var(--tree-element-padding) !important;
     display: inline-flex !important;
     align-items: center !important;
     justify-content: center !important;
-    transform: none !important; /* undo MudBlazor's scaleX(-1) */
-    color: var(--tree-expand-icon-color) !important;
-    position: relative;
-}
-
-/* The expand-icon button inside the arrow wrapper */
-::deep .hq-tree__mud .mud-treeview-item-arrow .mud-icon-button {
-    width: 24px !important;
-    height: 24px !important;
-    min-width: 24px !important;
-    min-height: 24px !important;
-    padding: var(--tree-element-padding) !important;
-    margin: 0 !important;
     background: transparent !important;
     border: none !important;
     box-shadow: none !important;
     color: var(--tree-expand-icon-color) !important;
+    position: relative;
+    cursor: pointer;
 }
 
-::deep .hq-tree__mud .mud-treeview-item-arrow .mud-icon-button:hover,
-::deep .hq-tree__mud .mud-treeview-item-arrow .mud-icon-button:focus,
-::deep .hq-tree__mud .mud-treeview-item-arrow .mud-icon-button:active {
-    background-color: transparent !important;
-    color: var(--color-on-surface) !important;
+/* Leaf items — invisible expand placeholder */
+::deep .hq-tree__dx .dxbl-treeview-item-content > .dxbl-btn.dxbl-invisible {
+    visibility: hidden;
 }
 
-/* Hide Mud's default ripple inside the arrow button */
-::deep .hq-tree__mud .mud-treeview-item-arrow .mud-ripple,
-::deep .hq-tree__mud .mud-treeview-item-arrow .mud-icon-button-label .mud-ripple {
+/* Hide DX's default SVG chevron icon */
+::deep .hq-tree__dx .dxbl-treeview-item-content > .dxbl-btn > svg,
+::deep .hq-tree__dx .dxbl-treeview-item-content > .dxbl-btn > .dxbl-image {
     display: none !important;
 }
 
-/* The actual icon element that holds the SVG and rotates when expanded */
-::deep .hq-tree__mud .mud-treeview-item-arrow .mud-treeview-item-arrow-expand {
-    width: var(--tree-expand-icon-size) !important;
-    height: var(--tree-expand-icon-size) !important;
-    display: inline-flex !important;
-    align-items: center !important;
-    justify-content: center !important;
-    position: relative;
-}
-
-/* Hide the default Material SVG icon inside the rotation host */
-::deep .hq-tree__mud .mud-treeview-item-arrow .mud-treeview-item-arrow-expand > svg,
-::deep .hq-tree__mud .mud-treeview-item-arrow .mud-treeview-item-arrow-expand > .mud-icon-root,
-::deep .hq-tree__mud .mud-treeview-item-arrow .mud-icon-button-label > svg,
-::deep .hq-tree__mud .mud-treeview-item-arrow .mud-icon-button-label > .mud-icon-root {
-    width: 0 !important;
-    height: 0 !important;
-    opacity: 0 !important;
-    visibility: hidden !important;
-    color: transparent !important;
-}
-
-/* Inject FontAwesome caret-right; rotation is inherited from .mud-transform parent */
-::deep .hq-tree__mud .mud-treeview-item-arrow .mud-treeview-item-arrow-expand::before {
+/* Inject FA caret-right — collapsed (default) */
+::deep .hq-tree__dx .dxbl-treeview-item-content > .dxbl-btn::before {
     content: "\f0da";
     font-family: "Font Awesome 6 Free", "Font Awesome 5 Free", "FontAwesome";
     font-weight: 900;
@@ -161,66 +116,183 @@
     justify-content: center;
     width: var(--tree-expand-icon-size);
     height: var(--tree-expand-icon-size);
+    transition: transform 0.2s ease;
+    transform: rotate(0deg);
 }
 
-/* Hover color on expand icon */
-::deep .hq-tree__mud .mud-treeview-item-arrow:hover .mud-treeview-item-arrow-expand::before {
+/* Expanded state — rotate caret 90deg */
+::deep .hq-tree__dx .dxbl-treeview-item:has(> dxbl-expandable-container[expanded-state="True"]) > .dxbl-treeview-item-content > .dxbl-btn::before {
+    transform: rotate(90deg);
+}
+
+/* Expand button hover */
+::deep .hq-tree__dx .dxbl-treeview-item-content > .dxbl-btn:hover::before {
     color: var(--color-on-surface);
 }
 
-/* ===== Checkbox slot (only in MultiSelection mode) ===== */
-::deep .hq-tree__mud .mud-treeview-item-checkbox {
-    margin: 0 !important;
-    padding: 0 !important;
-    flex: 0 0 auto;
-}
-
-::deep .hq-tree__mud .mud-treeview-item-checkbox .mud-icon-button,
-::deep .hq-tree__mud .mud-treeview-item-checkbox .mud-button-root.mud-icon-button {
+/* ===== Checkbox (DxTreeView's built-in, CheckMode) ===== */
+::deep .hq-tree__dx .dxbl-treeview-item-content .dxbl-checkbox {
     width: 24px !important;
     height: 24px !important;
     min-width: 24px !important;
     min-height: 24px !important;
-    padding: var(--tree-element-padding) !important;
+    flex: 0 0 24px;
     margin: 0 !important;
+    padding: var(--tree-element-padding) !important;
+    display: inline-flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    position: relative;
+    border: none !important;
     background: transparent !important;
-    color: var(--color-on-surface-2) !important;
-    border-radius: var(--radius-1x);
+    box-shadow: none !important;
+    --dxbl-checkbox-border-color: transparent;
+    --dxbl-checkbox-border-width: 0px;
+    --dxbl-checkbox-bg: transparent;
 }
 
-/* Checked & indeterminate state — HQ navy (override Mud's palette color) */
-::deep .hq-tree__mud.mud-treeview-checked-primary .mud-treeview-item-checkbox .mud-button-root.mud-icon-button,
-::deep .hq-tree__mud .mud-treeview-item-checkbox .mud-button-root.mud-icon-button.mud-checked,
-::deep .hq-tree__mud .mud-treeview-item-checkbox .mud-checked,
-::deep .hq-tree__mud .mud-treeview-item-checkbox .mud-indeterminate {
-    color: var(--tree-checkbox-color) !important;
+/* Hide DX's default check element visually but keep it clickable */
+::deep .hq-tree__dx .dxbl-treeview-item-content .dxbl-checkbox .dxbl-checkbox-check-element {
+    opacity: 0 !important;
+    position: absolute !important;
+    inset: 0 !important;
+    width: 100% !important;
+    height: 100% !important;
+    cursor: pointer;
+    z-index: 2;
+}
+
+/* Hide any inner borders/outlines/SVGs */
+::deep .hq-tree__dx .dxbl-treeview-item-content .dxbl-checkbox > *:not(.hq-tree-cb-icon) {
+    border: none !important;
+    outline: none !important;
+    box-shadow: none !important;
+    background: transparent !important;
+}
+
+/* FA checkbox icon — rendered via ::after on the checkbox wrapper */
+::deep .hq-tree__dx .dxbl-treeview-item-content .dxbl-checkbox::after {
+    content: "\f0c8";
+    font-family: "Font Awesome 6 Free", "Font Awesome 5 Free", "FontAwesome";
+    font-weight: 400;
+    font-size: 16px;
+    line-height: 1;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 16px;
+    height: 16px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--tree-checkbox-color-unchecked);
+    pointer-events: none;
+    z-index: 1;
+}
+
+/* Checked: square-check (Solid/900), navy */
+::deep .hq-tree__dx .dxbl-treeview-item-content .dxbl-checkbox:not(.dxbl-checkbox-unchecked):not(.dxbl-checkbox-indeterminate)::after {
+    content: "\f14a";
+    font-weight: 900;
+    color: var(--tree-checkbox-color);
+}
+
+/* Indeterminate: square-minus (Solid/900), navy */
+::deep .hq-tree__dx .dxbl-treeview-item-content .dxbl-checkbox.dxbl-checkbox-indeterminate::after {
+    content: "\f146";
+    font-weight: 900;
+    color: var(--tree-checkbox-color);
+}
+
+/* Unchecked explicit (ensure unchecked style) */
+::deep .hq-tree__dx .dxbl-treeview-item-content .dxbl-checkbox.dxbl-checkbox-unchecked::after {
+    content: "\f0c8";
+    font-weight: 400;
+    color: var(--tree-checkbox-color-unchecked);
 }
 
 /* Disabled checkbox */
-::deep .hq-tree__mud .mud-treeview-item-checkbox .mud-disabled,
-::deep .hq-tree__mud .mud-treeview-item-disabled .mud-treeview-item-checkbox .mud-button-root {
+::deep .hq-tree__dx .dxbl-treeview-item.dxbl-disabled .dxbl-checkbox::after,
+::deep .hq-tree__dx .dxbl-treeview-item-content .dxbl-checkbox.dxbl-disabled::after {
     color: var(--tree-checkbox-color-disabled) !important;
-    opacity: 1 !important;
 }
 
-/* Hide checkbox ripple */
-::deep .hq-tree__mud .mud-treeview-item-checkbox .mud-ripple {
-    display: none !important;
+/* Check-all checkbox at top (if visible) */
+::deep .hq-tree__dx .dxbl-treeview-checkbox-check-all {
+    width: 24px !important;
+    height: 24px !important;
+    margin: 0 0 var(--tree-item-gap) 0 !important;
+    padding: var(--tree-element-padding) !important;
+    position: relative;
+    border: none !important;
+    background: transparent !important;
+    box-shadow: none !important;
+    --dxbl-checkbox-border-color: transparent;
+    --dxbl-checkbox-border-width: 0px;
+    --dxbl-checkbox-bg: transparent;
 }
 
-/* ===== Item label (where BodyContent renders) ===== */
-::deep .hq-tree__mud .mud-treeview-item-label {
+::deep .hq-tree__dx .dxbl-treeview-checkbox-check-all .dxbl-checkbox-check-element {
+    opacity: 0 !important;
+    position: absolute !important;
+    inset: 0 !important;
+    width: 100% !important;
+    height: 100% !important;
+    cursor: pointer;
+    z-index: 2;
+}
+
+::deep .hq-tree__dx .dxbl-treeview-checkbox-check-all::after {
+    content: "\f0c8";
+    font-family: "Font Awesome 6 Free", "Font Awesome 5 Free", "FontAwesome";
+    font-weight: 400;
+    font-size: 16px;
+    line-height: 1;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 16px;
+    height: 16px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--tree-checkbox-color-unchecked);
+    pointer-events: none;
+    z-index: 1;
+}
+
+::deep .hq-tree__dx .dxbl-treeview-checkbox-check-all:not(.dxbl-checkbox-unchecked):not(.dxbl-checkbox-indeterminate)::after {
+    content: "\f14a";
+    font-weight: 900;
+    color: var(--tree-checkbox-color);
+}
+
+::deep .hq-tree__dx .dxbl-treeview-checkbox-check-all.dxbl-checkbox-indeterminate::after {
+    content: "\f146";
+    font-weight: 900;
+    color: var(--tree-checkbox-color);
+}
+
+/* ===== Item container (the <a> link wrapper) ===== */
+::deep .hq-tree__dx .dxbl-treeview-item-container {
     flex: 1 1 auto;
     min-width: 0;
     overflow: hidden;
-    padding: 0;
+    padding: 0 !important;
+    margin: 0;
+    text-decoration: none !important;
+    color: inherit !important;
+    display: flex;
+    align-items: center;
 }
 
-/* ===== NodeTextTemplate content (our BodyContent) ===== */
+/* ===== NodeTextTemplate content (our custom icon + text) ===== */
 ::deep .hq-tree-item__content {
     display: flex;
     align-items: center;
-    gap: var(--tree-content-gap);
+    gap: 0;
     min-height: var(--tree-content-height);
     min-width: 0;
     width: 100%;
@@ -231,24 +303,35 @@
     display: inline-flex;
     align-items: center;
     justify-content: center;
-    flex: 0 0 auto;
-    width: var(--tree-folder-icon-size);
-    height: var(--tree-folder-icon-size);
+    flex: 0 0 24px;
+    width: 24px;
+    height: 24px;
+    padding: var(--tree-element-padding);
     font-size: var(--tree-folder-icon-size);
-    color: var(--tree-folder-icon-color);
     line-height: 1;
+    box-sizing: border-box;
+}
+
+/* Folder icons — gold */
+::deep .hq-tree-item__icon--folder {
+    color: var(--tree-folder-icon-color);
+}
+
+/* File/leaf icons — gray */
+::deep .hq-tree-item__icon--file {
+    color: var(--tree-file-icon-color);
 }
 
 ::deep .hq-tree-item__icon--custom {
     color: var(--tree-folder-icon-color);
 }
 
-/* Disabled icon color (extra specificity for inside disabled item) */
-::deep .hq-tree__mud .mud-treeview-item.mud-treeview-item-disabled .hq-tree-item__icon {
+/* Disabled icon color */
+::deep .hq-tree__dx .dxbl-treeview-item.dxbl-disabled .hq-tree-item__icon {
     color: var(--tree-folder-icon-color-disabled);
 }
 
-/* Text — natural width, ellipsis for long text */
+/* Text — ellipsis for long text */
 ::deep .hq-tree-item__text {
     flex: 1 1 auto;
     min-width: 0;
@@ -263,22 +346,21 @@
     color: inherit;
 }
 
-/* ===== Child group indentation — 20px per level (Figma Tree/Level) ===== */
-/* Mud uses margin-inline-start: 17px by default → override to our 20px token */
-::deep .hq-tree__mud .mud-treeview-group {
-    margin-left: var(--tree-indent-per-level) !important;
-    margin-inline-start: var(--tree-indent-per-level) !important;
-    margin-inline-end: 0 !important;
-    padding: 0 !important;
+/* ===== Disabled state ===== */
+::deep .hq-tree__dx .dxbl-treeview-item.dxbl-disabled > .dxbl-treeview-item-content {
+    color: var(--tree-item-color-disabled) !important;
+    opacity: 1 !important;
+    cursor: not-allowed !important;
+    pointer-events: none !important;
 }
 
-/* ===== Collapse container ===== */
-::deep .hq-tree__mud .mud-collapse-container {
+/* ===== Expandable container (child group) ===== */
+::deep .hq-tree__dx dxbl-expandable-container {
     background-color: transparent;
 }
 
 /* ===== Focus visible (accessibility) ===== */
-::deep .hq-tree__mud .mud-treeview-item-content:focus-visible {
+::deep .hq-tree__dx .dxbl-treeview-item-container:focus-visible {
     outline: 2px solid var(--color-useful);
     outline-offset: -2px;
 }

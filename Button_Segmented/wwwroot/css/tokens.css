@@ -416,9 +416,11 @@
   --tree-expand-icon-color: var(--color-on-surface-2);
   --tree-expand-icon-size: 16px;
   --tree-folder-icon-color: var(--color-careful);
+  --tree-file-icon-color: var(--color-on-surface-2);
   --tree-folder-icon-color-disabled: var(--color-on-surface-2);
   --tree-folder-icon-size: 16px;
   --tree-checkbox-color: var(--color-primary);
+  --tree-checkbox-color-unchecked: var(--color-on-surface-1);
   --tree-checkbox-color-disabled: var(--color-on-surface-3);
   --tree-item-hover-bg: var(--color-surface-1);
   --tree-item-selected-bg: var(--color-navy-10);
